@@ -2,24 +2,24 @@
 import React, { ReactElement} from 'react';
 import styled from 'styled-components';
 import { Background } from '../components/Background';
-import { Register } from '../features/form/Register'
+import { Login } from '../features/form/Login';
 
-const StyledRegisterPage = styled.div`
+const StyledLoginPage = styled.div`
 `;
 
 
-interface RegisterPageProps {
+interface LoginPageProps {
 }
 
 //Register page does import our form component and is bound to our react routing system
-const RegisterPage = ({} : RegisterPageProps) : ReactElement => {
+const LoginPage = ({} : LoginPageProps) : ReactElement => {
 return (
     <>
-    <Register/>
+    <Login/>
     <Background expand/>
     </>
 );
 }
   
-  export { RegisterPage }
+  export { LoginPage }
   

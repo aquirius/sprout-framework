@@ -2,12 +2,15 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:3006",
+  "proxy": "http://127.0.0.1:1234",
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@reduxjs/toolkit": "^1.8.3",
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.3.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.3.0",
@@ -15,11 +18,13 @@
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-fontawesome": "^1.6.5",
     "@types/styled-components": "^5.1.25",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
+    "bcryptjs": "^2.4.3",
     "bfj": "^7.0.2",
     "browserslist": "^4.18.1",
     "camelcase": "^6.2.1",
@@ -38,6 +43,7 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -146,5 +152,12 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2"
+  },
+  "browser": {
+    "crypto": false
+}
 }
