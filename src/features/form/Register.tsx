@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -36,7 +37,6 @@ const StyledRegisterFormSubmit = styled.button`
   font-size: 2rem;
   border-radius: 4px;
 `;
-
 const Register = () : ReactElement => {
   //initialize our form with empty states
   const [uuid, setUUID] = useState("");
@@ -49,6 +49,9 @@ const Register = () : ReactElement => {
   const [repeat, setRepeatPassword] = useState("");
   const [message, setMessage] = useState("");
   const nav = useNavigate();
+
+  const {register, handleSubmit, formState: {errors}} = useForm();
+
 
   //build our request
   const request = new Request("/register", {
@@ -73,8 +76,7 @@ const Register = () : ReactElement => {
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = () => {
     if(password !== repeat){
       setMessage('passwords do not match')
       return new Error(message)
@@ -98,23 +100,39 @@ const Register = () : ReactElement => {
         <StyledRegisterFormHeader>
           <h2>Register</h2>
         </StyledRegisterFormHeader>
-        <StyledRegisterFormContent onSubmit={handleSubmit}>
+        <StyledRegisterFormContent onSubmit={handleSubmit(onSubmit)}>
           <StyledRegisterFormLabel>UUID</StyledRegisterFormLabel>
-          <StyledRegisterFormInput title='5 digit number user id' pattern='[0-9]{5,5}' type={"text"} required onChange={(e) => setUUID(e.target.value)}/>
+          <StyledRegisterFormInput {...register("uuid", {required: true, maxLength: 5, minLength: 5})} title='5 digit number user id' type={"text"} onChange={(e) => setUUID(e.target.value)}/>
+          {errors.uuid && <p>uuid is required.</p>}
+
           <StyledRegisterFormLabel>Display Name</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"text"} required onChange={(e) => setDisplayName(e.target.value)}/>
+          <StyledRegisterFormInput {...register("displayName", {required: true})} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>
+          {errors.displayName && <p>Display name is required.</p>}
+
           <StyledRegisterFormLabel>First Name</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"text"} required onChange={(e) => setFirstName(e.target.value)}/>
+          <StyledRegisterFormInput {...register("firstName", {required: true})} type={"text"} onChange={(e) => setFirstName(e.target.value)}/>
+          {errors.firstName && <p>First name is required.</p>}
+
           <StyledRegisterFormLabel>Last Name</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"text"} required onChange={(e) => setLastName(e.target.value)}/>
+          <StyledRegisterFormInput {...register("lastName", {required: true})} type={"text"} onChange={(e) => setLastName(e.target.value)}/>
+          {errors.lastName && <p>Last name is required.</p>}
+
           <StyledRegisterFormLabel>Email</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"email"} required onChange={(e) => setEmail(e.target.value)}/>
+          <StyledRegisterFormInput {...register("email", {required: true})} type={"email"} onChange={(e) => setEmail(e.target.value)}/>
+          {errors.email && <p>Email is required.</p>}
+
           <StyledRegisterFormLabel>Birthday</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"date"} required onChange={(e) => setBirthday(e.target.value)}/>
+          <StyledRegisterFormInput {...register("birthday", {required: true})} type={"date"} onChange={(e) => setBirthday(e.target.value)}/>
+          {errors.birthday && <p>Birthday is required.</p>}
+
           <StyledRegisterFormLabel>Password</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"password"} required onChange={(e) => setPassword(e.target.value)}/>
+          <StyledRegisterFormInput {...register("password", {required:true})} type={"password"} onChange={(e) => setPassword(e.target.value)}/>
+          {errors.password && <p>Password is required.</p>}
+
           <StyledRegisterFormLabel>Repeat password</StyledRegisterFormLabel>
-          <StyledRegisterFormInput type={"password"} required onChange={(e) => setRepeatPassword(e.target.value)}/>
+          <StyledRegisterFormInput {...register("repeatPassword", {required: true})} type={"password"} onChange={(e) => setRepeatPassword(e.target.value)}/>
+          {errors.repeatPassword && <p>Repeat password is required.</p>}
+
           <StyledRegisterFormSubmit type={"submit"}>submit</StyledRegisterFormSubmit>
         </StyledRegisterFormContent>
         {message}

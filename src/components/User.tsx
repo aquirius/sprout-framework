@@ -19,7 +19,7 @@ const User = ({uuid} : ButtonProps) : ReactElement => {
     .then((res) => res.json())
     .then((json) => setData(json.user))
     .finally(() => setLoading(false))
-  }, [loading])
+  }, [uuid, loading])
 
   return (
     <>

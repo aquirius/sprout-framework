@@ -1,31 +1,10 @@
 
 import React, { ReactElement} from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { Background } from '../components/Background';
+import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
 import { User } from '../components/User';
-
-
-const StyledUserGrid = styled.div`
-    display:grid;
-    grid-template-columns: 75px auto;
-    height: 100vh;
-`;
-
-const StyledUser = styled.div`
-    display: grid;
-    grid-column:2;
-    height: 100%;
-    margin-left: 20vh;
-`;
-
-const StyledNav = styled.div`
-    display: grid;
-    height: 100%;
-    grid-column:1;
-`;
-
 
 interface UserPageProps {
 }
@@ -34,14 +13,14 @@ const UserPage = ({}) : ReactElement => {
     const { uuid } = useParams();
     return (
     <>
-    <StyledUserGrid>
-        <StyledNav>
+    <Grid layout={'10vw 80vw'} dimension={"'a b'"}>
+        <GridElement position='a'>
             <Navbar/>
-        </StyledNav>
-        <StyledUser>
+        </GridElement>
+        <GridElement position='b'>
             <User uuid={uuid}/>
-        </StyledUser>
-    </StyledUserGrid>
+        </GridElement>
+    </Grid>
     <Background/>
     </>
 );

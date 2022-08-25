@@ -86,8 +86,9 @@ const Table = () : ReactElement => {
   const [email, setEmail] = useState("");
   const [direction, setDirection] = useState(true);
   const [sort, setSort] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate(); 
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [message, setMessage] = useState("");
+  const nav = useNavigate();
 
 
   //after the initial render with our empty states, we fetch our users list from the backend
@@ -95,10 +96,19 @@ const Table = () : ReactElement => {
   //we need this to make sure, if we delete a user to refresh our state and fetch a new user list
   useEffect(() => {
     fetch("/users"+window.location.search)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 401) {
+        nav("/login", {replace: true})
+      }
+      return res
+    })
+    .then((nav) => nav.json())
     .then((json) => setData(json.users))
     .finally(() => setLoading(false))
-  }, [loading])
+    .catch(error => {
+      console.log(error);
+    });
+  }, [nav, loading])
 
   //edit Handler calls our backend with edited data
   //our db updates the user with given uuid
@@ -150,7 +160,12 @@ const Table = () : ReactElement => {
     });
 
     fetch(request).then(res => {
+        setMessage(res.statusText)
+        if(!res.ok){
+          throw new Error(message);
+        }
         if (res.status === 200) {
+            nav("/user/"+uuid, {replace: true})
             return res.json()
         }
     }).catch(error => {
@@ -169,7 +184,7 @@ const Table = () : ReactElement => {
   //redirect to users page with given uuid
   const handleRedirect = (uuid: string) =>{ 
     let path = "/user/"+uuid; 
-    navigate(path);
+    nav(path);
   }
 
   return (
@@ -231,7 +246,9 @@ const Table = () : ReactElement => {
           );
         })}
         </StyledContent>
-        <StyledFooter/>
+        <StyledFooter>
+          {message}
+        </StyledFooter>
       </StyledTable>
   );
 }

@@ -10,9 +10,9 @@ interface GridProps {
 const StyledGrid = styled.div<{dimension : string, layout : string}>`
     display:grid;
     grid-gap: 1rem;
+    height: 100vh;
     grid-template-columns: ${(props) => props.layout};
     grid-template-areas: ${(props) => props.dimension};
-    align-content:center;
     align-items:start;
     background: transparent;
 `;
@@ -31,6 +31,7 @@ const StyledGridElement = styled.div<{position : string}>`
     grid-area: ${(props) => props.position};
     grid-row-start: auto;
     grid-row-end: auto;
+    height: 100%; 
 `;
 
 

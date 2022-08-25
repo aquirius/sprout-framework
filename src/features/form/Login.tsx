@@ -2,6 +2,8 @@ import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bcrypt from 'bcryptjs';
+import { useForm } from 'react-hook-form';
+
 
 const StyledLoginForm = styled.div`
   max-width: 500px;
@@ -45,6 +47,7 @@ const Login = () : ReactElement => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(0);
   const nav = useNavigate();
+
   var cookie: string;
   var recipes: string[];
   var sessionIDRecipe: string | undefined;
@@ -52,6 +55,7 @@ const Login = () : ReactElement => {
   var sessionID: string;
   var cookieUUID: string;
 
+  const {register, handleSubmit, formState: {errors}} = useForm();
 
   cookie = document.cookie
   recipes = cookie.split('; ')
@@ -73,7 +77,7 @@ const Login = () : ReactElement => {
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = () => {
     const request = new Request("/login", {
       method: "post",
       body: JSON.stringify({
@@ -86,7 +90,6 @@ const Login = () : ReactElement => {
           "Method": "login"
       }
     });
-    event.preventDefault();
 
     fetch(request)
     .then(res => {
@@ -100,7 +103,6 @@ const Login = () : ReactElement => {
     .then(x => x.json())
     .then(res => {
         nav("/user/"+res.uuid, {replace: true})
-
     }).catch(error => {
         console.log(error);
     });
@@ -112,11 +114,13 @@ const Login = () : ReactElement => {
         <StyledLoginFormHeader>
           <h2>Login</h2>
         </StyledLoginFormHeader>
-        <StyledLoginFormContent onSubmit={handleSubmit}>
+        <StyledLoginFormContent onSubmit={handleSubmit(onSubmit)}>
           <StyledLoginFormLabel>Display Name</StyledLoginFormLabel>
-          <StyledLoginFormInput type={"text"} required onChange={(e) => setDisplayName(e.target.value)}/>
+          <StyledLoginFormInput {...register("displayName", {required : true})} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>
+          {errors.displayName && <p>Display name is required.</p>}
           <StyledLoginFormLabel>Password</StyledLoginFormLabel>
-          <StyledLoginFormInput type={"password"} required onChange={(e) => setPassword(e.target.value)}/>
+          <StyledLoginFormInput  {...register("password", {required : true})} type={"password"} onChange={(e) => setPassword(e.target.value)}/>
+          {errors.password && <p>Password is required.</p>}
           <StyledLoginFormSubmit type={"submit"}>submit</StyledLoginFormSubmit>
         </StyledLoginFormContent>
         {message}
