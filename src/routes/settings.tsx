@@ -5,11 +5,12 @@ import { Background } from '../components/Background';
 import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
 import { User } from '../components/User';
+import { Settings } from '../features/form/Settings';
 
-interface UserPageProps {
+interface UserSettingsProps {
 }
-//Register page does import our form component and is bound to our react routing system
-const UserPage = ({}) : ReactElement => {
+//Settings page does import our form component and is bound to our react routing system
+const UserSettingsPage = ({}) : ReactElement => {
     const { uuid } = useParams();
     return (
     <>
@@ -18,7 +19,7 @@ const UserPage = ({}) : ReactElement => {
             <Navbar uuid={uuid}/>
         </GridElement>
         <GridElement position='b'>
-            <User uuid={uuid}/>
+            <Settings uuid={uuid}/>
         </GridElement>
     </Grid>
     <Background/>
@@ -27,4 +28,4 @@ const UserPage = ({}) : ReactElement => {
 }
 
   
-export { UserPage }
+export { UserSettingsPage }

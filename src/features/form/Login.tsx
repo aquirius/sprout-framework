@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import bcrypt from 'bcryptjs';
 import { useForm } from 'react-hook-form';
+import { Snack } from '../../components/Snack';
 
 
 const StyledLoginForm = styled.div`
@@ -123,7 +123,7 @@ const Login = () : ReactElement => {
           {errors.password && <p>Password is required.</p>}
           <StyledLoginFormSubmit type={"submit"}>submit</StyledLoginFormSubmit>
         </StyledLoginFormContent>
-        {message}
+        {message && <Snack danger message={message}/>}
       </StyledLoginForm>
     </>
   );

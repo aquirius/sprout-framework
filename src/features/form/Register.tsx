@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Snack } from '../../components/Snack';
 
 const StyledRegisterForm = styled.div`
   max-width: 500px;
@@ -135,10 +136,9 @@ const Register = () : ReactElement => {
 
           <StyledRegisterFormSubmit type={"submit"}>submit</StyledRegisterFormSubmit>
         </StyledRegisterFormContent>
-        {message}
+        {message && <Snack danger message={message}/> }  
       </StyledRegisterForm>
     </>
   );
 }
-
 export { Register }

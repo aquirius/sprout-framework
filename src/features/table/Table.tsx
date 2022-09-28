@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Snack } from '../../components/Snack';
 import { Button } from '../button/Button';
 
 const StyledTable = styled.div`
@@ -247,7 +248,7 @@ const Table = () : ReactElement => {
         })}
         </StyledContent>
         <StyledFooter>
-          {message}
+        {message && <Snack danger message={message}/>}
         </StyledFooter>
       </StyledTable>
   );

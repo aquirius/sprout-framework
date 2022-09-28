@@ -9,9 +9,10 @@ import { UsersPage } from './routes/users';
 import { RegisterPage } from './routes/register';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser } from '@fortawesome/free-solid-svg-icons'
+import { UserSettingsPage } from './routes/settings';
 //add fontawesome icons on top level for button component
-library.add(faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft)
+library.add(faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser)
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -24,8 +25,9 @@ root.render(
     <Route path='/register' element={<RegisterPage/>}></Route>
     <Route path='/login' element={<LoginPage/>}></Route>
     <Route path="/user/:uuid" element={<UserPage/>}></Route>
+    <Route path="/user/:uuid/settings" element={<UserSettingsPage/>}></Route>
+
     <Route path='/users' element={<UsersPage/>}></Route>
   </Routes>
   </BrowserRouter>
 );
-
