@@ -11,6 +11,7 @@ import { RegisterPage } from './routes/register';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser } from '@fortawesome/free-solid-svg-icons'
 import { UserSettingsPage } from './routes/settings';
+import { LandingPage } from './routes/landing';
 //add fontawesome icons on top level for button component
 library.add(faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser)
 
@@ -21,7 +22,7 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
   <Routes>
-    <Route path='/' element={<App/>}></Route>
+    <Route path='/' element={<LandingPage/>}></Route>
     <Route path='/register' element={<RegisterPage/>}></Route>
     <Route path='/login' element={<LoginPage/>}></Route>
     <Route path="/user/:uuid" element={<UserPage/>}></Route>

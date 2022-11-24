@@ -64,11 +64,11 @@ const Login = () : ReactElement => {
   uuidRecipe = recipes.find(row => row.startsWith('uuid='))
   
   useEffect(()=>{
-    if (typeof sessionIDRecipe !== 'undefined'){
+    if (sessionIDRecipe !== undefined){
       sessionID = sessionIDRecipe.split('=')[1];
     }
   
-    if (typeof uuidRecipe !== 'undefined'){
+    if (uuidRecipe !== undefined){
       cookieUUID = uuidRecipe.split('=')[1];
       nav("/user/"+cookieUUID, {replace: true})
     }

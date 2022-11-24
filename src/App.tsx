@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Link to={"/"}/>
         <Link to={"/users"}/>
         <Link to={"/register"}/>
         <Link to={"/user/:uuid"}/>
