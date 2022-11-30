@@ -1,25 +1,33 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { Grid, GridElement } from '../../components/Grid';
+import { Button } from '../button/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledLanding = styled.div`
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 80vh;
     justify-content: center;
     align-self: center;
 `;
 
 const StyledLandingButtonFront = styled.div<{x: string; y:string; z:string}>`
-    width: 100px;
-    height: 100px;
+    width: 50vw;
+    height: 30vh;
     transform-style: preserve-3d;
-    background: transparent;
     border: solid 1px black;
     transition: all 0.3s ease;
     transform: rotateY(${props => props.x}deg) rotateX(${props => props.y}deg);
-    box-shadow: 5rem 5rem 4rem white;
+    box-shadow: 0 5rem 9rem grey;
+
+    background-image: url('me.jpeg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
 `;
 
@@ -29,10 +37,16 @@ const StyledLandingCell = styled.div<{x: number; y:number;}>`
     z-index: 2;
 `;
 const StyledLandingGrid = styled.div`
-    height: 100vh;
+    height: 80vh;
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 `;
+
+const StyledLandingProfileImage = styled.div`
+    background-image: url('me.jpeg');
+    height: 100%;
+`;
+
 
 const Landing = () : ReactElement => {
   //initialize with empty states
@@ -56,17 +70,13 @@ const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
 }
 
 return (
-    <>
+    <> 
         <StyledLandingGrid>
-            {cells && cells.map((cell, id) => {
-                return (cell)
-            })}
+                {cells && cells.map((cell, id) => {
+                    return (cell)
+                })}
         </StyledLandingGrid>
         <StyledLanding>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
             <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
         </StyledLanding>
     </>

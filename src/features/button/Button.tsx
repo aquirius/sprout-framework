@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 const StyledButton = styled.button`
@@ -13,6 +13,7 @@ const StyledButton = styled.button`
 interface ButtonProps {
   size? : SizeProp
   icon?: IconProp
+  children?: ReactElement
   onClick?: () => void
 }
 

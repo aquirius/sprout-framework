@@ -67,7 +67,7 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
           </GridElement>
           <GridElement row='' position="a">
             <StyledActionIcons expand={expand}>
-              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={"gear"}></FontAwesomeIcon>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={"cog"}></FontAwesomeIcon>
               <StyledActionIconLabel expand={expand}>settings</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>

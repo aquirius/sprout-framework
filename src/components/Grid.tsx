@@ -11,7 +11,7 @@ interface GridProps {
 const StyledGrid = styled.div<{dimension : string, layout : string, rows?: string}>`
     display:grid;
     grid-gap: 1rem;
-    height: 100vh;
+    height: 100%;
     grid-template-columns: ${(props) => props.layout};
     grid-template-areas: ${(props) => props.dimension};
     ${(props) => props.rows ? "grid-template-rows:"+props.rows : ""};
@@ -34,10 +34,10 @@ const StyledGridElement = styled.div<{position : string, align?: string, row?: s
     grid-row-start: auto;
     grid-row-end: auto;
     align-self: ${(props) => props.align ? props.align : "start"};
+    justify-self: ${(props) => props.align ? props.align : "start"};
     ${(props) => props.row ? "grid-row:"+props.row  : ""};
     height: 100%; 
     float:left;
-
 `;
 
 
@@ -48,9 +48,9 @@ interface GridElementProps {
     row?: string;
 }
 
-const GridElement = ({position,children } : GridElementProps) : ReactElement => {
+const GridElement = ({position,children, align } : GridElementProps) : ReactElement => {
     return (
-        <StyledGridElement position={position}>{children}</StyledGridElement>
+        <StyledGridElement align={align} position={position}>{children}</StyledGridElement>
     );
 }
 

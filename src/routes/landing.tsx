@@ -1,7 +1,12 @@
 import React, { ReactElement} from 'react';
 import styled from 'styled-components';
 import { Background } from '../components/Background';
+import { Grid, GridElement } from '../components/Grid';
+import { Navbar } from '../components/Navigation';
 import { Landing } from '../features/landing/Landing';
+import { LandingLinks } from '../features/landing/Links';
+import { Projects } from '../features/landing/Projects';
+import { Skills } from '../features/landing/Skills';
 
 const StyledLandingPage = styled.div`
 `;
@@ -14,8 +19,11 @@ interface LandingPageProps {
 const LandingPage = ({} : LandingPageProps) : ReactElement => {
 return (
     <>
-    <Landing/>
-    <Background expand/>
+        <Landing/>
+        <LandingLinks/>
+        <Skills/>
+        <Projects/>
+
     </>
 );
 }
