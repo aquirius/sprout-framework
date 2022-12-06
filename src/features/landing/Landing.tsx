@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { Grid, GridElement } from '../../components/Grid';
 import { Button } from '../button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Card } from '../../components/Card';
 
 const StyledLanding = styled.div`
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    display: flex;
-    width: 100vw;
-    height: 80vh;
-    justify-content: center;
-    align-self: center;
+    top:0;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
 `;
 
 const StyledLandingButtonFront = styled.div<{x: string; y:string; z:string}>`
-    width: 50vw;
-    height: 30vh;
+    width: 100%;
+    height: 80%;
     transform-style: preserve-3d;
     border: solid 1px black;
     transition: all 0.3s ease;
@@ -37,14 +37,17 @@ const StyledLandingCell = styled.div<{x: number; y:number;}>`
     z-index: 2;
 `;
 const StyledLandingGrid = styled.div`
-    height: 80vh;
+    height: 100vh;
+    width: 100vw;
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 `;
 
-const StyledLandingProfileImage = styled.div`
-    background-image: url('me.jpeg');
-    height: 100%;
+const StyledLandingButtonText = styled.div`
+    padding: 3rem;
+    font-size: 3.5rem;
+    color: white;
+    transform: translateZ(50px);
 `;
 
 
@@ -77,7 +80,11 @@ return (
                 })}
         </StyledLandingGrid>
         <StyledLanding>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}></StyledLandingButtonFront>
+            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}>
+                <StyledLandingButtonText>adsf</StyledLandingButtonText>
+                <StyledLandingButtonText>sdfsdfdsf</StyledLandingButtonText>
+
+            </StyledLandingButtonFront>
         </StyledLanding>
     </>
   );

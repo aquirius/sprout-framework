@@ -45,10 +45,12 @@ const StyledCardBack = styled.div<{expand? : boolean}>`
 
 interface CardProps {
     uuid?: string;
+    childFront: ReactElement
+    childBack: ReactElement
 }
 
 //User page does import our table component and is bound to our react routing system
-const Card = ({ uuid}:CardProps) : ReactElement => {
+const Card = ({ uuid, childFront, childBack }:CardProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
@@ -67,19 +69,10 @@ return (
     <StyledCard>
         <StyledCardContainer expand={expand} onClick={() => setExpand(!expand)}>
             <StyledCardFront>
-                testestest
+                {childFront}
             </StyledCardFront>
             <StyledCardBack>
-                <h2>{data ? uuid : "404"}</h2>
-                {data && Object.keys(data).map((key, index) => {
-                return (
-                <div key={index}>
-                    <h4>
-                    {key}: {data[key]}
-                    </h4>
-                </div>
-                );
-            })}
+                {childBack}
             </StyledCardBack>
         </StyledCardContainer>
     </StyledCard>

@@ -15,7 +15,8 @@ const StyledGrid = styled.div<{dimension : string, layout : string, rows?: strin
     grid-template-columns: ${(props) => props.layout};
     grid-template-areas: ${(props) => props.dimension};
     ${(props) => props.rows ? "grid-template-rows:"+props.rows : ""};
-    align-items:start;
+    align-items:center;
+    justify-content: center;
     background: transparent;
 `;
 

@@ -35,31 +35,31 @@ const User = ({uuid} : ButtonProps) : ReactElement => {
       <GridElement position='a'>
         <Flexbox direction='row' wrap='wrap'>
           <FlexboxElement align='flex-start' order={0} grow={0}>
-            <Card uuid={uuid}/>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}/>
           </FlexboxElement>
             <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card uuid={uuid}></Card>
+              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
           <FlexboxElement align='flex-end' order={2} grow={0}>
-            <Card uuid={uuid}></Card>
+            <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
         </Flexbox>
       </GridElement>
