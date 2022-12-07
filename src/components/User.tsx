@@ -33,7 +33,7 @@ const User = ({uuid} : ButtonProps) : ReactElement => {
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
-        <Flexbox direction='row' wrap='wrap'>
+        <Flexbox align='center' direction='row' wrap='wrap'>
           <FlexboxElement align='flex-start' order={0} grow={0}>
               <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}/>
           </FlexboxElement>

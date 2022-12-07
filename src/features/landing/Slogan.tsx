@@ -15,7 +15,7 @@ const StyledSlogan = styled.div<{rotate: string; positionY: string}>`
 `;
 
 const StyledSloganCore = styled.span`
-    font-size: 2rem;
+    font-size: 4rem;
     mix-blend-mode:difference;
     transform: translateZ(100px);
 `;

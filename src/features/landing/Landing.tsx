@@ -1,29 +1,27 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Grid, GridElement } from '../../components/Grid';
-import { Button } from '../button/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Card } from '../../components/Card';
 
 const StyledLanding = styled.div`
     position: absolute;
     top:0;
-    margin-left: auto; 
+    left:0;
+    right:0;
+    bottom:0;
+    margin-left: auto;
     margin-right: auto;
-    width: 100%;
-    height: 100%;
+    text-align: center;
 `;
 
 const StyledLandingButtonFront = styled.div<{x: string; y:string; z:string}>`
     width: 100%;
-    height: 80%;
+    height: 100%;
     transform-style: preserve-3d;
     border: solid 1px black;
     transition: all 0.3s ease;
     transform: rotateY(${props => props.x}deg) rotateX(${props => props.y}deg);
     box-shadow: 0 5rem 9rem grey;
 
-    background-image: url('me.jpeg');
+    background-image: url('me2.png');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -45,8 +43,9 @@ const StyledLandingGrid = styled.div`
 
 const StyledLandingButtonText = styled.div`
     padding: 3rem;
-    font-size: 3.5rem;
+    font-size: 5rem;
     color: white;
+    width: fit-content;
     transform: translateZ(50px);
 `;
 
@@ -59,7 +58,7 @@ const cells = []
 
 for(var y=1;y<=10;y++){
     for(var x=1;x<=10; x++){
-        cells.push(<StyledLandingCell onMouseOver={(e) => handleMouseMove(e)} x={x} y={y}/>)
+        cells.push(<StyledLandingCell key={x+"_"+y} onMouseOver={(e) => handleMouseMove(e)} x={x} y={y}/>)
     }
 }
 
@@ -81,9 +80,9 @@ return (
         </StyledLandingGrid>
         <StyledLanding>
             <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}>
-                <StyledLandingButtonText>adsf</StyledLandingButtonText>
-                <StyledLandingButtonText>sdfsdfdsf</StyledLandingButtonText>
-
+                <StyledLandingButtonText>imagine.</StyledLandingButtonText>
+                <StyledLandingButtonText>build.</StyledLandingButtonText>
+                <StyledLandingButtonText>optimize.</StyledLandingButtonText>
             </StyledLandingButtonFront>
         </StyledLanding>
     </>

@@ -4,13 +4,15 @@ import styled from 'styled-components';
 interface FlexboxProps {
     direction: string;
     wrap: string;
+    align: string;
     children: ReactNode;
 }
 
-const StyledFlexbox = styled.div<{direction : string, wrap : string}>`
+const StyledFlexbox = styled.div<{direction : string, wrap : string, align : string}>`
     display:flex;
     flex-direction: ${(props) => props.direction};
     flex-wrap: ${(props) => props.wrap};
+    justify-content: ${(props) => props.align};
 `;
 
 
@@ -30,8 +32,8 @@ const StyledFlexboxItem = styled.div<{order : number, grow : number, align : str
 
 `;
 
-const Flexbox = ({direction, wrap, children } : FlexboxProps) : ReactElement => {
-    return (<StyledFlexbox direction={direction} wrap={wrap}>{children}</StyledFlexbox>)
+const Flexbox = ({align, direction, wrap, children } : FlexboxProps) : ReactElement => {
+    return (<StyledFlexbox align={align} direction={direction} wrap={wrap}>{children}</StyledFlexbox>)
 }
 
 const FlexboxElement = ({order, grow, align, children } : FlexboxElementProps) : ReactElement => {
