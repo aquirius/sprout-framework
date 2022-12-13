@@ -58,7 +58,6 @@ const Register = () : ReactElement => {
   const request = new Request("/register", {
     method: "post",
     body: JSON.stringify({
-      uuid: uuid,
       display_name: displayName,
       first_name: firstName,
       last_name: lastName,
@@ -103,9 +102,6 @@ const Register = () : ReactElement => {
           <h2>Register</h2>
         </StyledRegisterFormHeader>
         <StyledRegisterFormContent onSubmit={handleSubmit(onSubmit)}>
-          <StyledRegisterFormLabel>UUID</StyledRegisterFormLabel>
-          <StyledRegisterFormInput {...register("uuid", {required: true, maxLength: 5, minLength: 5})} title='5 digit number user id' type={"text"} onChange={(e) => setUUID(e.target.value)}/>
-          {errors.uuid && <p>uuid is required.</p>}
 
           <StyledRegisterFormLabel>Display Name</StyledRegisterFormLabel>
           <StyledRegisterFormInput {...register("displayName", {required: true})} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>

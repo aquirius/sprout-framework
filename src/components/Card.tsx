@@ -56,12 +56,12 @@ const Card = ({ uuid, childFront, childBack }:CardProps) : ReactElement => {
     const [expand, setExpand] = useState(false)
 
 
-  useEffect(() => {
-    fetch("/user/"+uuid)
-    .then((res) => res.json())
-    .then((json) => setData(json.user))
-    .finally(() => setLoading(false))
-  }, [uuid, loading])
+//   useEffect(() => {
+//     fetch("/user/"+uuid)
+//     .then((res) => res.json())
+//     .then((json) => setData(json.user))
+//     .finally(() => setLoading(false))
+//   }, [uuid, loading])
 
 return (
     <>

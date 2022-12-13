@@ -15,6 +15,7 @@ import { faInstagram, faGithub, faGolang, faReact, faNodeJs } from "@fortawesome
 import { UserSettingsPage } from './routes/settings';
 import { LandingPage } from './routes/landing';
 import { ImpressumPage } from './routes/impressum';
+import { PlantsPage } from './routes/plants';
 
 library.add(
   faCheckSquare as IconDefinition,
@@ -27,7 +28,6 @@ library.add(
   faAngleLeft as IconDefinition,
   faGear as IconDefinition,
   faUser as IconDefinition,
-  faCog as IconDefinition,
 
   faGolang as IconDefinition,
   faInstagram as IconDefinition,
@@ -48,7 +48,9 @@ root.render(
     <Route path='/impressum' element={<ImpressumPage/>}></Route>
     <Route path='/login' element={<LoginPage/>}></Route>
     <Route path="/user/:uuid" element={<UserPage/>}></Route>
+    <Route path="/user/:uuid/greenhouse" element={<PlantsPage/>}></Route>
     <Route path="/user/:uuid/settings" element={<UserSettingsPage/>}></Route>
+
     <Route path='/users' element={<UsersPage/>}></Route>
   </Routes>
   </BrowserRouter>

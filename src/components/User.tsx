@@ -8,12 +8,12 @@ import { Snack } from './Snack';
 const StyledUser = styled.div`
 `;
 
-interface ButtonProps {
+interface UserProps {
   uuid?: string
 }
 
 //Button component draws us an html button with icon and size of the icon
-const User = ({uuid} : ButtonProps) : ReactElement => {
+const User = ({uuid} : UserProps) : ReactElement => {
 
   const [data, setData] = useState()
   const [loading, setLoading] = useState(false)
