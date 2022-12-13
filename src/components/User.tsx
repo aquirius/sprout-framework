@@ -34,33 +34,6 @@ const User = ({uuid} : UserProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-          <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}/>
-          </FlexboxElement>
-            <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
-          <FlexboxElement align='flex-end' order={2} grow={0}>
-            <Card childFront={<>asdfsadf</>} childBack={<>asfdsa</>}></Card>
-          </FlexboxElement>
         </Flexbox>
       </GridElement>
       <GridElement position='b'>

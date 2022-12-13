@@ -4,13 +4,23 @@ import { useParams } from 'react-router-dom';
 import { Background } from '../components/Background';
 import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
-import { Plants } from '../components/Plants';
+import { Greenhouses } from '../components/Greenhouses';
 
-interface PlantsPageProps {
+interface GreenhousePageProps {
 }
 //Register page does import our form component and is bound to our react routing system
-const PlantsPage = ({}) : ReactElement => {
+const GreenhousesPage = ({}) : ReactElement => {
     const { uuid } = useParams();
+    const { guid } = useParams();
+    
+    let userID : number = 0
+    let greenhouseID : number = 0
+    if (uuid != null){
+        userID = parseInt(uuid)
+    }
+    if (guid != null){
+        greenhouseID = parseInt(guid)
+    }
     return (
     <>
     <Grid layout={'10vw 80vw'} dimension={"'a b'"}>
@@ -18,7 +28,7 @@ const PlantsPage = ({}) : ReactElement => {
             <Navbar uuid={uuid}/>
         </GridElement>
         <GridElement position='b'>
-            <Plants uuid={uuid}/>
+            <Greenhouses uuid={userID}/>
         </GridElement>
     </Grid>
     <Background/>
@@ -27,4 +37,4 @@ const PlantsPage = ({}) : ReactElement => {
 }
 
   
-export { PlantsPage }
+export { GreenhousesPage }
