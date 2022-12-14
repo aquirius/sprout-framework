@@ -45,6 +45,34 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
     }
   });
 
+  const onAddPot = () => {
+    const addPot = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-pot", {
+      method: "post",
+      body: JSON.stringify({
+        suid: suid,
+      }),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          "Method": "add"
+      }
+    });
+    fetch(addPot).then(res => {
+      console.log(res)
+        setMessage(res.statusText)
+        if(!res.ok){
+          throw new Error(message);
+        }
+        if (res.status === 200) {
+            return res.json()
+        }
+    }).then((json) => {
+      console.log(json)
+    }).catch(error => {
+        console.log(error);
+    });
+  }
+
   useEffect(()=> {
     fetch(getPots).then(res => {
       console.log(res)
@@ -63,7 +91,7 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
     }).catch(error => {
         console.log(error);
     });
-  }, [suid])
+  }, [suid, uuid, guid])
 
   return (
     <>
@@ -75,7 +103,7 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
+              <Card height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
           </FlexboxElement>
           </div>
         );
@@ -83,7 +111,7 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
         </Flexbox>
       </GridElement>
       <GridElement position='b'>
-        <Snack danger message={message}></Snack>
+        <Button icon={faPlus as IconProp} onClick={onAddPot}></Button>
       </GridElement>
     </Grid>
         

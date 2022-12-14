@@ -38,87 +38,58 @@ const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
   const [pots, setPots] = useState<GetPots>()
 
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState("")
   const [stackUUID, setStackUUID] = useState();
 
   const nav = useNavigate();
 
-console.log("here")
   useEffect(() => {
-    fetch("/user/"+uuid+"/greenhouse/"+guid+"/get-stacks")
-    .then((res) => {
-      setMessage(res.statusText)
-      return res.json()})
-    .then((json) => {
-      setStacks(json.stacks)
-    })
-    .finally(() => setLoading(false))
-  }, [uuid, loading])
+    if (loading){
+      fetch("/user/"+uuid+"/greenhouse/"+guid+"/get-stacks")
+      .then((res) => {
+        setMessage(res.statusText)
+        return res.json()})
+      .then((json) => {
+        setStacks(json.stacks)
+      })
+      .finally(() => setLoading(false))
+    }
+  }, [uuid,guid,loading])
 
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
-  const onLoadPots = (suid:number) => {
-    const getPots = new Request("/user/"+uuid+"/greenhouse/"+guid+"/get-pots", {
-      method: "post",
-      body: JSON.stringify({
-        suid: suid,
-      }),
-      headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-          "Method": "add"
-      }
+  const onAddStack = () => {
+    //build our request
+    const addStack = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-stack", {
+    method: "post",
+    body: JSON.stringify({
+      UUID: uuid,
+      GUID: guid
+    }),
+    headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Method": "add"
+    }
     });
 
-    fetch(getPots).then(res => {
-      console.log(res)
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-    }).then((json) => {
-      console.log(json)
-      console.log(suid)
-
-      setPots(json.pots)
-    }).catch(error => {
-        console.log(error);
-    });
-  }
-
-  const onAddPot = (suid : number) => {
-    const addPot = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-pot", {
-      method: "post",
-      body: JSON.stringify({
-        suid: suid,
-      }),
-      headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-          "Method": "add"
-      }
-    });
-    fetch(addPot).then(res => {
-      console.log(res)
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-    }).then((json) => {
-      console.log(json)
-      setPots(json.pots)
-    }).catch(error => {
-        console.log(error);
-    });
-  }
+      fetch(addStack).then(res => {
+        console.log(res)
+          setMessage(res.statusText)
+          if(!res.ok){
+            throw new Error(message);
+          }
+          if (res.status === 200) {
+              return res.json()
+          }
+      }).then((json) => {
+        setStacks(json.stacks)
+      }).catch(error => {
+          console.log(error);
+      });
+    }
 
   return (
     <>
@@ -130,17 +101,16 @@ console.log("here")
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card childFront={<>{value.SUID}<Button icon={faPlus as IconProp} onClick={() => onAddPot(value.SUID)}></Button></>} childBack={<><Button icon={faPlus as IconProp} onClick={() => setStackUUID(value.SUID) }></Button></>}/>
+              <Card height={300} width={900} childFront={<Pots uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
           </FlexboxElement>
           </div>
         );
-      })}
-      {stackUUID && <Pots uuid={uuid} guid={guid} suid={stackUUID}></Pots>} {stackUUID}
-      
+      })}      
       
       </Flexbox>
       </GridElement>
       <GridElement position='b'>
+      <Button icon={faPlus as IconProp} onClick={onAddStack}></Button>
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>

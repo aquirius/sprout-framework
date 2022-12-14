@@ -39,19 +39,6 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
   const [stackUUID, setStackUUID] = useState(0);
 
   const nav = useNavigate();    
- //build our request
- const addStack = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-stack", {
-  method: "post",
-  body: JSON.stringify({
-    UUID: uuid,
-    GUID: guid
-  }),
-  headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-      "Method": "add"
-  }
-});
 
   useEffect(() => {
     fetch("/user/"+uuid+"/greenhouse/"+guid)
@@ -65,27 +52,6 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
     .finally(() => setLoading(false))
   }, [uuid, loading])
 
-  //submit Handler submits our form with filled data
-  //we fill out our user object with our useState hooks
-  //we prevent default rendering, because we want to display a message
-  const onSubmitStack = () => {
-    fetch(addStack).then(res => {
-      console.log(res)
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-    }).then((json) => {
-      setStacks(json.stacks)
-    }).catch(error => {
-        console.log(error);
-    });
-  }
-
-
   return (
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
@@ -97,7 +63,6 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
         </Flexbox>
       </GridElement>
       <GridElement position='b'>
-        <Button size='4x' icon={faPlus as IconProp} onClick={onSubmitStack}></Button>
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>

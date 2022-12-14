@@ -2,11 +2,11 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledCard = styled.div<{expand?: boolean}>`
+const StyledCard = styled.div<{expand?: boolean, height?:number, width?:number}>`
     background-color: transparent;
-    width: 300px;
-    height: 300px;
     perspective: 1000px;
+    ${(props) => !props.height ? "height: 300px" : "height: "+props.height+"px"};
+    ${(props) => !props.width ? "width: 300px" : "width: "+props.width+"px"};
 `;
 
 const StyledCardContainer = styled.div<{expand? : boolean}>`
@@ -44,29 +44,31 @@ const StyledCardBack = styled.div<{expand? : boolean}>`
 
 interface CardProps {
     uuid?: string;
+    height?: number;
+    width?: number;
     childFront: ReactElement
     childBack: ReactElement
 }
 
 //User page does import our table component and is bound to our react routing system
-const Card = ({ uuid, childFront, childBack }:CardProps) : ReactElement => {
+const Card = ({ uuid, height, width, childFront, childBack }:CardProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
     const [expand, setExpand] = useState(false)
 
+    const onCardClick = (event : React.MouseEvent) => {
+        event.preventDefault();
+        console.log(event.currentTarget, event.target)
+        if(event.currentTarget) {
+        }
+        setExpand(!expand)
 
-//   useEffect(() => {
-//     fetch("/user/"+uuid)
-//     .then((res) => res.json())
-//     .then((json) => setData(json.user))
-//     .finally(() => setLoading(false))
-//   }, [uuid, loading])
-
+    }
 return (
     <>
-    <StyledCard>
-        <StyledCardContainer expand={expand} onClick={() => setExpand(!expand)}>
+    <StyledCard height={height} width={width}>
+        <StyledCardContainer expand={expand} onClick={(e) => onCardClick(e)}>
             <StyledCardFront>
                 {childFront}
             </StyledCardFront>
