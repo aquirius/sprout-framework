@@ -31,11 +31,8 @@ const GreenhousePage = ({}) : ReactElement => {
             <Navbar uuid={uuid}/>
         </GridElement>
         <GridElement position='b'>
-            <Greenhouse uuid={userID} guid={greenhouseID}>
-                <Stacks uuid={userID} guid={greenhouseID}>
-                    <Pots/>
-                </Stacks>
-            </Greenhouse>
+            <Greenhouse uuid={userID} guid={greenhouseID}></Greenhouse>
+                <Stacks uuid={userID} guid={greenhouseID}></Stacks>
         </GridElement>
     </Grid>
     <Background/>

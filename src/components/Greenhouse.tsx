@@ -19,13 +19,16 @@ interface GreenhouseProps {
   children?: ReactElement
 }
 
-interface GreenhouseProps {
+interface GetGreenhouseProps {
+  GUID: number;
+  Address: string;
+  Zip: number;
 }
 
 //Button component draws us an html button with icon and size of the icon
 const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
 
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<GetGreenhouseProps>()
   const [stacks, setStacks] = useState<any>()
   const [pots, setPots] = useState<any>()
 
@@ -88,14 +91,13 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        <h1>{data}</h1> 
-          
-          <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<><Button icon={faPlus as IconProp} onClick={onSubmitStack}></Button></>} childBack={<></>}></Card>
-          </FlexboxElement>
+        <h1>{data && data.GUID}</h1>
+        <h1>{data && data.Address}</h1> 
+        <h1>{data && data.Zip}</h1> 
         </Flexbox>
       </GridElement>
       <GridElement position='b'>
+        <Button size='4x' icon={faPlus as IconProp} onClick={onSubmitStack}></Button>
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
