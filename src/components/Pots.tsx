@@ -7,6 +7,7 @@ import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
+import { Popup } from './Popup';
 import { Pot } from './Pot';
 import { Snack } from './Snack';
 
@@ -59,7 +60,6 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
       }
     });
     fetch(addPot).then(res => {
-      console.log(res)
         setMessage(res.statusText)
         if(!res.ok){
           throw new Error(message);
@@ -76,7 +76,6 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
 
   useEffect(()=> {
     fetch(getPots).then(res => {
-      console.log(res)
         setMessage(res.statusText)
         if(!res.ok){
           throw new Error(message);
@@ -85,21 +84,17 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
             return res.json()
         }
     }).then((json) => {
-
-      console.log(json, stackUUID)
       setData(json.pots)
       setLoading(false)
     }).catch(error => {
         console.log(error);
     });
   }, [suid, uuid, guid])
-
   return (
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-          <h1>pots</h1>
         {data && data.map((value : any, index : number) => {
         return (
           <div key={index}>

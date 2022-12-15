@@ -8,27 +8,30 @@ const StyledPopup = styled.div<{expand?: boolean, height?:number, width?:number}
     ${(props) => !props.height ? "height: 300px" : "height: "+props.height+"px"};
     ${(props) => !props.width ? "width: 300px" : "width: "+props.width+"px"};
     ${(props) => props.expand ? "display: none" : "display: block"};
-
+    position: absolute;
 `;
 
-const StyledPopupContainer = styled.div<{expand? : boolean}>`
-    position: relative;
+const StyledPopupContainer = styled.div<{expand? : boolean, top?: number, left?: number}>`
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    ${(props) => props.expand ? "visibility: hidden" : "visibility: visible"};
+    ${(props) => props.expand ? "display: none" : "display: block"};
+
+    ${(props) => props.top ? "top: 5px": "top: "+props.top+"px"};
+    ${(props) => props.left ? "left: -10px": "left: "+props.left+"px"};
 `;
 
-const StyledPopupEdge = styled.div<{expand? : boolean}>`
+const StyledPopupEdge = styled.div<{expand? : boolean, top?: number, left?: number}>`
     position: absolute;
-    top: 5px;
-    left: -10px;
+    ${(props) => props.top ? "top: 5px": "top: "+props.top+"px"};
+    ${(props) => props.left ? "left: -10px": "left: "+props.left+"px"};
+
     width: 20px;
     height: 20px;
     background: #f9f9f9;
-    ${(props) => props.expand ? "visibility: hidden" : "visibility: visible"};
+    ${(props) => props.expand ? "display: none" : "display: block"};
     content: '';
     transform: rotate(45deg);
 `;
@@ -45,35 +48,46 @@ const StyledPopupFront = styled.div<{expand? : boolean}>`
 `;
 
 interface PopupProps {
-    uuid?: string;
+    popup?: boolean;
     height?: number;
     width?: number;
+    rect?: DOMRect;
 }
 
 //User page does import our table component and is bound to our react routing system
-const Popup = ({ uuid, height, width }:PopupProps) : ReactElement => {
+const Popup = ({ rect, popup, height, width }:PopupProps) : ReactElement => {
 
     const [data, setData] = useState()
-    const [loading, setLoading] = useState(false)
+    const [rectTop, setRectTop] = useState(0)
+    const [rectLeft, setRectLeft] = useState(0)
+    const [rectRight, setRectRight] = useState(0)
+    const [rectBottom, setRectBottom] = useState(0)
+    const [rectHeight, setRectHeight] = useState(0)
+
     const [expandPopup, setExpandPopup] = useState(false)
 
-    const onPopupClick = (event : React.MouseEvent) => {
-        event.preventDefault();
-        setExpandPopup(!expandPopup)
+    if (rect != undefined) {
+        setRectTop(rect.top)
+        setRectLeft(rect.left)
+        setRectRight(rect.right)
+        setRectBottom(rect.bottom)
+        setRectHeight(rect.height)
     }
+    
+
+    console.log(rect)
+
 return (
     <>
-    <StyledPopup expand={expandPopup} height={height} width={width}>
-        <StyledPopupContainer expand={expandPopup} onClick={(e) => onPopupClick(e)}>
+    <StyledPopup expand={popup} height={height} width={width}>
+        <StyledPopupContainer top={rectTop} left={rectLeft} expand={popup} onClick={(e) => {}}>
 
             <StyledPopupFront>
 
             {<>asdfasdfdsaf</>}
 
             </StyledPopupFront>
-            <StyledPopupEdge expand={expandPopup}>
-
-</StyledPopupEdge>
+            <StyledPopupEdge top={rectTop} left={rectLeft} expand={popup}></StyledPopupEdge>
 
         </StyledPopupContainer>
     </StyledPopup>

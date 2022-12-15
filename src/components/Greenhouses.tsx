@@ -60,7 +60,6 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
   //we prevent default rendering, because we want to display a message
   const onSubmit = () => {
     fetch(request).then(res => {
-      console.log(res)
         setMessage(res.statusText)
         if(!res.ok){
           throw new Error(message);
@@ -68,7 +67,10 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
         if (res.status === 200) {
             return res.json()
         }
+        console.log(res.json())
+
     }).then((json) => {
+      console.log("json", json)
       setGreenhouseUUID(json.greenhouse.guid)
       nav("/user/"+uuid+"/greenhouse/"+json.greenhouse.guid)
     }).catch(error => {

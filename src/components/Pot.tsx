@@ -1,6 +1,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Popup } from './Popup';
 
 const StyledPot = styled.div<{expand?: boolean, height?:number, width?:number}>`
     background-color: transparent;
@@ -43,7 +44,6 @@ const StyledPotBack = styled.div<{expand? : boolean}>`
 `;
 
 interface PotProps {
-    uuid?: string;
     height?: number;
     width?: number;
     childFront: ReactElement
@@ -51,14 +51,15 @@ interface PotProps {
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({ uuid, height, width, childFront, childBack }:PotProps) : ReactElement => {
+const Pot = ({ height, width, childFront, childBack }:PotProps) : ReactElement => {
 
     const [data, setData] = useState()
-    const [loading, setLoading] = useState(false)
+    const [rect, setRect] = useState<DOMRect>()
     const [expandPot, setExpandPot] = useState(false)
 
+
     const onPotClick = (event : React.MouseEvent) => {
-        event.preventDefault();
+        setRect(event.currentTarget.getBoundingClientRect())
         setExpandPot(!expandPot)
     }
 return (
@@ -73,10 +74,11 @@ return (
             </StyledPotBack>
         </StyledPotContainer>
     </StyledPot>
+    {expandPot && <Popup rect={rect || undefined} popup={expandPot} height={200} width={200}></Popup>}
     </>
 );
 }
   
-  export { Pot }
+export { Pot }
 
   

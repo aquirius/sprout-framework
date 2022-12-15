@@ -8,6 +8,7 @@ import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
+import { Popup } from './Popup';
 import { Snack } from './Snack';
 
 const StyledGreenhouse = styled.div`
@@ -66,7 +67,7 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
-        
+       
 
     </>
   );

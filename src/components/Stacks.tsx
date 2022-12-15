@@ -12,6 +12,7 @@ import { Pots } from './Pots';
 import { Snack } from './Snack';
 
 const StyledStacks = styled.div`
+
 `;
 
 interface StacksProps {
@@ -94,12 +95,10 @@ const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
 
   return (
     <>
+    <StyledStacks>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        <Popup height={200} width={200}></Popup>
-
-          <h1>stacks</h1>
         {stacks && stacks.map((value : any, index : number) => {
         return (
           <div key={index}>
@@ -117,6 +116,7 @@ const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
+    </StyledStacks>
         
 
     </>

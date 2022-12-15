@@ -21,13 +21,14 @@ const StyledCardContainer = styled.div<{expand? : boolean}>`
 `;
 
 
-const StyledCardFront = styled.div<{expand? : boolean}>`
+const StyledCardFront = styled.div<{expand? : boolean, colorFront?: string}>`
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    background-color: #f9f9f9;
+    ${(props) => !props.colorFront ? "background-color: #f9f9f9" : "background-color: "+props.colorFront};
+
     color: black;
 `;
 const StyledCardClick = styled.div<{expand? : boolean}>`
@@ -36,27 +37,27 @@ const StyledCardClick = styled.div<{expand? : boolean}>`
     height: 100%;
 `;
 
-const StyledCardBack = styled.div<{expand? : boolean}>`
+const StyledCardBack = styled.div<{expand? : boolean, colorBack?: string}>`
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    background-color: #182848;
-    color: white;
+    ${(props) => !props.colorBack ? "background-color: #182848" : "background-color: "+props.colorBack};
     transform: rotateY(180deg);
 `;
 
 interface CardProps {
-    uuid?: string;
     height?: number;
     width?: number;
     childFront: ReactElement
     childBack: ReactElement
+    colorFront?: string;
+    colorBack?: string;
 }
 
 //User page does import our table component and is bound to our react routing system
-const Card = ({ uuid, height, width, childFront, childBack }:CardProps) : ReactElement => {
+const Card = ({ height, width, childFront, childBack, colorFront, colorBack }:CardProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
@@ -70,12 +71,13 @@ return (
     <>
     <StyledCard height={height} width={width}>
         <StyledCardContainer expand={expand}>
-            <StyledCardFront>
+            <StyledCardFront colorFront={colorFront}>
                 {childFront}
                 <StyledCardClick onClick={(e) => onCardClick(e)}/>
             </StyledCardFront>
-            <StyledCardBack>
+            <StyledCardBack colorBack={colorBack}>
                 {childBack}
+                <StyledCardClick onClick={(e) => onCardClick(e)}/>
             </StyledCardBack>
         </StyledCardContainer>
     </StyledCard>
