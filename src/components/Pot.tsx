@@ -74,7 +74,7 @@ return (
             </StyledPotBack>
         </StyledPotContainer>
     </StyledPot>
-    {expandPot && <Popup rect={rect || undefined} popup={expandPot} height={200} width={200}></Popup>}
+    {expandPot && <Popup rect={rect} popup={expandPot} height={200} width={200}></Popup>}
     </>
 );
 }
