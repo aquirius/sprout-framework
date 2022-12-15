@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Snack } from '../../components/Snack';
+import { json } from 'stream/consumers';
 
 
 const StyledLoginForm = styled.div`
@@ -100,7 +101,11 @@ const Login = () : ReactElement => {
       setStatus(res.status)
       return res
     })
-    .then(x => x.json())
+    .then(x => {
+      var json = x.json()
+      console.log(json)
+      return json
+    })
     .then(res => {
         nav("/user/"+res.uuid, {replace: true})
     }).catch(error => {

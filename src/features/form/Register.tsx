@@ -82,14 +82,13 @@ const Register = () : ReactElement => {
       return new Error(message)
     }
     fetch(request).then(res => {
-      console.log(res)
-        setMessage(res.statusText)
+      setMessage(res.statusText)
         if(!res.ok){
           throw new Error(message);
         }
-        if (res.status === 200) {
-            nav("/user/"+uuid, {replace: true})
-        }
+        return res.json()
+    }).then(checked => {
+      nav("/user/"+checked.user.UUID)
     }).catch(error => {
         console.log(error);
     });

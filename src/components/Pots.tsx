@@ -7,6 +7,7 @@ import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
+import { Pot } from './Pot';
 import { Snack } from './Snack';
 
 const StyledPots = styled.div`
@@ -103,7 +104,7 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
+              <Pot height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
           </FlexboxElement>
           </div>
         );

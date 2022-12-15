@@ -2,14 +2,14 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledCard = styled.div<{expand?: boolean, height?:number, width?:number}>`
+const StyledPot = styled.div<{expand?: boolean, height?:number, width?:number}>`
     background-color: transparent;
     perspective: 1000px;
     ${(props) => !props.height ? "height: 300px" : "height: "+props.height+"px"};
     ${(props) => !props.width ? "width: 300px" : "width: "+props.width+"px"};
 `;
 
-const StyledCardContainer = styled.div<{expand? : boolean}>`
+const StyledPotContainer = styled.div<{expand? : boolean}>`
     position: relative;
     width: 100%;
     height: 100%;
@@ -21,7 +21,7 @@ const StyledCardContainer = styled.div<{expand? : boolean}>`
 `;
 
 
-const StyledCardFront = styled.div<{expand? : boolean}>`
+const StyledPotFront = styled.div<{expand? : boolean}>`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -30,13 +30,8 @@ const StyledCardFront = styled.div<{expand? : boolean}>`
     background-color: #f9f9f9;
     color: black;
 `;
-const StyledCardClick = styled.div<{expand? : boolean}>`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-`;
 
-const StyledCardBack = styled.div<{expand? : boolean}>`
+const StyledPotBack = styled.div<{expand? : boolean}>`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -47,7 +42,7 @@ const StyledCardBack = styled.div<{expand? : boolean}>`
     transform: rotateY(180deg);
 `;
 
-interface CardProps {
+interface PotProps {
     uuid?: string;
     height?: number;
     width?: number;
@@ -56,33 +51,32 @@ interface CardProps {
 }
 
 //User page does import our table component and is bound to our react routing system
-const Card = ({ uuid, height, width, childFront, childBack }:CardProps) : ReactElement => {
+const Pot = ({ uuid, height, width, childFront, childBack }:PotProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
-    const [expand, setExpand] = useState(false)
+    const [expandPot, setExpandPot] = useState(false)
 
-    const onCardClick = (event : React.MouseEvent) => {
+    const onPotClick = (event : React.MouseEvent) => {
         event.preventDefault();
-        setExpand(!expand)
+        setExpandPot(!expandPot)
     }
 return (
     <>
-    <StyledCard height={height} width={width}>
-        <StyledCardContainer expand={expand}>
-            <StyledCardFront>
+    <StyledPot height={height} width={width}>
+        <StyledPotContainer expand={expandPot} onClick={(e) => onPotClick(e)}>
+            <StyledPotFront>
                 {childFront}
-                <StyledCardClick onClick={(e) => onCardClick(e)}/>
-            </StyledCardFront>
-            <StyledCardBack>
+            </StyledPotFront>
+            <StyledPotBack>
                 {childBack}
-            </StyledCardBack>
-        </StyledCardContainer>
-    </StyledCard>
+            </StyledPotBack>
+        </StyledPotContainer>
+    </StyledPot>
     </>
 );
 }
   
-  export { Card }
+  export { Pot }
 
   

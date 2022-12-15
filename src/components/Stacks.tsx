@@ -7,6 +7,7 @@ import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
+import { Popup } from './Popup';
 import { Pots } from './Pots';
 import { Snack } from './Snack';
 
@@ -96,6 +97,8 @@ const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
+        <Popup height={200} width={200}></Popup>
+
           <h1>stacks</h1>
         {stacks && stacks.map((value : any, index : number) => {
         return (
