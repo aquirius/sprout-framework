@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 
 export interface APIPost {
-	readonly success: boolean;
-	readonly payload?: any;
-	readonly data?: any;
-	readonly busy: boolean;
-  readonly version: number;
+	readonly postSuccess: boolean;
+	readonly postPayload?: any;
+	readonly postData?: any;
+	readonly postBusy: boolean;
+  readonly postVersion: number;
   readonly post: () => void;
 }
 
@@ -14,28 +14,22 @@ export interface APIRequest{
 }
 
 const useAPIPost = (target: string, method: string, request: APIRequest): APIPost => {
-
-  const [payload, setPayload] = useState<any>()
   const [data, setData] = useState<any>()
   const [success, setSuccess] = useState(false)
   const [busy, setBusy] = useState(true)
   const [versionState, setVersion] = useState(0)
 
-
-  const _request = new Request(target, {
-    method: "post",
-    body: request.payload,
-    headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "Method": method
-    }
-  });
-
-  let clone = _request.clone()
-
   var post = useCallback(() => {
-    fetch(clone).then((res) => {
+    const _request = new Request(target, {
+      method: "post",
+      body: request.payload,
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          "Method": method
+      }
+    });  
+    fetch(_request).then((res) => {
       setVersion(versionState+1)
       if(!res.ok){
         setSuccess(false)
@@ -49,7 +43,7 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
       setData(json)
       return;
     }).catch(() => undefined)
-  },[versionState])
+  },[versionState, target, method, request.payload])
 
   console.log({
     success: success,
@@ -61,14 +55,70 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
   })
 
   return {
-    success: success,
-    busy: false,
-    version: versionState,
-    payload: request.payload,
-		data: data,
+    postSuccess: success,
+    postBusy: false,
+    postVersion: versionState,
+    postPayload: request.payload,
+		postData: data,
     post:post,
   }
 }
 
 
-export {useAPIPost}
+
+export interface APIGet {
+	readonly getSuccess: boolean;
+	readonly getData?: any;
+	readonly getBusy: boolean;
+  readonly getVersion: number;
+  readonly get: () => void;
+}
+
+const useAPIGet = (target: string): APIGet => {
+  const [data, setData] = useState<any>()
+  const [success, setSuccess] = useState(false)
+  const [busy, setBusy] = useState(true)
+  const [versionState, setVersion] = useState(0)
+
+  var get = useCallback(() => {
+    const _request = new Request(target, {
+      method: "get",
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+      }
+    });
+    fetch(_request).then((res) => {
+      setVersion(versionState+1)
+      if(!res.ok){
+        setSuccess(false)
+        throw new Error("invalid post");
+      }
+      return res.json()
+    }).then((json)=> {
+      setSuccess(true)
+      setBusy(false)
+      setData(json)
+      return;
+    }).catch(() => undefined)
+  },[versionState, target])
+
+  console.log({
+    getSuccess: success,
+    getBusy: busy,
+    getVersion: versionState,
+		getData: data,
+    get:get,
+  })
+
+  return {
+    getSuccess: success,
+    getBusy: false,
+    getVersion: versionState,
+		getData: data,
+    get:get,
+  }
+}
+
+
+export {useAPIPost, useAPIGet}
