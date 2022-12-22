@@ -73,4 +73,4 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
   );
 }
 
-export { Greenhouse }
+export { Greenhouse}

@@ -48,18 +48,24 @@ interface PotProps {
     width?: number;
     childFront: ReactElement
     childBack: ReactElement
+    onClick: (event : any) => void
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({ height, width, childFront, childBack }:PotProps) : ReactElement => {
+const Pot = ({ height, width, childFront, childBack, onClick }:PotProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [rect, setRect] = useState<DOMRect>()
     const [expandPot, setExpandPot] = useState(false)
 
-
     const onPotClick = (event : React.MouseEvent) => {
+        event.stopPropagation();
+
         setRect(event.currentTarget.getBoundingClientRect())
+        onClick(event)
+
+        console.log("clicked pot", event.currentTarget)
+
         setExpandPot(!expandPot)
     }
 return (
@@ -74,7 +80,6 @@ return (
             </StyledPotBack>
         </StyledPotContainer>
     </StyledPot>
-    {expandPot && <Popup rect={rect} popup={expandPot} height={200} width={200}></Popup>}
     </>
 );
 }

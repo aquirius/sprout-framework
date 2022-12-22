@@ -7,11 +7,11 @@ const StyledPopup = styled.div<{expand?: boolean, height?:number, width?:number,
     position: absolute;
 
     perspective: 1000px;
-    ${(props) => !props.height ? "height: 300px" : "height: "+props.height+"px"};
-    ${(props) => !props.width ? "width: 300px" : "width: "+props.width+"px"};
+    height: 60vh;
+    width: 50vw;
     ${(props) => props.expand ? "display: block" : "display: none"};
 
-    ${(props) => props.top ? "top: "+props.top+"px":"top: 5px"};
+    ${(props) => props.top ? "top: "+props.left+"px" : "top: 5px"};
     ${(props) => props.left ? "left: "+props.left+"px" : "left: -10px"};
 
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -28,13 +28,12 @@ const StyledPopupContainer = styled.div<{expand? : boolean, top?: number, left?:
 
 const StyledPopupEdge = styled.div<{expand? : boolean, top?: number, left?: number}>`
     position: absolute;
-    ${(props) => props.top ? "top: "+props.top+"px" : "top: 5px"};
-    ${(props) => props.left ? "left: "+props.left+"px" : "left: -10px"};
+    left: 0;
+    top: 0;
 
     width: 20px;
     height: 20px;
     background: #f9f9f9;
-    ${(props) => props.expand ? "display: block" : "display: none"};
     content: '';
     transform: rotate(45deg);
 `;
@@ -67,20 +66,36 @@ const Popup = ({ rect, popup, height, width }:PopupProps) : ReactElement => {
     const [expandPopup, setExpandPopup] = useState(false)
     const [rectBottom, setRectBottom] = useState(0)
 
+    var wd = window.innerWidth;
+    var ht = window.innerHeight;
+        
+    var halfWindowWidth = wd / 2
+    var halfWindowHeight = ht / 2
 
+    var leftCenter
+    var topCenter
+
+
+    if (rect !== undefined) {
+        leftCenter = halfWindowWidth - (rect.width / 2)
+        topCenter = halfWindowHeight - (rect.height / 2)
+    }
+
+
+
+    console.log(rect, leftCenter, topCenter)
 return (
     <>
             {rect &&  
-    <StyledPopup top={rect.bottom} left={rect.left} expand={popup} height={height} width={width}>
-        <StyledPopupContainer top={rect.bottom} left={rect.left} expand={popup} onClick={(e) => {}}>
+    <StyledPopup top={topCenter} left={leftCenter} expand={popup} height={height} width={width}>
+        <StyledPopupContainer top={topCenter} left={leftCenter} expand={popup} onClick={(e) => {}}>
 
         <StyledPopupFront>
 
         {<>asdfasdfdsaf</>}
+        <StyledPopupEdge top={topCenter} left={leftCenter} expand={popup}></StyledPopupEdge>
 
         </StyledPopupFront>
-        <StyledPopupEdge top={rect?.top} left={rect?.left} expand={popup}></StyledPopupEdge>
-
         </StyledPopupContainer>
     </StyledPopup>
 }

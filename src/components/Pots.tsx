@@ -18,13 +18,14 @@ interface PotsProps {
   uuid?: number
   guid?: number
   suid?: number
+  onClick: (event : any) => void
 }
 
 interface PotsProps {
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
+const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
 
   const [data, setData] = useState<any>()
 
@@ -73,6 +74,8 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
         console.log(error);
     });
   }
+  console.log("pots : ", onClick)
+
 
   useEffect(()=> {
     fetch(getPots).then(res => {
@@ -99,7 +102,7 @@ const Pots = ({uuid, guid, suid} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
+              <Pot onClick={onClick} height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
           </FlexboxElement>
           </div>
         );

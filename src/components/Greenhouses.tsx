@@ -1,8 +1,9 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faBuilding, faPlus } from '@fortawesome/free-solid-svg-icons';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAPIPost } from '../api/api';
 import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
@@ -13,69 +14,70 @@ const StyledGreenhouse = styled.div`
 `;
 
 interface GreenhousesProps {
-  uuid?: number
+  uuid: number
 }
 
-interface GreenhousesProps {
+//TODO api interfaces in new folder /api for each system
+interface GreenhouseAPI {
+  GUID: number;
+  Address: string;
+  Zip: number;
 }
+
+interface Greenhouses {
+  message: string
+  greenhouses : GreenhouseAPI[]
+  get: () => void
+}
+
+const useGreenhouses = (uuid : number) => {
+    const [greenhouses, setGreenhouses] = useState<Array<GreenhouseAPI>>()
+    const [message, setMessage] = useState("")
+
+    var get = useCallback(() => {
+      fetch("/user/"+uuid+"/greenhouse")
+      .then((res) => {
+        setMessage(res.statusText)
+        return res.json()})
+      .then((json) => {
+        setGreenhouses(json.greenhouses)
+      })
+  }, [])
+
+    return {
+      message,
+      greenhouses,
+      get:get
+    }
+};
 
 //Button component draws us an html button with icon and size of the icon
 const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
 
-  const [data, setData] = useState<any>()
+  const [greenhousesState, setGreenhousesState] = useState<any>()
+  const [messageFetch, setMessage] = useState("")
+
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState("")
-  const [greenhouseUUID, setGreenhouseUUID] = useState(0);
+  const [guid, setGUID] = useState(0)
+
   const nav = useNavigate();
-
-  //build our request
-  const request = new Request("/user/"+uuid+"/greenhouse", {
-    method: "post",
-    body: JSON.stringify({
-      UUID: uuid
-    }),
-    headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "Method": "add"
-    }
-  });
-
+  const {message, greenhouses, get} = useGreenhouses(uuid);
+  const {version, success, busy, data, post} = useAPIPost("/user/"+uuid+"/greenhouse", "add", {"payload" : {"UUID": uuid}});
 
   useEffect(() => {
-    fetch("/user/"+uuid+"/greenhouse")
-    .then((res) => {
-      setMessage(res.statusText)
-      return res.json()})
-    .then((json) => {
-      console.log(json)
-      setData(json.greenhouses)
-    })
-    .finally(() => setLoading(false))
-  }, [uuid, loading])
+    get()
+    if (loading || !success || busy || !data){
+      return
+    }
+    setGreenhousesState(greenhouses)
+    setMessage(message)
+    setLoading(false)
+  }, [version])
 
-
-  //submit Handler submits our form with filled data
-  //we fill out our user object with our useState hooks
-  //we prevent default rendering, because we want to display a message
-  const onSubmit = () => {
-    fetch(request).then(res => {
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-        console.log(res.json())
-
-    }).then((json) => {
-      console.log("json", json)
-      setGreenhouseUUID(json.greenhouse.guid)
-      nav("/user/"+uuid+"/greenhouse/"+json.greenhouse.guid)
-    }).catch(error => {
-        console.log(error);
-    });
+  const onAddGreenhouse = () => {
+    console.log("add")
+    post()
+    setLoading(true)
   }
 
   return (
@@ -83,18 +85,17 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        {data && Object.keys(data).map((key, index) => {
-        return (
-          <div key={index}>
-            <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card childFront={<><Button icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+data[key].GUID)}></Button></>} childBack={<>{data[key].Address} : {data[key].Zip}</>}/>
-          </FlexboxElement>
-          </div>
-        );
-      })}
-          
+        {greenhouses && Object.keys(greenhouses).map((key, index) => {
+          return (
+            <div key={index}>
+              <FlexboxElement align='flex-start' order={0} grow={0}>
+                <Card childFront={<><Button icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+greenhouses[index].GUID)}></Button></>} childBack={<>{greenhouses[index].Address} : {greenhouses[index].Zip}</>}/>
+            </FlexboxElement>
+            </div>
+          );
+        })}
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<><Button icon={faPlus as IconProp} onClick={onSubmit}></Button></>} childBack={<>asfdsa</>}></Card>
+              <Card childFront={<><Button icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></Button></>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
         </Flexbox>
       </GridElement>
@@ -102,8 +103,6 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
-        
-
     </>
   );
 }

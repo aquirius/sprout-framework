@@ -10,6 +10,7 @@ import { Grid, GridElement } from './Grid';
 import { Popup } from './Popup';
 import { Pots } from './Pots';
 import { Snack } from './Snack';
+import { Stack } from './Stack';
 
 const StyledStacks = styled.div`
 
@@ -18,6 +19,7 @@ const StyledStacks = styled.div`
 interface StacksProps {
   uuid?: number
   guid?: number
+  onClick : (event :any) => void
   children?: ReactElement
 }
 
@@ -33,7 +35,7 @@ interface GetPots {
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
+const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
 
   const [data, setData] = useState<any>()
   const [stacks, setStacks] = useState<any>()
@@ -93,26 +95,29 @@ const Stacks = ({uuid, guid} : StacksProps) : ReactElement => {
       });
     }
 
+    console.log("stacks : ", onClick)
+
   return (
     <>
     <StyledStacks>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        {stacks && stacks.map((value : any, index : number) => {
-        return (
-          <div key={index}>
-            <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Card height={300} width={900} childFront={<Pots uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
-          </FlexboxElement>
-          </div>
-        );
-      })}      
-      
+          {stacks && stacks.map((value : any, index : number) => {
+          return (
+            <div key={index}>
+              <FlexboxElement align='flex-start' order={0} grow={0}>
+                <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
+            </FlexboxElement>
+            </div>
+          );
+        })}
+        <FlexboxElement align='flex-start' order={0} grow={0}>
+          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Button icon={faPlus as IconProp} onClick={onAddStack}></Button>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
+        </FlexboxElement>
       </Flexbox>
       </GridElement>
       <GridElement position='b'>
-      <Button icon={faPlus as IconProp} onClick={onAddStack}></Button>
         <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
