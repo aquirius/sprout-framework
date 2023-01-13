@@ -1,8 +1,9 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMasksTheater, faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAPIGet, useAPIPost } from '../api/api';
 import { Button } from '../features/button/Button';
 import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
@@ -46,56 +47,29 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   const [message, setMessage] = useState("")
   const [stackUUID, setStackUUID] = useState();
 
-  const nav = useNavigate();
+  const {getData, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/get-stacks");
+  const {postVersion, post} = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/add-stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
 
   useEffect(() => {
-    if (loading){
-      fetch("/user/"+uuid+"/greenhouse/"+guid+"/get-stacks")
-      .then((res) => {
-        setMessage(res.statusText)
-        return res.json()})
-      .then((json) => {
-        setStacks(json.stacks)
-      })
-      .finally(() => setLoading(false))
+    get()
+    if (loading || !getData){
+      return
     }
-  }, [uuid,guid,loading])
+    setMessage("200")
+    setLoading(false)
+  }, [postVersion])
+
+  console.log(getData?.stacks.length)
 
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
   const onAddStack = () => {
-    //build our request
-    const addStack = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-stack", {
-    method: "post",
-    body: JSON.stringify({
-      UUID: uuid,
-      GUID: guid
-    }),
-    headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "Method": "add"
-    }
-    });
+    post()
+    setLoading(true)
+  }
 
-      fetch(addStack).then(res => {
-        console.log(res)
-          setMessage(res.statusText)
-          if(!res.ok){
-            throw new Error(message);
-          }
-          if (res.status === 200) {
-              return res.json()
-          }
-      }).then((json) => {
-        setStacks(json.stacks)
-      }).catch(error => {
-          console.log(error);
-      });
-    }
-
-    console.log("stacks : ", onClick)
+  console.log("stacks", getData)
 
   return (
     <>
@@ -103,7 +77,8 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-          {stacks && stacks.map((value : any, index : number) => {
+          {getData && getData.stacks.map((value : any, index : number) => {
+            console.log(value.SUID)
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
@@ -113,7 +88,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
           );
         })}
         <FlexboxElement align='flex-start' order={0} grow={0}>
-          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Button icon={faPlus as IconProp} onClick={onAddStack}></Button>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
+          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Button icon={faPlus as IconProp} onClick={() => onAddStack()}></Button>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
         </FlexboxElement>
       </Flexbox>
       </GridElement>

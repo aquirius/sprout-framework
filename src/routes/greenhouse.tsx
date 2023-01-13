@@ -35,12 +35,6 @@ const GreenhousePage = ({}) : ReactElement => {
         setPopup(true)
         return
     }
-
-    console.log(rect)
-
-    
-
-
     
     return (
     <>

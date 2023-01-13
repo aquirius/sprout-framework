@@ -22,7 +22,7 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
   var post = useCallback(() => {
     const _request = new Request(target, {
       method: "post",
-      body: request.payload,
+      body: JSON.stringify(request.payload),
       headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
@@ -63,8 +63,6 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
     post:post,
   }
 }
-
-
 
 export interface APIGet {
 	readonly getSuccess: boolean;

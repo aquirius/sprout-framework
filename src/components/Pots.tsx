@@ -3,13 +3,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAPIGet, useAPIPost } from '../api/api';
 import { Button } from '../features/button/Button';
-import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
-import { Popup } from './Popup';
 import { Pot } from './Pot';
-import { Snack } from './Snack';
 
 const StyledPots = styled.div`
 `;
@@ -26,79 +24,33 @@ interface PotsProps {
 
 //Button component draws us an html button with icon and size of the icon
 const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
-
-  const [data, setData] = useState<any>()
-
-  const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState("")
-  const [PotsUUID, setPotsUUID] = useState(0);
-  const [stackUUID, setStackUUID] = useState(0);
+  const [loading, setLoading] = useState(false)
   const nav = useNavigate();
 
-  //build our request
-  const getPots = new Request("/user/"+uuid+"/greenhouse/"+guid+"/get-pots", {
-    method: "post",
-    body: JSON.stringify({
-      suid: suid,
-    }),
-    headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "Method": "add"
-    }
-  });
+  const getPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/get-pots", "add", {"payload" : {"suid": suid}});
+  const addPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/add-pot", "add", {"payload" : {"suid": suid}});
 
   const onAddPot = () => {
-    const addPot = new Request("/user/"+uuid+"/greenhouse/"+guid+"/add-pot", {
-      method: "post",
-      body: JSON.stringify({
-        suid: suid,
-      }),
-      headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-          "Method": "add"
-      }
-    });
-    fetch(addPot).then(res => {
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-    }).then((json) => {
-      console.log(json)
-    }).catch(error => {
-        console.log(error);
-    });
+    addPots.post()
+    setLoading(true)
   }
-  console.log("pots : ", onClick)
 
+  console.log(getPots)
 
-  useEffect(()=> {
-    fetch(getPots).then(res => {
-        setMessage(res.statusText)
-        if(!res.ok){
-          throw new Error(message);
-        }
-        if (res.status === 200) {
-            return res.json()
-        }
-    }).then((json) => {
-      setData(json.pots)
-      setLoading(false)
-    }).catch(error => {
-        console.log(error);
-    });
-  }, [suid, uuid, guid])
+  useEffect(() => {
+    getPots.post()
+    if (loading || !getPots.postData){
+      return
+    }
+    setLoading(false)
+  }, [addPots.postVersion, loading])
+
   return (
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        {data && data.map((value : any, index : number) => {
+        {getPots.postData && getPots.postData.pots.map((value : any, index : number) => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
@@ -110,7 +62,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         </Flexbox>
       </GridElement>
       <GridElement position='b'>
-        <Button icon={faPlus as IconProp} onClick={onAddPot}></Button>
+        <Button icon={faPlus as IconProp} onClick={() => onAddPot()}></Button>
       </GridElement>
     </Grid>
         
