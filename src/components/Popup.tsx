@@ -81,9 +81,6 @@ const Popup = ({ rect, popup, height, width }:PopupProps) : ReactElement => {
         topCenter = halfWindowHeight - (rect.height / 2)
     }
 
-
-
-    console.log(rect, leftCenter, topCenter)
 return (
     <>
             {rect &&  

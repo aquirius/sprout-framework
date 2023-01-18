@@ -63,9 +63,6 @@ const Pot = ({ height, width, childFront, childBack, onClick }:PotProps) : React
 
         setRect(event.currentTarget.getBoundingClientRect())
         onClick(event)
-
-        console.log("clicked pot", event.currentTarget)
-
         setExpandPot(!expandPot)
     }
 return (

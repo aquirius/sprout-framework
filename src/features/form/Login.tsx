@@ -103,7 +103,6 @@ const Login = () : ReactElement => {
     })
     .then(x => {
       var json = x.json()
-      console.log(json)
       return json
     })
     .then(res => {

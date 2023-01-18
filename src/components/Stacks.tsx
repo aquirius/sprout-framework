@@ -59,8 +59,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
     setLoading(false)
   }, [postVersion])
 
-  console.log(getData?.stacks.length)
-
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
@@ -69,8 +67,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
     setLoading(true)
   }
 
-  console.log("stacks", getData)
-
   return (
     <>
     <StyledStacks>
@@ -78,7 +74,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
           {getData && getData.stacks.map((value : any, index : number) => {
-            console.log(value.SUID)
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>

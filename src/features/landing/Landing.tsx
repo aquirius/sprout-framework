@@ -44,7 +44,7 @@ const StyledLandingGrid = styled.div`
 const StyledLandingButtonText = styled.div`
     padding: 3rem;
     font-size: 5rem;
-    color: white;
+    color: black;
     width: fit-content;
     transform: translateZ(50px);
 `;
@@ -80,9 +80,9 @@ return (
         </StyledLandingGrid>
         <StyledLanding>
             <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}>
-                <StyledLandingButtonText>imagine.</StyledLandingButtonText>
-                <StyledLandingButtonText>build.</StyledLandingButtonText>
-                <StyledLandingButtonText>optimize.</StyledLandingButtonText>
+                <StyledLandingButtonText>order.</StyledLandingButtonText>
+                <StyledLandingButtonText>plant.</StyledLandingButtonText>
+                <StyledLandingButtonText>harvest.</StyledLandingButtonText>
             </StyledLandingButtonFront>
         </StyledLanding>
     </>

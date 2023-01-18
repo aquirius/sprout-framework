@@ -38,21 +38,21 @@ return (
             </StyledLandingLinks>
         </GridElement>
         <GridElement position='b' align={"center"}>
-            <StyledLandingLinks onClick={() => console.log("clicked")}>
+            <StyledLandingLinks>
                 <StyledLandingLink href='https://xing.com/profile/maximilian_guth3/cv'>
                         <FontAwesomeIcon size='2x' icon={faXing as IconProp}></FontAwesomeIcon>
                 </StyledLandingLink>
             </StyledLandingLinks>
         </GridElement>
         <GridElement position='c' align={"center"}>
-        <StyledLandingLinks onClick={() => console.log("clicked")}>
+        <StyledLandingLinks>
                 <StyledLandingLink href='https://github.com/aquirius'>
                         <FontAwesomeIcon size='2x' icon={faGithub as IconProp}></FontAwesomeIcon>
                 </StyledLandingLink>
             </StyledLandingLinks>
         </GridElement>
         <GridElement position='d' align={"center"}>
-        <StyledLandingLinks onClick={() => console.log("clicked")}>
+        <StyledLandingLinks>
                 <StyledLandingLink href='https://instagram.com/moshinima'>
                         <FontAwesomeIcon size='2x' icon={faInstagram as IconProp}></FontAwesomeIcon>
                 </StyledLandingLink>

@@ -20,7 +20,7 @@ const StyledLandingSection = styled.div`
     position: relative;
     justify-content: center;
     height: 100vh;
-    background:white;
+    background: black;
     overflow: hidden;
     padding-bottom: 3rem;
 `;
@@ -44,24 +44,6 @@ return (
             <Landing/>
         </StyledLandingPageSection>
         </StyledLandingSection>
-        <StyledLandingPageSection>
-            <LandingLinks/>
-        </StyledLandingPageSection>
-        <StyledLandingPageSection>
-            <Slogan angle={45} offset={500} headContentString={"Hi nice to meet you! I am Max !"} bodyContentString={"do you wanna see front ends ?"} footerContentString={""}/>
-        </StyledLandingPageSection>
-        <StyledLandingPageSection>
-            <Skills/>
-        </StyledLandingPageSection>
-        <StyledLandingPageSection>
-            <Slogan angle={95} offset={500} headContentString={"Do you like what you see ?"} bodyContentString={"and wanna work with me ?"} footerContentString={""}/>
-        </StyledLandingPageSection>
-        <StyledLandingPageSection>
-            <Contact/>
-        </StyledLandingPageSection>
-        <StyledLandingPageSection>
-            <Projects/>
-        </StyledLandingPageSection>
         <StyledLandingPageSection>
             <Legal/>
         </StyledLandingPageSection>

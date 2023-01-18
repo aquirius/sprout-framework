@@ -34,9 +34,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
     addPots.post()
     setLoading(true)
   }
-
-  console.log(getPots)
-
+  
   useEffect(() => {
     getPots.post()
     if (loading || !getPots.postData){
