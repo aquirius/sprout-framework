@@ -9,7 +9,7 @@ import { UsersPage } from './routes/users';
 import { RegisterPage } from './routes/register';
 
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee, faPen, faBan, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faGear, faUser, faCog, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faGithub, faGolang, faReact, faNodeJs } from "@fortawesome/free-brands-svg-icons"
 
 import { UserSettingsPage } from './routes/settings';
@@ -29,6 +29,7 @@ library.add(
   faAngleLeft as IconDefinition,
   faGear as IconDefinition,
   faUser as IconDefinition,
+  faSignOut as IconDefinition,
 
   faGolang as IconDefinition,
   faInstagram as IconDefinition,

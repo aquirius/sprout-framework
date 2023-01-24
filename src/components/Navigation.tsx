@@ -1,6 +1,6 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faHouse, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,12 @@ const StyledNavbarContent = styled.div<{expand: boolean}>`
 
 `;
 
+const StyledNavbarFooter = styled.div<{expand: boolean}>`
+  position: absolute;
+  bottom: 0;
+`;
+
+
 const StyledBurgerIcon = styled.div`
   margin: 2rem auto;
   width: 20px;
@@ -33,7 +39,6 @@ const StyledBurgerIcon = styled.div`
 
 const StyledActionIcons = styled.p<{expand: boolean}>`
   padding: 2rem;
-
 `;
 
 const StyledActionIconLabel = styled.span<{expand: boolean}>`
@@ -65,24 +70,30 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
         <Grid rows='80%' layout={"100%"} dimension={"'a'"} >
           <GridElement position='a'>
             <StyledActionIcons expand={expand}>
-              <FontAwesomeIcon onClick={() => nav("/user/"+uuid)} size='2x' icon={"user"}></FontAwesomeIcon>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid)} size='2x' icon={"user"}/>
               <StyledActionIconLabel expand={expand}>profile</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
           <GridElement row='' position="a">
             <StyledActionIcons expand={expand}>
-              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}></FontAwesomeIcon>
-              <StyledActionIconLabel expand={expand}>settings</StyledActionIconLabel>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouse")} size='2x' icon={faHouse as IconProp}/>
+              <StyledActionIconLabel expand={expand}>home</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
           <GridElement row='' position="a">
             <StyledActionIcons expand={expand}>
-              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouse")} size='2x' icon={faHouse as IconProp}></FontAwesomeIcon>
-              <StyledActionIconLabel expand={expand}>home</StyledActionIconLabel>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}/>
+              <StyledActionIconLabel expand={expand}>settings</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
         </Grid>
       </StyledNavbarContent>
+      <StyledNavbarFooter expand={expand}>
+        <StyledActionIcons expand={expand}>
+          <FontAwesomeIcon onClick={() => console.log("logout")} size='2x' icon={faSignOut as IconProp}/>
+          <StyledActionIconLabel expand={expand}>logout</StyledActionIconLabel>
+        </StyledActionIcons>
+      </StyledNavbarFooter>
     </StyledNavbar>
   </>
   );
