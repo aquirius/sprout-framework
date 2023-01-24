@@ -2,7 +2,7 @@
   "name": "sprout-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:3000",
+  "proxy": "http://127.0.0.1:1234",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-common-types": "^6.2.1",
@@ -45,7 +45,7 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mini-css-extract-plugin": "^2.4.5",
     "os-browserify": "^0.3.0",
     "postcss": "^8.4.4",
