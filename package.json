@@ -1,8 +1,8 @@
 {
-  "name": "moshi-frame",
+  "name": "sprout-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:1234",
+  "proxy": "http://127.0.0.1:3000",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-common-types": "^6.2.1",

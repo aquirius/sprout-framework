@@ -51,9 +51,7 @@ root.render(
     <Route path="/user/:uuid" element={<UserPage/>}></Route>
     <Route path="/user/:uuid/greenhouse" element={<GreenhousesPage/>}></Route>
     <Route path="/user/:uuid/greenhouse/:guid" element={<GreenhousePage/>}></Route>
-
     <Route path="/user/:uuid/settings" element={<UserSettingsPage/>}></Route>
-
     <Route path='/users' element={<UsersPage/>}></Route>
   </Routes>
   </BrowserRouter>

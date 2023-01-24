@@ -45,7 +45,7 @@ const StyledCardBack = styled.div<{expand? : boolean, colorBack?: string}>`
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    ${(props) => !props.colorBack ? "background-color: #182848" : "background-color: "+props.colorBack};
+    ${(props) => !props.colorBack ? "background-color: #095a04" : "background-color: "+props.colorBack};
     transform: rotateY(180deg);
 `;
 

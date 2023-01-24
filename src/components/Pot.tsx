@@ -38,7 +38,7 @@ const StyledPotBack = styled.div<{expand? : boolean}>`
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    background-color: #182848;
+    background-color: #095a04;
     color: white;
     transform: rotateY(180deg);
 `;

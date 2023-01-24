@@ -32,7 +32,7 @@ const StyledRegisterFormInput = styled.input`
 `;
 
 const StyledRegisterFormSubmit = styled.button`
-  background: #4b6cb7;
+  background: #63ac20;
   color: white;
   padding: 1rem 2rem;
   font-size: 2rem;

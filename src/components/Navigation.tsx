@@ -8,11 +8,12 @@ import styled from 'styled-components';
 import { Grid, GridElement } from './Grid';
 
 const StyledNavbar = styled.div<{expand: boolean}>`
-  background: ${(props) => props.expand ? "#f9f9f9" : "#182848"};
+  background: ${(props) => props.expand ? "#f9f9f9" : "#095a04"};
   width: ${(props) => props.expand ? "10vw" : "3vw"};
   color: ${(props) => props.expand ? "black" : "white"};
   min-width: 75px;
   position: fixed;
+  left: 0;
   height: 100%;
   transition-property: background, width, color;
   transition-timing-function: ease-in-out;
@@ -65,6 +66,7 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
           <GridElement position='a'>
             <StyledActionIcons expand={expand}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid)} size='2x' icon={"user"}></FontAwesomeIcon>
+              <StyledActionIconLabel expand={expand}>profile</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
           <GridElement row='' position="a">
@@ -76,7 +78,7 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
           <GridElement row='' position="a">
             <StyledActionIcons expand={expand}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouse")} size='2x' icon={faHouse as IconProp}></FontAwesomeIcon>
-              <StyledActionIconLabel expand={expand}>settings</StyledActionIconLabel>
+              <StyledActionIconLabel expand={expand}>home</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
         </Grid>

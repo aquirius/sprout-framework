@@ -92,7 +92,7 @@ const useAPIGet = (target: string): APIGet => {
         throw new Error("invalid post");
       }
       return res.json()
-    }).then((json)=> {
+    }).then((json) => {
       setSuccess(true)
       setBusy(false)
       setData(json)

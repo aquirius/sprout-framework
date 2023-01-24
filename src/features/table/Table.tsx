@@ -62,7 +62,7 @@ const StyledColumnInput = styled.input`
 `;
 
 const StyledFooter = styled.div`
-  background: #182848;
+  background: #095a04;
   border-top: 1px solid lightgrey;
   height: 25px;
   border-radius:0px 0px 20px 20px;

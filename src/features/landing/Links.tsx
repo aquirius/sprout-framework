@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Grid, GridElement } from '../../components/Grid';
 
 const StyledLandingLinks = styled.div`
-    background-color: #182848;
+    background-color: #095a04;
     text-align:center;
     z-index: 2;
     border-radius: 25px;
