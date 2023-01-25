@@ -1,44 +1,53 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { Button } from '../button/Button';
+import { useNavigate } from 'react-router-dom';
+
+const Cloud = ({x, y, opacity} : any) => (
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 320" preserveAspectRatio="none" shapeRendering="auto">
+        <path fill="#63ac20" x={x} y={y} fillOpacity={opacity} d="M 0,320 108.37255,246.7632 C 250.3534,150.81434 289.23223,235.00033 360,261.3 c 97.92805,35.76196 198.57925,56.59361 360,26.7 115.9594,-21.4746 139.49096,-27.7518 234.63877,-50.58882 0,0 142.26773,-44.95844 281.75903,-0.35074 L 1351.8242,281.8501 1440,320 H 1380 1080 720 360 60 Z"></path>
+    </svg>
+)
+
+const StyledMoveForever = keyframes`
+    0% {transform: translate3d(-300px,0,0); opacity: 0;}
+    50%{transform: translate3d(0,0,0); opacity: 1;}
+    100%{transform: translate3d(555px,0,0); opacity: 0;}
+
+`
+
+const StyledCloud = styled(Cloud)`
+    width: 100%;
+    height: 15vh;
+`;
+
+const StyledCloudAnimator = styled.div`
+`;
+
+const StyledCloudWrapper = styled.div`
+    position: absolute;
+    width: 120%;
+    animation: ${StyledMoveForever} 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    &:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+    }
+    &:nth-child(2) {
+        animation-delay: -6s;
+        animation-duration: 10s;
+    }
+    &:nth-child(3) {
+        animation-delay: -12s;
+        animation-duration: 13s;
+    }
+    &:nth-child(4) {
+        animation-delay: -18s;
+        animation-duration: 20s;
+    }
+`;
 
 const StyledLanding = styled.div`
-    position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-`;
-
-const StyledLandingButtonFront = styled.div<{x: string; y:string; z:string}>`
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    border: solid 1px black;
-    transition: all 0.3s ease;
-    transform: rotateY(${props => props.x}deg) rotateX(${props => props.y}deg);
-    box-shadow: 0 5rem 9rem grey;
-
-    background-image: url('me2.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-`;
-
-const StyledLandingCell = styled.div<{x: number; y:number;}>`
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-`;
-const StyledLandingGrid = styled.div`
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    position:relative;
 `;
 
 const StyledLandingButtonText = styled.div`
@@ -46,7 +55,13 @@ const StyledLandingButtonText = styled.div`
     font-size: 5rem;
     color: black;
     width: fit-content;
-    transform: translateZ(50px);
+`;
+
+const StyledButtonFront = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 `;
 
 
@@ -54,36 +69,33 @@ const Landing = () : ReactElement => {
   //initialize with empty states
 const [loading, setLoading] = useState(true)
 const [position, setPosition] = useState({x:"0", y:"0", z: "0"});
-const cells = [] 
-
-for(var y=1;y<=10;y++){
-    for(var x=1;x<=10; x++){
-        cells.push(<StyledLandingCell key={x+"_"+y} onMouseOver={(e) => handleMouseMove(e)} x={x} y={y}/>)
-    }
-}
-
-const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    const x = event.currentTarget.getAttribute("x") || "0"
-    const y = event.currentTarget.getAttribute("y") || "0"
-    const yS = (-((parseInt(y)*100) - (5*100) - (100/2))/10).toString()
-    const zS = (parseInt(y)*36).toString()
-    const xS = (((parseInt(x)*100) - (5*100) - (100/2))/10).toString()
-    setPosition({x:xS , y:yS, z:zS})
-}
+const nav = useNavigate();
 
 return (
     <> 
-        <StyledLandingGrid>
-                {cells && cells.map((cell, id) => {
-                    return (cell)
-                })}
-        </StyledLandingGrid>
         <StyledLanding>
-            <StyledLandingButtonFront x={position.x} y={position.y} z={position.z}>
                 <StyledLandingButtonText>order.</StyledLandingButtonText>
                 <StyledLandingButtonText>plant.</StyledLandingButtonText>
                 <StyledLandingButtonText>harvest.</StyledLandingButtonText>
-            </StyledLandingButtonFront>
+                <StyledButtonFront>
+                    <Button onClick={() => nav("/login")} content={"login"}></Button>
+                    <Button onClick={() => nav("/register")} content={"register"}></Button>
+                </StyledButtonFront>
+                <StyledCloudAnimator>
+                    <StyledCloudWrapper>
+                        <StyledCloud x={48} y={0} opacity={"1"}/>
+                    </StyledCloudWrapper>
+                    <StyledCloudWrapper>
+                        <StyledCloud x={48} y={3} opacity={"1"}/>
+                    </StyledCloudWrapper>
+                    <StyledCloudWrapper>
+                        <StyledCloud x={48} y={5} opacity={"1"}/>
+                    </StyledCloudWrapper>
+                    <StyledCloudWrapper>
+                        <StyledCloud x={48} y={7} opacity={"1"}/>
+                    </StyledCloudWrapper>
+                </StyledCloudAnimator>
+
         </StyledLanding>
     </>
   );

@@ -12,6 +12,7 @@ import { Popup } from './Popup';
 import { Pots } from './Pots';
 import { Snack } from './Snack';
 import { Stack } from './Stack';
+import { IconButton } from '../features/button/IconButton';
 
 const StyledStacks = styled.div`
 
@@ -77,13 +78,13 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-                <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
+                <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></IconButton></>}/>
             </FlexboxElement>
             </div>
           );
         })}
         <FlexboxElement align='flex-start' order={0} grow={0}>
-          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Button icon={faPlus as IconProp} onClick={() => onAddStack()}></Button>} childBack={<><Button icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></Button></>}/>
+          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<IconButton icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></IconButton></>}/>
         </FlexboxElement>
       </Flexbox>
       </GridElement>

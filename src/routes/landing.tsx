@@ -12,17 +12,15 @@ import { Skills } from '../features/landing/Skills';
 import { Slogan } from '../features/landing/Slogan';
 
 const StyledLandingPage = styled.div`
-    
+    width: 100%;
 `;
 
 const StyledLandingSection = styled.div`
-    display: grid;
     position: relative;
     justify-content: center;
     height: 100vh;
-    background: black;
+    background: white;
     overflow: hidden;
-    padding-bottom: 3rem;
 `;
 
 const StyledLandingPageSection = styled.div`

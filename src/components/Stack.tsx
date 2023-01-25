@@ -79,7 +79,6 @@ return (
             <StyledStackFront colorFront={colorFront}>
                 <StyledStackClick onClick={(e) => onStackClick(e)}>
                 {childFront}
-
                 </StyledStackClick>
             </StyledStackFront>
             <StyledStackBack colorBack={colorBack}>

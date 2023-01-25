@@ -9,6 +9,7 @@ import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
 import { Snack } from './Snack';
+import { IconButton } from '../features/button/IconButton';
 
 const StyledGreenhouse = styled.div`
 `;
@@ -49,13 +50,13 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-                <Card childFront={<><Button icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+getData.greenhouses[index].GUID)}></Button></>} childBack={<>{getData.greenhouses[index].Address} : {getData.greenhouses[index].Zip}</>}/>
+                <Card childFront={<><IconButton icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+getData.greenhouses[index].GUID)}></IconButton></>} childBack={<>{getData.greenhouses[index].Address} : {getData.greenhouses[index].Zip}</>}/>
             </FlexboxElement>
             </div>
           );
         })}
           <FlexboxElement align='auto' order={1} grow={0}>
-              <Card childFront={<><Button icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></Button></>} childBack={<>asfdsa</>}></Card>
+              <Card childFront={<><IconButton icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton></>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
         </Flexbox>
       </GridElement>

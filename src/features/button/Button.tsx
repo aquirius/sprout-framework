@@ -4,25 +4,24 @@ import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontaw
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 const StyledButton = styled.button`
-  height: 50px;
-  width:50px;
-  border: 1px solid lightgrey;
-  background: transparent;
+  background: #63ac20;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  border-radius: 4px;
 `;
 
 interface ButtonProps {
-  size? : SizeProp
-  icon?: IconProp
-  children?: ReactElement
+  content?: string
   onClick?: () => void
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Button = ({size, icon, onClick} : ButtonProps) : ReactElement => {
+const Button = ({content, onClick} : ButtonProps) : ReactElement => {
   return (
     <>
-      <StyledButton  onClick={onClick}>
-        {icon && <FontAwesomeIcon icon={icon} size={size}/>}
+      <StyledButton onClick={onClick}>
+        {content}
       </StyledButton>
     </>
   );

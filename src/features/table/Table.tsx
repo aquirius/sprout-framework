@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { Button } from '../button/Button';
+import { IconButton } from '../button/IconButton';
 
 const StyledTable = styled.div`
   min-width: 1750px;
@@ -238,9 +239,9 @@ const Table = () : ReactElement => {
               <StyledColumnInput type={"email"} defaultValue={Email} onChange={(e) => setEmail(e.target.value)}/>
               <StyledContent>{formattedBirthday}</StyledContent>
               <StyledAction>
-                <Button icon={"pen"} size={"2x"} onClick={() => handleEdit({uuid: UUID, display_name:displayName, email:email, user_first_name:firstName, user_last_name:lastName})}/>
-                <Button icon={"ban"} size={"2x"} onClick={() => handleDelete(UUID)}/>
-                <Button icon={"angle-right"} size={"2x"} onClick={() => handleRedirect(UUID)}/>
+                <IconButton icon={"pen"} size={"2x"} onClick={() => handleEdit({uuid: UUID, display_name:displayName, email:email, user_first_name:firstName, user_last_name:lastName})}/>
+                <IconButton icon={"ban"} size={"2x"} onClick={() => handleDelete(UUID)}/>
+                <IconButton icon={"angle-right"} size={"2x"} onClick={() => handleRedirect(UUID)}/>
               </StyledAction>
             </StyledRow>
             </>

@@ -78,7 +78,6 @@ return (
             <StyledCardFront colorFront={colorFront}>
                 <StyledCardClick onClick={(e) => onCardClick(e)}>
                 {childFront}
-
                 </StyledCardClick>
             </StyledCardFront>
             <StyledCardBack colorBack={colorBack}>

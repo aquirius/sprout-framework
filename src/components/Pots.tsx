@@ -8,6 +8,7 @@ import { Button } from '../features/button/Button';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
 import { Pot } from './Pot';
+import { IconButton } from '../features/button/IconButton';
 
 const StyledPots = styled.div`
 `;
@@ -34,7 +35,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
     addPots.post()
     setLoading(true)
   }
-  
+
   useEffect(() => {
     getPots.post()
     if (loading || !getPots.postData){
@@ -52,7 +53,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot onClick={onClick} height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><Button icon={faPlus as IconProp} onClick={() => console.log("dfd")}></Button></>}/>
+              <Pot onClick={onClick} height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
           </FlexboxElement>
           </div>
         );
@@ -60,7 +61,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         </Flexbox>
       </GridElement>
       <GridElement position='b'>
-        <Button icon={faPlus as IconProp} onClick={() => onAddPot()}></Button>
+        <IconButton icon={faPlus as IconProp} onClick={() => onAddPot()}></IconButton>
       </GridElement>
     </Grid>
         
