@@ -3,9 +3,17 @@ import styled, { keyframes } from 'styled-components';
 import { Button } from '../button/Button';
 import { useNavigate } from 'react-router-dom';
 
-const Cloud = ({x, y, opacity} : any) => (
+interface CloudProps {
+    x : number;
+    y: number;
+    opacity: string;
+    color: string;
+}
+
+
+const Cloud = ({x, y, opacity, color} : CloudProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 320" preserveAspectRatio="none" shapeRendering="auto">
-        <path fill="#63ac20" x={x} y={y} fillOpacity={opacity} d="M 0,320 108.37255,246.7632 C 250.3534,150.81434 289.23223,235.00033 360,261.3 c 97.92805,35.76196 198.57925,56.59361 360,26.7 115.9594,-21.4746 139.49096,-27.7518 234.63877,-50.58882 0,0 142.26773,-44.95844 281.75903,-0.35074 L 1351.8242,281.8501 1440,320 H 1380 1080 720 360 60 Z"></path>
+        <path fill={color} x={x} y={y} fillOpacity={opacity} d="M 0,320 108.37255,246.7632 C 250.3534,150.81434 289.23223,235.00033 360,261.3 c 97.92805,35.76196 198.57925,56.59361 360,26.7 115.9594,-21.4746 139.49096,-27.7518 234.63877,-50.58882 0,0 142.26773,-44.95844 281.75903,-0.35074 L 1351.8242,281.8501 1440,320 H 1380 1080 720 360 60 Z"></path>
     </svg>
 )
 
@@ -13,7 +21,6 @@ const StyledMoveForever = keyframes`
     0% {transform: translate3d(-300px,0,0); opacity: 0;}
     50%{transform: translate3d(0,0,0); opacity: 1;}
     100%{transform: translate3d(555px,0,0); opacity: 0;}
-
 `
 
 const StyledCloud = styled(Cloud)`
@@ -83,16 +90,16 @@ return (
                 </StyledButtonFront>
                 <StyledCloudAnimator>
                     <StyledCloudWrapper>
-                        <StyledCloud x={48} y={0} opacity={"1"}/>
+                        <StyledCloud color={"#63ac20"} x={48} y={0} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud x={48} y={3} opacity={"1"}/>
+                        <StyledCloud color={"#63ac20"} x={48} y={3} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud x={48} y={5} opacity={"1"}/>
+                        <StyledCloud color={"#63ac20"} x={48} y={5} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud x={48} y={7} opacity={"1"}/>
+                        <StyledCloud color={"#63ac20"} x={48} y={7} opacity={"1"}/>
                     </StyledCloudWrapper>
                 </StyledCloudAnimator>
 

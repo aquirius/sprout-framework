@@ -58,6 +58,49 @@ interface NavbarProps {
 const Navbar = ({uuid} : NavbarProps) : ReactElement => {
   const [expand, setExpand] = useState(false)
   const nav = useNavigate();
+  var cookie: string;
+  var recipes: string[];
+  var sessionIDRecipe: string | undefined;
+  var uuidRecipe: string | undefined;
+  var sessionID: string;
+  var cookieUUID: string;
+
+  cookie = document.cookie
+  recipes = cookie.split('; ')
+  sessionIDRecipe = recipes.find(row => row.startsWith('session-id='))
+  uuidRecipe = recipes.find(row => row.startsWith('uuid='))
+
+  if (sessionIDRecipe !== undefined){
+    sessionID = sessionIDRecipe.split('=')[1];
+  }
+  if (uuidRecipe !== undefined){
+    cookieUUID = uuidRecipe.split('=')[1];
+  }
+
+  const onSubmit = () => {
+    const request = new Request("/logout", {
+      method: "post",
+      body: JSON.stringify({
+        uuid: cookieUUID,
+        session_id: sessionID,
+      }),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          "Method": "logout"
+      }
+    });
+
+    fetch(request)
+    .then(res => {
+      console.log(res)
+      if(res.ok){
+        nav("/login", {replace: true})
+      }
+    }).catch(error => {
+        console.log(error);
+    });
+  }
 
   return (
   <>
@@ -90,7 +133,7 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
       </StyledNavbarContent>
       <StyledNavbarFooter expand={expand}>
         <StyledActionIcons expand={expand}>
-          <FontAwesomeIcon onClick={() => console.log("logout")} size='2x' icon={faSignOut as IconProp}/>
+          <FontAwesomeIcon onClick={() => onSubmit()} size='2x' icon={faSignOut as IconProp}/>
           <StyledActionIconLabel expand={expand}>logout</StyledActionIconLabel>
         </StyledActionIcons>
       </StyledNavbarFooter>
@@ -99,4 +142,4 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
   );
 }
   
-  export { Navbar }
+export { Navbar }

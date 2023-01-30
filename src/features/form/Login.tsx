@@ -63,17 +63,14 @@ const Login = () : ReactElement => {
 
   sessionIDRecipe = recipes.find(row => row.startsWith('session-id='))
   uuidRecipe = recipes.find(row => row.startsWith('uuid='))
-  
-  useEffect(()=>{
-    if (sessionIDRecipe !== undefined){
-      sessionID = sessionIDRecipe.split('=')[1];
-    }
-  
-    if (uuidRecipe !== undefined){
-      cookieUUID = uuidRecipe.split('=')[1];
-      nav("/user/"+cookieUUID, {replace: true})
-    }
-  },[])
+
+  if (sessionIDRecipe !== undefined){
+    sessionID = sessionIDRecipe.split('=')[1];
+  }
+
+  if (uuidRecipe !== undefined && uuidRecipe !== ""){
+    cookieUUID = uuidRecipe.split('=')[1];
+  }
 
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks

@@ -4,6 +4,7 @@ import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
 import { Snack } from './Snack';
+import { useNavigate } from 'react-router-dom';
 
 const StyledUser = styled.div`
 `;
@@ -19,6 +20,11 @@ const User = ({uuid} : UserProps) : ReactElement => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
 
+  const nav = useNavigate();
+
+  if(!uuid || uuid === ""){
+    nav("/login", {replace: true})
+  }
 
   useEffect(() => {
     fetch("/user/"+uuid)

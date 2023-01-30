@@ -73,18 +73,24 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
 
   sessionIDRecipe = recipes.find(row => row.startsWith('session-id='))
 
-  useEffect(() => {
-    if (typeof sessionIDRecipe === 'undefined'){
-        nav("/login", {replace: true})
-        return
-    }
-    
+  if (!uuid) {
+    nav("/login", {replace: true})
+  }
+  if (typeof sessionIDRecipe === 'undefined' || sessionIDRecipe === '' ){
+    nav("/login", {replace: true})
+  }
+
+  useEffect(() => {    
     fetch("/user/"+uuid)
     .then((res) => {
       setMessage(res.statusText)
+      if(res.status === 401){
+        throw new Error(res.statusText);
+      }
       return res.json()
     })
     .then((json) => setData(json.user))
+    .catch(() => nav("/login", {replace: true}))
     .finally(() => setLoading(false))
   }, [uuid, loading])
 
