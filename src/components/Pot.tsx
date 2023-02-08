@@ -12,6 +12,11 @@ const StyledPot = styled.div<{expand?: boolean, height?:number, width?:number}>`
 
 const StyledPotContainer = styled.div<{expand? : boolean}>`
     position: relative;
+    width:100px;
+    height:100px;
+    background: #f9f9f9;
+    border-radius: 100%;
+    overflow: hidden;
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 `;
 
@@ -20,22 +25,21 @@ const StyledPotFront = styled.div<{expand? : boolean}>`
     position: absolute;
     width:100px;
     height:100px;
-    border-radius:100%;
-    border:20px solid;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    background-color: #f9f9f9;
+    left: -50px;
+    transform: translate3d(30px, 30px, 30px);
+    background-color: lightblue;
     color: black;
-    border-color:#f9f9f9 lightblue brown #095a04;
+    border-radius: 100%;
 `;
 
 const StyledPotBack = styled.div<{expand? : boolean}>`
     position: absolute;
-    width: 50%%;
-    height: 100%;
+    width:100px;
+    height:100px;
+    transform: translate3d(30px, 30px, 30px);
     background-color: #095a04;
     color: white;
-    border-radius: 50%;
+    border-radius: 100%;
 `;
 
 interface PotProps {
