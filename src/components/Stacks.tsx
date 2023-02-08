@@ -1,6 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faMasksTheater, faPlus } from '@fortawesome/free-solid-svg-icons';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, ReactEventHandler, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAPIGet, useAPIPost } from '../api/api';
@@ -78,13 +78,13 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-                <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></IconButton></>}/>
+                <Stack onClick={(e) => onClick(e)} children={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>}></Stack>
             </FlexboxElement>
             </div>
           );
         })}
         <FlexboxElement align='flex-start' order={0} grow={0}>
-          <Stack onClick={(e) => onClick(e)} height={300} width={900} childFront={<IconButton icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => {setLoading(true)}}></IconButton></>}/>
+          <Stack onClick={(e) => onClick(e)} height={300} width={900} children={<IconButton icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>}/>
         </FlexboxElement>
       </Flexbox>
       </GridElement>

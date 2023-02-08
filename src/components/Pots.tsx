@@ -44,6 +44,9 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
     setLoading(false)
   }, [addPots.postVersion, loading])
 
+  var water = 100;
+  var fertilizer = 100;
+
   return (
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
@@ -53,7 +56,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot onClick={onClick} height={100} width={100} childFront={<>{value.SUID}</>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
+              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
           </FlexboxElement>
           </div>
         );
