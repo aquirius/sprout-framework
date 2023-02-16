@@ -5,8 +5,8 @@ import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 const StyledIconButton = styled.button`
   height: 50px;
-  width:50px;
-  border: 1px solid lightgrey;
+  width: 50px;
+  border: none;
   background: transparent;
 `;
 

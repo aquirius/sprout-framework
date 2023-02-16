@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPencil, faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,7 +10,8 @@ import { Grid, GridElement } from './Grid';
 import { Pot } from './Pot';
 import { IconButton } from '../features/button/IconButton';
 
-const StyledPots = styled.div`
+const StyledAddPotButton = styled.div`
+  align-self: center;
 `;
 
 interface PotsProps {
@@ -36,6 +37,10 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
     setLoading(true)
   }
 
+  const onEditStack = () => {
+    setLoading(true)
+  }
+
   useEffect(() => {
     getPots.post()
     if (loading || !getPots.postData){
@@ -56,15 +61,16 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>} childBack={<><IconButton icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
+              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>} childBack={<><IconButton size='2x' icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
           </FlexboxElement>
           </div>
         );
       })}
         </Flexbox>
       </GridElement>
-      <GridElement position='b'>
-        <IconButton icon={faPlus as IconProp} onClick={() => onAddPot()}></IconButton>
+      <GridElement position='b' align='center'>
+        <IconButton size='4x' icon={faPlus as IconProp} onClick={() => onAddPot()}></IconButton>
+        <IconButton size='3x' icon={faPen as IconProp} onClick={() => onEditStack()}></IconButton>
       </GridElement>
     </Grid>
         

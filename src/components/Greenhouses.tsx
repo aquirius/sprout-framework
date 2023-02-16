@@ -43,9 +43,7 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
 
   return (
     <StyledGreenhouse>
-    <Grid layout={"80% 20%"} dimension={"'a b'"} >
-      <GridElement position='a'>
-        <Flexbox align='center' direction='row' wrap='wrap'>
+     <Flexbox align='center' direction='row' wrap='wrap'>
         {getData && Object.keys(getData.greenhouses).map((key, index) => {
           return (
             <div key={index}>
@@ -59,11 +57,6 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
               <Card childFront={<><IconButton icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton></>} childBack={<>asfdsa</>}></Card>
           </FlexboxElement>
         </Flexbox>
-      </GridElement>
-      <GridElement position='b'>
-        <Snack danger message={messageFetch}></Snack>
-      </GridElement>
-    </Grid>
     </StyledGreenhouse>
   );
 }

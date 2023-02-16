@@ -29,7 +29,6 @@ const StyledFlexboxItem = styled.div<{order : number, grow : number, align : str
     flex-grow: ${(props) => props.grow};
     align-self: ${(props) => props.align};
     margin: 0.5rem;
-
 `;
 
 const Flexbox = ({align, direction, wrap, children } : FlexboxProps) : ReactElement => {

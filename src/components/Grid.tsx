@@ -30,13 +30,13 @@ const Grid = ({dimension, layout, children, rows } : GridProps) : ReactElement =
 }
 
 const StyledGridElement = styled.div<{position : string, align?: string, row?: string}>`
+    display:grid;
     grid-area: ${(props) => props.position};
     grid-row-start: auto;
     grid-row-end: auto;
     align-self: ${(props) => props.align ? props.align : "start"};
     justify-self: ${(props) => props.align ? props.align : "start"};
     ${(props) => props.row ? "grid-row:"+props.row  : ""};
-    height: 100%; 
     float:left;
 `;
 

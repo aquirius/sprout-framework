@@ -9,7 +9,7 @@ import { Grid, GridElement } from './Grid';
 
 const StyledNavbar = styled.div<{expand: boolean}>`
   background: ${(props) => props.expand ? "#f9f9f9" : "#095a04"};
-  width: ${(props) => props.expand ? "10vw" : "3vw"};
+  width: ${(props) => props.expand ? "10vw" : "5vw"};
   color: ${(props) => props.expand ? "black" : "white"};
   min-width: 75px;
   position: fixed;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAPIGet } from '../api/api';
@@ -9,10 +9,16 @@ import { Snack } from './Snack';
 const StyledGreenhouse = styled.div`
 `;
 
+const StyledGreenhouseHeader = styled.div`
+`;
+
+const StyledGreenhouseContent = styled.div`
+`;
+
 interface GreenhouseProps {
   uuid?: number
   guid?: number
-  children?: ReactElement
+  children?: ReactNode
 }
 
 interface GetGreenhouseProps {
@@ -22,7 +28,7 @@ interface GetGreenhouseProps {
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
+const Greenhouse = ({uuid, guid, children} : GreenhouseProps) : ReactElement => {
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
@@ -39,18 +45,14 @@ const Greenhouse = ({uuid, guid} : GreenhouseProps) : ReactElement => {
 
   return (
     <StyledGreenhouse>
-    <Grid layout={"80% 20%"} dimension={"'a b'"} >
-      <GridElement position='a'>
-        <Flexbox align='center' direction='row' wrap='wrap'>
+      <StyledGreenhouseHeader>
         <h1>{getData && getData.greenhouse.GUID}</h1>
         <h1>{getData && getData.greenhouse.Address}</h1> 
         <h1>{getData && getData.greenhouse.Zip}</h1> 
-        </Flexbox>
-      </GridElement>
-      <GridElement position='b'>
-        <Snack danger message={message}></Snack>
-      </GridElement>
-    </Grid>
+      </StyledGreenhouseHeader>
+      <StyledGreenhouseContent>
+      {children}
+      </StyledGreenhouseContent>
     </StyledGreenhouse>
   );
 }

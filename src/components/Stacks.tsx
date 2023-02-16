@@ -71,7 +71,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   return (
     <>
     <StyledStacks>
-    <Grid layout={"80% 20%"} dimension={"'a b'"} >
+    <Grid layout={"90% 10%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
           {getData && getData.stacks.map((value : any, index : number) => {
@@ -83,13 +83,10 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
             </div>
           );
         })}
-        <FlexboxElement align='flex-start' order={0} grow={0}>
-          <Stack onClick={(e) => onClick(e)} height={300} width={900} children={<IconButton icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>}/>
+        <FlexboxElement align='center' order={0} grow={0}>
+          <IconButton size="5x" icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
         </FlexboxElement>
       </Flexbox>
-      </GridElement>
-      <GridElement position='b'>
-        <Snack danger message={message}></Snack>
       </GridElement>
     </Grid>
     </StyledStacks>
