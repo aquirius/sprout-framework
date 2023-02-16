@@ -1,5 +1,5 @@
 
-import React, { ReactElement, useState} from 'react';
+import React, { ReactElement, ReactEventHandler, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { Background } from '../components/Background';
 import { Grid, GridElement } from '../components/Grid';
@@ -9,6 +9,8 @@ import { Stacks } from '../components/Stacks';
 import { Pots } from '../components/Pots';
 import { rejects } from 'assert';
 import { Popup } from '../components/Popup';
+import { Sidebar } from '../components/Sidebar';
+import { RecordWithTtl } from 'dns';
 
 interface GreenhousePageProps {
 }
@@ -17,7 +19,8 @@ const GreenhousePage = ({}) : ReactElement => {
     const { uuid } = useParams();
     const { guid } = useParams();
     const [popup, setPopup] = useState(false)
-    
+    const [sidebar, setSideBar] = useState(false)
+
     let userID : number = 0
     let greenhouseID : number = 0
     if (uuid != null){
@@ -35,18 +38,26 @@ const GreenhousePage = ({}) : ReactElement => {
         setPopup(true)
         return
     }
+
+    const onSidebar = (event: React.PointerEvent ) => {
+        setSideBar(!sidebar)
+        event.preventDefault()
+        var puid = event.currentTarget.getAttribute("puid")
+        console.log(puid)
+        return
+    }
     
     return (
     <>
-    <Grid layout={'10vw 80vw'} dimension={"'a b'"}>
+    <Grid layout={'10vw auto'} dimension={"'a b'"}>
         <GridElement position='a'>
             <Navbar uuid={uuid}/>
         </GridElement>
         <GridElement position='b'>
-            <Greenhouse uuid={userID} guid={greenhouseID}></Greenhouse>
-                <Stacks onClick={(e) => onClick(e)} uuid={userID} guid={greenhouseID}></Stacks>
-                <Popup rect={rect} popup={popup} height={200} width={200}></Popup>
-
+            <Greenhouse uuid={userID} guid={greenhouseID}>
+                <Stacks onClick={(e) => onSidebar(e)} uuid={userID} guid={greenhouseID}></Stacks>
+                <Sidebar expand={sidebar} onStacks={(e) => onClick(e)}>{<>adsfasdf</>}</Sidebar>
+            </Greenhouse>
         </GridElement>
     </Grid>
     <Background/>
