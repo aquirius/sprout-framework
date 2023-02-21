@@ -38,6 +38,7 @@ const StyledRegisterFormSubmit = styled.button`
   font-size: 2rem;
   border-radius: 4px;
 `;
+
 const Register = () : ReactElement => {
   //initialize our form with empty states
   const [uuid, setUUID] = useState("");

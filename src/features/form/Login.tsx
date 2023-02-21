@@ -103,6 +103,7 @@ const Login = () : ReactElement => {
       return json
     })
     .then(res => {
+        console.log(res)
         nav("/user/"+res.uuid, {replace: true})
     }).catch(error => {
         console.log(error);

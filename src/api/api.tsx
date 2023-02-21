@@ -44,14 +44,14 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
     }).catch(() => undefined)
   },[versionState, target])
 
-  console.log({
-    postSuccess: success,
-    busy: busy,
-    version: versionState,
-    payload: request.payload,
-		data: data,
-    post:post,
-  })
+  // console.log({
+  //   postSuccess: success,
+  //   busy: busy,
+  //   version: versionState,
+  //   payload: request.payload,
+	// 	data: data,
+  //   post:post,
+  // })
 
   return {
     postSuccess: success,
@@ -100,13 +100,13 @@ const useAPIGet = (target: string): APIGet => {
     }).catch(() => undefined)
   },[versionState, target])
 
-  console.log({
-    getSuccess: success,
-    getBusy: busy,
-    getVersion: versionState,
-		getData: data,
-    get:get,
-  })
+  // console.log({
+  //   getSuccess: success,
+  //   getBusy: busy,
+  //   getVersion: versionState,
+	// 	getData: data,
+  //   get:get,
+  // })
 
   return {
     getSuccess: success,

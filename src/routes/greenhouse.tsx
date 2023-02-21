@@ -32,18 +32,13 @@ const GreenhousePage = ({}) : ReactElement => {
 
     var rect;
 
-    const onClick = (event: any ) => {
-        event.preventDefault()
-        rect = event.currentTarget.getBoundingClientRect()
+    const onClick = (event: React.MouseEvent ) => {
         setPopup(true)
         return
     }
 
-    const onSidebar = (event: React.PointerEvent ) => {
+    const onStacks = (event: React.PointerEvent ) => {
         setSideBar(!sidebar)
-        event.preventDefault()
-        var puid = event.currentTarget.getAttribute("puid")
-        console.log(puid)
         return
     }
     
@@ -55,8 +50,8 @@ const GreenhousePage = ({}) : ReactElement => {
         </GridElement>
         <GridElement position='b'>
             <Greenhouse uuid={userID} guid={greenhouseID}>
-                <Stacks onClick={(e) => onSidebar(e)} uuid={userID} guid={greenhouseID}></Stacks>
-                <Sidebar expand={sidebar} onStacks={(e) => onClick(e)}>{<>adsfasdf</>}</Sidebar>
+                <Stacks onClick={(e) => onClick(e)} uuid={userID} guid={greenhouseID}></Stacks>
+                <Sidebar expand={sidebar}>{<>adsfasdf</>}</Sidebar>
             </Greenhouse>
         </GridElement>
     </Grid>

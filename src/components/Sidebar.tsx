@@ -36,7 +36,10 @@ interface SidebarProps {
 
 //User page does import our table component and is bound to our react routing system
 const Sidebar = ({ children, expand, onClick, onStacks }: SidebarProps) : ReactElement => {    
-    console.log(onStacks)
+    if (!onStacks){
+        return <></>
+    }
+    const stacks = onStacks((e : React.PointerEvent)=> console.log(e))
 return (
     <>
     <StyledSidebarBlur expand={expand} onClick={onClick}></StyledSidebarBlur>
