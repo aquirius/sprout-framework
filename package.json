@@ -1,6 +1,7 @@
 {
   "name": "sprout-frontend",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "proxy": "http://127.0.0.1:1234",
   "dependencies": {
