@@ -24,12 +24,12 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
   const [loading, setLoading] = useState(false)
 
   const nav = useNavigate();
-  const {getData, get} = useAPIGet("/user/"+uuid+"/greenhouse");
-  const {postVersion, postSuccess, postBusy, postData, post} = useAPIPost("/user/"+uuid+"/greenhouse", "add", {"payload" : {"UUID": uuid}});
+  const getGreenhouse = useAPIGet("/user/"+uuid+"/greenhouse");
+  const {postVersion, postSuccess, postBusy, data, post} = useAPIPost("/user/"+uuid+"/greenhouse", "add", {"payload" : {"UUID": uuid}});
 
   useEffect(() => {
-    get()
-    if (loading || !postSuccess || postBusy || !postData){
+    getGreenhouse.get()
+    if (loading || !postSuccess || postBusy || !data){
       return
     }
     setMessage("200")
@@ -44,11 +44,14 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
   return (
     <StyledGreenhouse>
      <Flexbox align='center' direction='row' wrap='wrap'>
-        {getData && Object.keys(getData.greenhouses).map((key, index) => {
+        {getGreenhouse.data && Object.keys(getGreenhouse.data.greenhouses).map((key, index) => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-                <Card childFront={<><IconButton icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+getData.greenhouses[index].GUID)}></IconButton></>} childBack={<>{getData.greenhouses[index].Address} : {getData.greenhouses[index].Zip}</>}/>
+                <Card 
+                  childFront={<><IconButton icon={faBuilding as IconProp} onClick={() => nav("/user/"+uuid+"/greenhouse/"+getGreenhouse.data.greenhouses[index].GUID)}></IconButton></>}
+                  childBack={<>{getGreenhouse.data.greenhouses[index].Address} : {getGreenhouse.data.greenhouses[index].Zip}</>}
+                />
             </FlexboxElement>
             </div>
           );

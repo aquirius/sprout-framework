@@ -32,11 +32,11 @@ const Greenhouse = ({uuid, guid, children} : GreenhouseProps) : ReactElement => 
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
-  const {getData, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid);
+  const {data, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid);
 
   useEffect(() => {
     get()
-    if (loading || !getData){
+    if (loading || !data){
       return
     }
     setMessage("200")
@@ -46,9 +46,9 @@ const Greenhouse = ({uuid, guid, children} : GreenhouseProps) : ReactElement => 
   return (
     <StyledGreenhouse>
       <StyledGreenhouseHeader>
-        <h1>{getData && getData.greenhouse.GUID}</h1>
-        <h1>{getData && getData.greenhouse.Address}</h1> 
-        <h1>{getData && getData.greenhouse.Zip}</h1> 
+        <h1>{data && data.greenhouse.GUID}</h1>
+        <h1>{data && data.greenhouse.Address}</h1> 
+        <h1>{data && data.greenhouse.Zip}</h1> 
       </StyledGreenhouseHeader>
       <StyledGreenhouseContent>
       {children}

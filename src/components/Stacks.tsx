@@ -39,7 +39,6 @@ interface GetPots {
 //Button component draws us an html button with icon and size of the icon
 const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
 
-  const [data, setData] = useState<any>()
   const [stacks, setStacks] = useState<any>()
   const [pots, setPots] = useState<GetPots>()
 
@@ -48,12 +47,12 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   const [message, setMessage] = useState("")
   const [stackUUID, setStackUUID] = useState();
 
-  const {getData, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/get-stacks");
-  const {postVersion, post} = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/add-stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
+  const {data, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack");
+  const {postVersion, post} = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
 
   useEffect(() => {
     get()
-    if (loading || !getData){
+    if (loading || !data){
       return
     }
     setMessage("200")
@@ -74,7 +73,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
     <Grid layout={"90% 10%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-          {getData && getData.stacks.map((value : any, index : number) => {
+          {data && data.stacks.map((value : any, index : number) => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
@@ -90,8 +89,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
       </GridElement>
     </Grid>
     </StyledStacks>
-        
-
     </>
   );
 }

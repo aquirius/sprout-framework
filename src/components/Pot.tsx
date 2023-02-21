@@ -2,6 +2,9 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Popup } from './Popup';
+import { IconButton } from '../features/button/IconButton';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const StyledPot = styled.div<{expand?: boolean, height?:number, width?:number}>`
     background-color: transparent;
@@ -46,12 +49,11 @@ interface PotProps {
     water?: number;
     fertilizer?: number;
     childFront: ReactElement
-    childBack: ReactElement
     onClick: (event : any) => void
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({ water, fertilizer, childFront, childBack, onClick }:PotProps) : ReactElement => {
+const Pot = ({ water, fertilizer, childFront, onClick }:PotProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [rect, setRect] = useState<DOMRect>()
@@ -72,14 +74,14 @@ return (
                 {childFront}
             </StyledPotFront>
             <StyledPotBack>
-                {childBack}
+                <IconButton size='2x' icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton>
             </StyledPotBack>
         </StyledPotContainer>
     </StyledPot>
     </>
 );
 }
-  
+
 export { Pot }
 
   

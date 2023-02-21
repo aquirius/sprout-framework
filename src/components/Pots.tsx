@@ -29,8 +29,8 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
   const [loading, setLoading] = useState(false)
   const nav = useNavigate();
 
-  const getPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/get-pots", "add", {"payload" : {"suid": suid}});
-  const addPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/add-pot", "add", {"payload" : {"suid": suid}});
+  const getPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "get", {"payload" : {"suid": suid}});
+  const addPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "add", {"payload" : {"suid": suid}});
 
   const onAddPot = () => {
     addPots.post()
@@ -43,7 +43,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
 
   useEffect(() => {
     getPots.post()
-    if (loading || !getPots.postData){
+    if (loading || !getPots.data){
       return
     }
     setLoading(false)
@@ -57,11 +57,11 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
-        {getPots.postData && getPots.postData.pots.map((value : any, index : number) => {
+        {getPots.data && getPots.data.pots.map((value : any, index : number) => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>} childBack={<><IconButton size='2x' icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton></>}/>
+              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>}/>
           </FlexboxElement>
           </div>
         );

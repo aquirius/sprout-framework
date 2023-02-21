@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 export interface APIPost {
 	readonly postSuccess: boolean;
 	readonly postPayload?: any;
-	readonly postData?: any;
+	readonly data?: any;
 	readonly postBusy: boolean;
   readonly postVersion: number;
   readonly post: () => void;
@@ -58,14 +58,14 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
     postBusy: false,
     postVersion: versionState,
     postPayload: request.payload,
-		postData: data,
+		data: data,
     post:post,
   }
 }
 
 export interface APIGet {
 	readonly getSuccess: boolean;
-	readonly getData?: any;
+	readonly data?: any;
 	readonly getBusy: boolean;
   readonly getVersion: number;
   readonly get: () => void;
@@ -112,7 +112,7 @@ const useAPIGet = (target: string): APIGet => {
     getSuccess: success,
     getBusy: false,
     getVersion: versionState,
-		getData: data,
+		data: data,
     get:get,
   }
 }
