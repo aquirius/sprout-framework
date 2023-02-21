@@ -48,33 +48,25 @@ const StyledPotBack = styled.div<{expand? : boolean}>`
 interface PotProps {
     water?: number;
     fertilizer?: number;
-    childFront: ReactElement
+    puid: number;
     onClick: (event : any) => void
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({ water, fertilizer, childFront, onClick }:PotProps) : ReactElement => {
+const Pot = ({ water, fertilizer, puid, onClick }:PotProps) : ReactElement => {
 
     const [data, setData] = useState()
     const [rect, setRect] = useState<DOMRect>()
     const [expandPot, setExpandPot] = useState(false)
 
-    const onPotClick = (event : React.MouseEvent) => {
-        event.stopPropagation();
-
-        setRect(event.currentTarget.getBoundingClientRect())
-        onClick(event)
-        setExpandPot(!expandPot)
-    }
 return (
     <>
     <StyledPot>
-        <StyledPotContainer expand={expandPot} onClick={(e) => onPotClick(e)}>
+        <StyledPotContainer expand={expandPot}>
             <StyledPotFront>
-                {childFront}
             </StyledPotFront>
             <StyledPotBack>
-                <IconButton size='2x' icon={faPlus as IconProp} onClick={() => console.log("dfd")}></IconButton>
+                <IconButton size='2x' icon={faPlus as IconProp} onClick={onClick}></IconButton>
             </StyledPotBack>
         </StyledPotContainer>
     </StyledPot>

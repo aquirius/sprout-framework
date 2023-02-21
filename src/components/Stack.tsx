@@ -1,6 +1,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Pots } from './Pots';
 
 const StyledStack = styled.div<{expand?: boolean, height?:number, width?:number}>`
     position: relative;
@@ -12,19 +13,19 @@ const StyledStack = styled.div<{expand?: boolean, height?:number, width?:number}
 `;
 
 interface StackProps {
-    height?: number;
-    width?: number;
-    children: ReactElement;
+    uuid: number;
+    guid: number;
+    suid: number;
     onClick : (event : any) => void
 }
 
 //User page does import our table component and is bound to our react routing system
-const Stack = ({ children, onClick }:StackProps) : ReactElement => {
+const Stack = ({ uuid, guid, suid, onClick }:StackProps) : ReactElement => {
 
 return (
     <>
-    <StyledStack onClick={onClick}>
-        {children}
+    <StyledStack>
+        <Pots onClick={onClick} uuid={uuid} guid={guid} suid={suid}></Pots>
     </StyledStack>
     </>
 );

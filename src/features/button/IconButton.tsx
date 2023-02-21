@@ -14,7 +14,7 @@ interface IconButtonProps {
   size? : SizeProp
   icon?: IconProp
   children?: ReactElement
-  onClick?: () => void
+  onClick?: (e: any) => void
 }
 
 //Button component draws us an html button with icon and size of the icon

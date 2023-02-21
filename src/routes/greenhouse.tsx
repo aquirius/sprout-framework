@@ -34,6 +34,7 @@ const GreenhousePage = ({}) : ReactElement => {
 
     const onClick = (event: React.MouseEvent ) => {
         setPopup(true)
+        console.log("adsfasdfasf", event.currentTarget.attributes)
         return
     }
 
@@ -50,8 +51,8 @@ const GreenhousePage = ({}) : ReactElement => {
         </GridElement>
         <GridElement position='b'>
             <Greenhouse uuid={userID} guid={greenhouseID}>
-                <Stacks onClick={(e) => onClick(e)} uuid={userID} guid={greenhouseID}></Stacks>
-                <Sidebar expand={sidebar}>{<>adsfasdf</>}</Sidebar>
+                <Stacks onClick={onStacks} uuid={userID} guid={greenhouseID}></Stacks>
+                <Sidebar onClick={() => {}} expand={sidebar}>{<>adsfasdf</>}</Sidebar>
             </Greenhouse>
         </GridElement>
     </Grid>

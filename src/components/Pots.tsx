@@ -9,6 +9,8 @@ import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
 import { Pot } from './Pot';
 import { IconButton } from '../features/button/IconButton';
+import { Sidebar } from './Sidebar';
+import { PotSettings } from '../features/form/PotSettings';
 
 const StyledAddPotButton = styled.div`
   align-self: center;
@@ -27,6 +29,9 @@ interface PotsProps {
 //Button component draws us an html button with icon and size of the icon
 const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
   const [loading, setLoading] = useState(false)
+  const [sidebar, setSidebar] = useState(false)
+  const [puid, setPuid] = useState(0)
+
   const nav = useNavigate();
 
   const getPots = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "get", {"payload" : {"suid": suid}});
@@ -35,6 +40,12 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
   const onAddPot = () => {
     addPots.post()
     setLoading(true)
+  }
+
+  const onEditPot = (puid : any, event : React.MouseEvent) => {
+    setSidebar(true)
+    setPuid(puid)
+    console.log(puid)
   }
 
   const onEditStack = () => {
@@ -61,7 +72,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         return (
           <div key={index}>
             <FlexboxElement align='flex-start' order={0} grow={0}>
-              <Pot onClick={onClick} water={water} fertilizer={fertilizer} childFront={<>{value.SUID}</>}/>
+              <Pot puid={value.PUID} onClick={(e) => onEditPot(value.PUID, e)} water={water} fertilizer={fertilizer}/>
           </FlexboxElement>
           </div>
         );
@@ -73,8 +84,9 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         <IconButton size='3x' icon={faPen as IconProp} onClick={() => onEditStack()}></IconButton>
       </GridElement>
     </Grid>
-        
-
+    <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
+      <PotSettings puid={puid}></PotSettings>
+    </Sidebar>
     </>
   );
 }

@@ -1,4 +1,5 @@
 
+import exp from 'constants';
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -29,21 +30,16 @@ const StyledSidebarBlur = styled.div<{expand?: boolean}>`
 interface SidebarProps {
     children: ReactElement;
     expand: boolean;
-    onClick? : (event : any) => void
-    onStacks? : (event : any) => void
-
+    onClick: () => void;
 }
 
 //User page does import our table component and is bound to our react routing system
-const Sidebar = ({ children, expand, onClick, onStacks }: SidebarProps) : ReactElement => {    
-    if (!onStacks){
-        return <></>
-    }
-    const stacks = onStacks((e : React.PointerEvent)=> console.log(e))
+const Sidebar = ({ children, expand, onClick }: SidebarProps) : ReactElement => {    
+
 return (
     <>
-    <StyledSidebarBlur expand={expand} onClick={onClick}></StyledSidebarBlur>
-    <StyledSidebar expand={expand} onClick={onClick}>
+    <StyledSidebarBlur onClick={onClick} expand={expand}></StyledSidebarBlur>
+    <StyledSidebar expand={expand}>
         {children}
     </StyledSidebar>
     </>

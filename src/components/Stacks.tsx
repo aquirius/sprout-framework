@@ -22,7 +22,6 @@ interface StacksProps {
   uuid?: number
   guid?: number
   onClick : (event :any) => void
-  children?: ReactElement
 }
 
 interface StacksProps {
@@ -77,7 +76,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-                <Stack onClick={(e) => onClick(e)} children={<Pots onClick={onClick} uuid={uuid} guid={guid} suid={value.SUID}></Pots>}></Stack>
+                <Stack uuid={uuid ? uuid : 0} guid={guid ? guid : 0} suid={value.SUID ? value.SUID : 0} onClick={onClick}></Stack>
             </FlexboxElement>
             </div>
           );
