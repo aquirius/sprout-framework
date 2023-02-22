@@ -8,6 +8,7 @@ const StyledSidebar = styled.div<{expand?: boolean, height?:number, width?:numbe
     background-color: #f9f9f9;
     ${(props) => props.expand ? "right: 0%" : "right: -100%"};
     top: 0%;
+    z-index: 9999;
     height: 100vh;
     width: 50vw;
     min-width: 300px;
@@ -20,6 +21,7 @@ const StyledSidebarBlur = styled.div<{expand?: boolean}>`
     background-color: transparent;
     ${(props) => props.expand ? "left: 0%" : "left: -100%"};
     top: 0%;
+    z-index: 9999;
     height: 100vh;
     width: 50vw;
     min-width: 300px;

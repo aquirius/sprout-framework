@@ -52,7 +52,6 @@ const GreenhousePage = ({}) : ReactElement => {
         <GridElement position='b'>
             <Greenhouse uuid={userID} guid={greenhouseID}>
                 <Stacks onClick={onStacks} uuid={userID} guid={greenhouseID}></Stacks>
-                <Sidebar onClick={() => {}} expand={sidebar}>{<>adsfasdf</>}</Sidebar>
             </Greenhouse>
         </GridElement>
     </Grid>

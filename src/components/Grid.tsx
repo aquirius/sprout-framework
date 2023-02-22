@@ -10,7 +10,6 @@ interface GridProps {
 
 const StyledGrid = styled.div<{dimension : string, layout : string, rows?: string}>`
     display:grid;
-    grid-gap: 1rem;
     grid-template-columns: ${(props) => props.layout};
     grid-template-areas: ${(props) => props.dimension};
     ${(props) => props.rows ? "grid-template-rows:"+props.rows : ""};
