@@ -102,7 +102,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   return (
     <>
     <StyledStacks>
-    <Grid layout={"90% 10%"} dimension={"'a b'"} >
+    <Grid layout={"100%"} dimension={"'a'"} >
       <GridElement position='a'>
         <Flexbox align='center' direction='row' wrap='wrap'>
           {data && data.stacks.map((value : any, index : number) => {
@@ -120,10 +120,10 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
             </div>
           );
         })}
-        <FlexboxElement align='center' order={0} grow={0}>
-          <IconButton size="4x" icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
-        </FlexboxElement>
       </Flexbox>
+      </GridElement>
+      <GridElement position='a' align='center'>
+        <IconButton size="8x" icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
       </GridElement>
     </Grid>
     </StyledStacks>

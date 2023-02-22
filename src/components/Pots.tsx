@@ -76,7 +76,7 @@ const Pots = ({uuid, guid, suid, onClick} : PotsProps) : ReactElement => {
         </Flexbox>
       </GridElement>
       <GridElement position='b' align='center'>
-        <IconButton size='4x' icon={faPlus as IconProp} onClick={() => onAddPot()}></IconButton>
+        <IconButton size='2x' icon={faPlus as IconProp} onClick={() => onAddPot()}></IconButton>
       </GridElement>
     </Grid>
     <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
