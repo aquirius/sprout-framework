@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
+import { LightTheme } from '../../schema/color';
 
 
 interface SettingsProps {
@@ -37,7 +38,7 @@ const StyledSettingsFormInput = styled.input`
 `;
 
 const StyledSettingsFormSubmit = styled.button`
-  background: #63ac20;
+  background: ${LightTheme.palette.secondary};
   color: white;
   padding: 1rem 2rem;
   font-size: 2re m;

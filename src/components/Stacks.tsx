@@ -17,11 +17,6 @@ import { Sidebar } from './Sidebar';
 import { PotSettings } from '../features/form/PotSettings';
 import { StackSettings } from '../features/form/StackSettings';
 
-/*
-  position: absolute;
-  top: ${(props) => props.expand ? "-50px" : "0px"};
-  transition: all 0.3s ease;
-*/
 const StyledStackSettings = styled.div<{expand:boolean}>`
   position: absolute;
   top: 0px;

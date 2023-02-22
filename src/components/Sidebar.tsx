@@ -2,10 +2,11 @@
 import exp from 'constants';
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { LightTheme } from '../schema/color';
 
 const StyledSidebar = styled.div<{expand?: boolean, height?:number, width?:number}>`
     position: fixed;
-    background-color: #f9f9f9;
+    background-color: ${LightTheme.palette.light};
     ${(props) => props.expand ? "right: 0%" : "right: -100%"};
     top: 0%;
     z-index: 9999;

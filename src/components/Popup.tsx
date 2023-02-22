@@ -1,6 +1,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { LightTheme } from '../schema/color';
 
 const StyledPopup = styled.div<{expand?: boolean, height?:number, width?:number, top?: number, left?: number}>`
     background-color: transparent;
@@ -33,7 +34,7 @@ const StyledPopupEdge = styled.div<{expand? : boolean, top?: number, left?: numb
 
     width: 20px;
     height: 20px;
-    background: #f9f9f9;
+    background: ${LightTheme.palette.light};
     content: '';
     transform: rotate(45deg);
 `;
@@ -43,7 +44,7 @@ const StyledPopupFront = styled.div<{expand? : boolean}>`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #f9f9f9;
+    background-color: ${LightTheme.palette.light};
     color: black;
 `;
 
@@ -56,15 +57,6 @@ interface PopupProps {
 
 //User page does import our table component and is bound to our react routing system
 const Popup = ({ rect, popup, height, width }:PopupProps) : ReactElement => {
-
-    const [data, setData] = useState()
-    const [rectTop, setRectTop] = useState(0)
-    const [rectLeft, setRectLeft] = useState(0)
-    const [rectRight, setRectRight] = useState(0)
-    const [rectHeight, setRectHeight] = useState(0)
-
-    const [expandPopup, setExpandPopup] = useState(false)
-    const [rectBottom, setRectBottom] = useState(0)
 
     var wd = window.innerWidth;
     var ht = window.innerHeight;

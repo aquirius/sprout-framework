@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Snack } from '../../components/Snack';
 import { json } from 'stream/consumers';
+import { LightTheme } from '../../schema/color';
 
 
 const StyledLoginForm = styled.div`
@@ -34,7 +35,7 @@ const StyledLoginFormInput = styled.input`
 `;
 
 const StyledLoginFormSubmit = styled.button`
-  background: #63ac20;
+  background: ${LightTheme.palette.secondary};
   color: white;
   padding: 1rem 2rem;
   font-size: 2rem;

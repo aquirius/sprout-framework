@@ -2,9 +2,10 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { LightTheme } from '../../schema/color';
 
 const StyledButton = styled.button`
-  background: #63ac20;
+  background: ${LightTheme.palette.secondary};
   color: white;
   padding: 1rem 2rem;
   font-size: 2rem;

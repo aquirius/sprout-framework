@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Button } from '../button/Button';
 import { useNavigate } from 'react-router-dom';
+import { LightTheme } from '../../schema/color';
 
 interface CloudProps {
     x : number;
@@ -90,16 +91,16 @@ return (
                 </StyledButtonFront>
                 <StyledCloudAnimator>
                     <StyledCloudWrapper>
-                        <StyledCloud color={"#63ac20"} x={48} y={0} opacity={"1"}/>
+                        <StyledCloud color={LightTheme.palette.primary} x={48} y={0} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud color={"#63ac20"} x={48} y={3} opacity={"1"}/>
+                        <StyledCloud color={LightTheme.palette.primary} x={48} y={3} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud color={"#63ac20"} x={48} y={5} opacity={"1"}/>
+                        <StyledCloud color={LightTheme.palette.primary} x={48} y={5} opacity={"1"}/>
                     </StyledCloudWrapper>
                     <StyledCloudWrapper>
-                        <StyledCloud color={"#63ac20"} x={48} y={7} opacity={"1"}/>
+                        <StyledCloud color={LightTheme.palette.primary} x={48} y={7} opacity={"1"}/>
                     </StyledCloudWrapper>
                 </StyledCloudAnimator>
 

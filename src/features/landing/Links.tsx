@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Grid, GridElement } from '../../components/Grid';
+import { LightTheme } from '../../schema/color';
 
 const StyledLandingLinks = styled.div`
-    background-color: #095a04;
+    background-color: ${LightTheme.palette.secondary};
     text-align:center;
     z-index: 2;
     border-radius: 25px;

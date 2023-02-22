@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { useAPIPost } from '../../api/api';
+import { LightTheme } from '../../schema/color';
 
 
 interface PotSettingsProps {
@@ -38,7 +39,7 @@ const StyledPotSettingsFormInput = styled.input`
 `;
 
 const StyledPotSettingsFormSubmit = styled.button`
-  background: #63ac20;
+  background: ${LightTheme.palette.secondary};
   color: white;
   padding: 1rem 2rem;
   font-size: 2re m;

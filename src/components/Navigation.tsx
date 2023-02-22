@@ -6,9 +6,10 @@ import React, { ReactElement, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Grid, GridElement } from './Grid';
+import { LightTheme } from '../schema/color';
 
 const StyledNavbar = styled.div<{expand: boolean}>`
-  background: ${(props) => props.expand ? "#f9f9f9" : "#095a04"};
+  background: ${(props) => props.expand ? LightTheme.palette.light : LightTheme.palette.secondary};
   width: ${(props) => props.expand ? "10vw" : "5vw"};
   color: ${(props) => props.expand ? "black" : "white"};
   min-width: 75px;

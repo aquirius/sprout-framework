@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { useAPIPost } from '../../api/api';
+import { LightTheme } from '../../schema/color';
+import { Button } from '../button/Button';
 
 
 interface StackSettingsProps {
@@ -38,11 +40,12 @@ const StyledStackSettingsFormInput = styled.input`
 `;
 
 const StyledStackSettingsFormSubmit = styled.button`
-  background: #63ac20;
+  background: ${LightTheme.palette.secondary};
   color: white;
   padding: 1rem 2rem;
   font-size: 2re m;
   border-radius: 4px;
+  border: none;
 `;
 const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
   //initialize our form with empty states

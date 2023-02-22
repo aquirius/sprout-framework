@@ -1,6 +1,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { LightTheme } from '../schema/color';
 
 const StyledCard = styled.div<{expand?: boolean, height?:number, width?:number}>`
     background-color: transparent;
@@ -20,17 +21,16 @@ const StyledCardContainer = styled.div<{expand? : boolean}>`
     ${(props) => props.expand ? "transform: rotateY(180deg)" : ""};
 `;
 
-
 const StyledCardFront = styled.div<{expand? : boolean, colorFront?: string}>`
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    ${(props) => !props.colorFront ? "background-color: #f9f9f9" : "background-color: "+props.colorFront};
-
+    background-color: ${(props) => !props.colorFront ? LightTheme.palette.light : props.colorFront};
     color: black;
 `;
+
 const StyledCardClick = styled.div<{expand? : boolean}>`
     position: absolute;
     width: 100%;
@@ -45,7 +45,7 @@ const StyledCardBack = styled.div<{expand? : boolean, colorBack?: string}>`
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    ${(props) => !props.colorBack ? "background-color: #095a04" : "background-color: "+props.colorBack};
+    background-color: ${(props) => !props.colorBack ? LightTheme.palette.light : props.colorBack};
     transform: rotateY(180deg);
 `;
 

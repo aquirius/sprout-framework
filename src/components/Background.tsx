@@ -1,12 +1,13 @@
 
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+import { LightTheme } from '../schema/color';
 
 const StyledBackground = styled.div<{expand?: boolean}>`
   position fixed;
   width: 100%;
   z-index: -1;
-  background: linear-gradient(90deg, #63ac20 0%, #095a04 100%);
+  background: linear-gradient(90deg, ${LightTheme.palette.primary} 0%, ${LightTheme.palette.secondary} 100%);
   height: ${(props) => props.expand ? "300px" : "150px"};
   transform: skew(30deg, 15deg);
   top: 0;
