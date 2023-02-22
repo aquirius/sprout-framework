@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { LightTheme } from '../../schema/color';
+import { Button } from '../button/Button';
 
 const StyledRegisterForm = styled.div`
   max-width: 500px;
@@ -30,14 +31,6 @@ const StyledRegisterFormInput = styled.input`
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-`;
-
-const StyledRegisterFormSubmit = styled.button`
-  background: ${LightTheme.palette.secondary};
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 2rem;
-  border-radius: 4px;
 `;
 
 const Register = () : ReactElement => {
@@ -132,7 +125,7 @@ const Register = () : ReactElement => {
           <StyledRegisterFormInput {...register("repeatPassword", {required: true})} type={"password"} onChange={(e) => setRepeatPassword(e.target.value)}/>
           {errors.repeatPassword && <p>Repeat password is required.</p>}
 
-          <StyledRegisterFormSubmit type={"submit"}>submit</StyledRegisterFormSubmit>
+          <Button type={"submit"} content='submit'></Button>
         </StyledRegisterFormContent>
         {message && <Snack danger message={message}/> }  
       </StyledRegisterForm>

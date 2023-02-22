@@ -9,21 +9,22 @@ const StyledButton = styled.button`
   color: white;
   padding: 1rem 2rem;
   font-size: 2rem;
-  border-radius: 4rem;
+  border-radius: 2.5rem;
   border: none;
   box-shadow: none;
 `;
 
 interface ButtonProps {
   content?: string
+  type?: "button" | "submit" | "reset"
   onClick?: () => void
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Button = ({content, onClick} : ButtonProps) : ReactElement => {
+const Button = ({type, content, onClick} : ButtonProps) : ReactElement => {
   return (
     <>
-      <StyledButton onClick={onClick}>
+      <StyledButton type={type} onClick={onClick}>
         {content}
       </StyledButton>
     </>

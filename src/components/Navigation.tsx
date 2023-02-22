@@ -10,8 +10,9 @@ import { LightTheme } from '../schema/color';
 
 const StyledNavbar = styled.div<{expand: boolean}>`
   background: ${(props) => props.expand ? LightTheme.palette.light : LightTheme.palette.secondary};
-  width: ${(props) => props.expand ? "10vw" : "5vw"};
+  width: ${(props) => props.expand ? "150px" : "75px"};
   color: ${(props) => props.expand ? "black" : "white"};
+  z-index: 999;
   min-width: 75px;
   position: fixed;
   left: 0;

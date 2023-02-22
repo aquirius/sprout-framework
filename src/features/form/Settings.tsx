@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { LightTheme } from '../../schema/color';
+import { Button } from '../button/Button';
 
 
 interface SettingsProps {
@@ -37,13 +38,6 @@ const StyledSettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const StyledSettingsFormSubmit = styled.button`
-  background: ${LightTheme.palette.secondary};
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 2re m;
-  border-radius: 4px;
-`;
 const Settings = ({uuid} : SettingsProps) : ReactElement => {
   //initialize our form with empty states
   const [displayName, setDisplayName] = useState("");
@@ -160,8 +154,7 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
           <StyledSettingsFormLabel>Repeat password</StyledSettingsFormLabel>
           <StyledSettingsFormInput {...register("repeatPassword")} type={"password"} onChange={(e) => setRepeatPassword(e.target.value)}/>
           {errors.repeatPassword && <p>Repeat password is required.</p>}
-
-          <StyledSettingsFormSubmit type={"submit"}>submit</StyledSettingsFormSubmit>
+          <Button type={"submit"} content='submit'></Button>
         </StyledSettingsFormContent>
         {message && <Snack danger message={message}/>}
       </StyledSettingsForm>

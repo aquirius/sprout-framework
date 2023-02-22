@@ -11,6 +11,7 @@ import { rejects } from 'assert';
 import { Popup } from '../components/Popup';
 import { Sidebar } from '../components/Sidebar';
 import { RecordWithTtl } from 'dns';
+import { CloudAnimation } from '../components/CloudAnimation';
 
 interface GreenhousePageProps {
 }
@@ -45,7 +46,8 @@ const GreenhousePage = ({}) : ReactElement => {
     
     return (
     <>
-    <Grid layout={'10vw auto'} dimension={"'a b'"}>
+    <CloudAnimation transform='' top={true}></CloudAnimation>
+    <Grid layout={'75px auto'} dimension={"'a b'"}>
         <GridElement position='a'>
             <Navbar uuid={uuid}/>
         </GridElement>

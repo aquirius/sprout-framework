@@ -13,6 +13,7 @@ const StyledGreenhouseHeader = styled.div`
 `;
 
 const StyledGreenhouseContent = styled.div`
+  margin-top: 2rem;
 `;
 
 interface GreenhouseProps {

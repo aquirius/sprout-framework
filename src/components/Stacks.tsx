@@ -99,7 +99,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
     <StyledStacks>
     <Grid layout={"100%"} dimension={"'a'"} >
       <GridElement position='a'>
-        <Flexbox align='center' direction='row' wrap='wrap'>
+        <Flexbox align='left' direction='row' wrap='wrap'>
           {data && data.stacks.map((value : any, index : number) => {
           return (
             <div key={index}>

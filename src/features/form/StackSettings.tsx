@@ -39,14 +39,6 @@ const StyledStackSettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const StyledStackSettingsFormSubmit = styled.button`
-  background: ${LightTheme.palette.secondary};
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 2re m;
-  border-radius: 4px;
-  border: none;
-`;
 const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
@@ -74,7 +66,7 @@ const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
           <StyledStackSettingsFormInput placeholder={"suid"} {...register("SUID")} type={"text"} onChange={(e) => {}}/>
           {errors.displayName && <p>Display name is required.</p>}
 
-          <StyledStackSettingsFormSubmit type={"submit"}>submit</StyledStackSettingsFormSubmit>
+          <Button type={"submit"} content='submit'></Button>
         </StyledStackSettingsFormContent>
       </StyledStackSettingsForm>
     </>

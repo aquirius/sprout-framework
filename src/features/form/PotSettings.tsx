@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { useAPIPost } from '../../api/api';
 import { LightTheme } from '../../schema/color';
+import { Button } from '../button/Button';
 
 
 interface PotSettingsProps {
@@ -38,13 +39,6 @@ const StyledPotSettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const StyledPotSettingsFormSubmit = styled.button`
-  background: ${LightTheme.palette.secondary};
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 2re m;
-  border-radius: 4px;
-`;
 const PotSettings = ({puid} : PotSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
@@ -71,8 +65,7 @@ const PotSettings = ({puid} : PotSettingsProps) : ReactElement => {
           {puid}
           <StyledPotSettingsFormInput placeholder={"puid"} {...register("PUID")} type={"text"} onChange={(e) => {}}/>
           {errors.displayName && <p>Display name is required.</p>}
-
-          <StyledPotSettingsFormSubmit type={"submit"}>submit</StyledPotSettingsFormSubmit>
+          <Button type={"submit"} content='submit'></Button>
         </StyledPotSettingsFormContent>
       </StyledPotSettingsForm>
     </>

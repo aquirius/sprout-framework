@@ -5,15 +5,16 @@ import { useForm } from 'react-hook-form';
 import { Snack } from '../../components/Snack';
 import { json } from 'stream/consumers';
 import { LightTheme } from '../../schema/color';
+import { Button } from '../button/Button';
 
 
 const StyledLoginForm = styled.div`
   max-width: 500px;
-  background: linear-gradient(90deg, #f9f9f9 0%, transparent 100%);
-  border-radius: 25px;
+  background: linear-gradient(90deg, ${LightTheme.palette.light} 0%, transparent 100%);
+  border-radius: 2.5rem;
   padding: 2rem 3rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; 
-  margin:10vw auto;
+  margin:75px auto;
 `;
 
 const StyledLoginFormHeader = styled.div`
@@ -29,17 +30,9 @@ const StyledLoginFormLabel = styled.label`
 
 const StyledLoginFormInput = styled.input`
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-`;
-
-const StyledLoginFormSubmit = styled.button`
-  background: ${LightTheme.palette.secondary};
-  color: white;
   padding: 1rem 2rem;
-  font-size: 2rem;
-  border-radius: 4px;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
 `;
 
 const Login = () : ReactElement => {
@@ -124,7 +117,7 @@ const Login = () : ReactElement => {
           <StyledLoginFormLabel>Password</StyledLoginFormLabel>
           <StyledLoginFormInput  {...register("password", {required : true})} type={"password"} onChange={(e) => setPassword(e.target.value)}/>
           {errors.password && <p>Password is required.</p>}
-          <StyledLoginFormSubmit type={"submit"}>submit</StyledLoginFormSubmit>
+          <Button type={"submit"} content="submit"></Button>
         </StyledLoginFormContent>
         {message && <Snack danger message={message}/>}
       </StyledLoginForm>

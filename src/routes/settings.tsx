@@ -14,7 +14,7 @@ const UserSettingsPage = ({}) : ReactElement => {
     const { uuid } = useParams();
     return (
     <>
-    <Grid layout={'10vw 80vw'} dimension={"'a b'"}>
+    <Grid layout={'75px auto'} dimension={"'a b'"}>
         <GridElement position='a'>
             <Navbar uuid={uuid}/>
         </GridElement>
