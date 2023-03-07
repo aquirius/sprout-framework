@@ -37,11 +37,15 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
       }
       return res.json()
     }).then((json)=> {
-      setSuccess(true)
-      setBusy(false)
       setData(json)
       return;
-    }).catch(() => undefined)
+    }).finally(() => {
+      setSuccess(true)
+      setBusy(false)
+    }).catch((err) => {
+      setSuccess(false)
+      setBusy(false)
+    })
   },[versionState, target])
 
   // console.log({

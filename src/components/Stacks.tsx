@@ -58,15 +58,14 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   const [pots, setPots] = useState<GetPots>()
   const [suid, setSuid] = useState(0)
   const [sidebar, setSidebar] = useState(false)
-  const [expand, setExpand] = useState(true)
 
 
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState("")
   const [stackUUID, setStackUUID] = useState();
 
-  const {data, get} = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack");
-  const {postVersion, post} = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
+  const getStack = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack");
+  const addStack = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
 
 
   const onEditStack = (suid : any, event : React.MouseEvent) => {
@@ -76,31 +75,28 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   }
 
   useEffect(() => {
-    get()
-    if (loading || !data){
+    getStack.get()
+    if (loading || !getStack.data){
       return
     }
     setMessage("200")
     setLoading(false)
-  }, [postVersion])
+  }, [addStack.postVersion])
 
   //submit Handler submits our form with filled data
   //we fill out our user object with our useState hooks
   //we prevent default rendering, because we want to display a message
   const onAddStack = () => {
-    post()
+    addStack.post()
     setLoading(true)
   }
-
-  // onMouseEnter={() => setExpand(true)} onMouseLeave={() => setExpand(false)}
-
   return (
     <>
     <StyledStacks>
     <Grid layout={"100%"} dimension={"'a'"} >
       <GridElement position='a'>
         <Flexbox align='left' direction='row' wrap='wrap'>
-          {data && data.stacks.map((value : any, index : number) => {
+          {getStack.data && getStack.data.stacks.map((value : any, index : number) => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
@@ -117,8 +113,8 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
         })}
       </Flexbox>
       </GridElement>
-      <GridElement position='a' align='center'>
-        <IconButton size="8x" icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
+      <GridElement position='b' align='center'>
+        <IconButton size='2x' icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
       </GridElement>
     </Grid>
     </StyledStacks>
