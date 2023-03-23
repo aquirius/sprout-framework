@@ -1,5 +1,73 @@
 import { useCallback, useState } from "react";
 
+export interface APIRequest{
+	readonly payload?: any;
+}
+
+export interface APIPut {
+	readonly putSuccess: boolean;
+	readonly putPayload?: any;
+	readonly data?: any;
+	readonly putBusy: boolean;
+  readonly putVersion: number;
+  readonly put: () => void;
+}
+
+
+const useAPIPut = (target: string, method: string, request: APIRequest): APIPut => {
+  const [data, setData] = useState<any>()
+  const [success, setSuccess] = useState(false)
+  const [busy, setBusy] = useState(true)
+  const [versionState, setVersion] = useState(0)
+
+  var put = useCallback(() => {
+    const _request = new Request(target, {
+      method: "put",
+      body: JSON.stringify(request.payload),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+    });  
+    fetch(_request).then((res) => {
+      setVersion(versionState+1)
+      if(!res.ok){
+        setSuccess(false)
+        throw new Error("invalid post");
+      }
+      return res.json()
+    }).then((json)=> {
+      setData(json)
+      return;
+    }).finally(() => {
+      setSuccess(true)
+      setBusy(false)
+    }).catch((err) => {
+      setSuccess(false)
+      setBusy(false)
+    })
+  },[versionState, target])
+
+  // console.log({
+  //   postSuccess: success,
+  //   busy: busy,
+  //   version: versionState,
+  //   payload: request.payload,
+	// 	data: data,
+  //   post:post,
+  // })
+
+  return {
+    putSuccess: success,
+    putBusy: false,
+    putVersion: versionState,
+    putPayload: request.payload,
+		data: data,
+    put:put,
+  }
+}
+
+
 export interface APIPost {
 	readonly postSuccess: boolean;
 	readonly postPayload?: any;
@@ -7,10 +75,6 @@ export interface APIPost {
 	readonly postBusy: boolean;
   readonly postVersion: number;
   readonly post: () => void;
-}
-
-export interface APIRequest{
-	readonly payload?: any;
 }
 
 const useAPIPost = (target: string, method: string, request: APIRequest): APIPost => {
@@ -122,4 +186,4 @@ const useAPIGet = (target: string): APIGet => {
 }
 
 
-export {useAPIPost, useAPIGet}
+export {useAPIPost, useAPIGet, useAPIPut}

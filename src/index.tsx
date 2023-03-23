@@ -15,7 +15,6 @@ import { faInstagram, faGithub, faGolang, faReact, faNodeJs } from "@fortawesome
 import { UserSettingsPage } from './routes/settings';
 import { LandingPage } from './routes/landing';
 import { ImpressumPage } from './routes/impressum';
-import { GreenhousePage } from './routes/greenhouse';
 import { GreenhousesPage } from './routes/greenhouses';
 
 library.add(
@@ -50,8 +49,7 @@ root.render(
     <Route path='/impressum' element={<ImpressumPage/>}></Route>
     <Route path='/login' element={<LoginPage/>}></Route>
     <Route path="/user/:uuid" element={<UserPage/>}></Route>
-    <Route path="/user/:uuid/greenhouse" element={<GreenhousesPage/>}></Route>
-    <Route path="/user/:uuid/greenhouse/:guid" element={<GreenhousePage/>}></Route>
+    <Route path="/user/:uuid/greenhouses" element={<GreenhousesPage/>}></Route>
     <Route path="/user/:uuid/settings" element={<UserSettingsPage/>}></Route>
     <Route path='/users' element={<UsersPage/>}></Route>
   </Routes>

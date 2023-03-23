@@ -21,12 +21,14 @@ const StyledGreenhouseSettings = styled.div<{expand:boolean}>`
   transition:all 0.5s ease
 `;
 
-const StyledGreenhouses = styled.div`
+const StyledGreenhouseButton = styled.div`
+  height: 50px;
+  text-align: center;
 `;
 
 const StyledGreenhouse = styled.div`
   position: relative;
-  margin: 2rem 0;
+  margin: 2rem;
   &:hover ${StyledGreenhouseSettings}{
     top: -50px;
   }
@@ -45,18 +47,17 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
 
 
   const nav = useNavigate();
-  const getGreenhouse = useAPIGet("/user/"+uuid+"/greenhouse");
-  const addGreenhouse = useAPIPost("/user/"+uuid+"/greenhouse", "add", {"payload" : {"UUID": uuid}});
+  const getGreenhouses = useAPIGet("/user/"+uuid+"/greenhouses");
+  const addGreenhouse = useAPIPost("/user/"+uuid+"/greenhouses", "add", {"payload" : {"UUID": uuid}});
 
   const onEditGreenhouse = (guid : any, event : React.MouseEvent) => {
     setSidebar(true)
     setGuid(guid)
-    console.log(guid)
   }
 
   useEffect(() => {
-    getGreenhouse.get()
-    if (loading || !getGreenhouse.data){
+    getGreenhouses.get()
+    if (loading || !getGreenhouses.data){
       return
     }
     setMessage("200")
@@ -72,25 +73,24 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
     <>
     <StyledGreenhouse>
      <Flexbox align='center' direction='row' wrap='wrap'>
-        {getGreenhouse.data && getGreenhouse.data.greenhouses.map((value : any, index : number) => {
+        {getGreenhouses.data && getGreenhouses.data.greenhouses.map((value : any, index : number) => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
               <StyledGreenhouse>
                 <StyledGreenhouseSettings expand={true}>
                   <IconButton size='2x' icon={faPen as IconProp} onClick={(e) => onEditGreenhouse(value.GUID, e)}></IconButton>
-                  {value.GUID}
                 </StyledGreenhouseSettings>
-                <Greenhouse uuid={uuid ? uuid : 0} guid={guid ? guid : 0}/>
-                </StyledGreenhouse>
+                <Greenhouse uuid={uuid} guid={value.GUID} onClick={() => {}}/>
+              </StyledGreenhouse>
             </FlexboxElement>
             </div>
           );
         })}
-      <GridElement position='b' align='center'>
-        <IconButton size='2x' icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton>
-      </GridElement>
-        </Flexbox>
+      </Flexbox>
+      <StyledGreenhouseButton>
+        <IconButton size='4x' icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton>
+      </StyledGreenhouseButton>
     </StyledGreenhouse>
     <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
         <GreenhouseSettings guid={guid}></GreenhouseSettings>

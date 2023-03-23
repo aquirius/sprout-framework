@@ -26,6 +26,7 @@ const StyledStackSettings = styled.div<{expand:boolean}>`
 const StyledStacks = styled.div`
 `;
 
+
 const StyledStack = styled.div`
   position: relative;
   margin: 2rem 0;
@@ -67,7 +68,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   const getStack = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack");
   const addStack = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
 
-
   const onEditStack = (suid : any, event : React.MouseEvent) => {
     setSidebar(true)
     setSuid(suid)
@@ -93,7 +93,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
   return (
     <>
     <StyledStacks>
-    <Grid layout={"100%"} dimension={"'a'"} >
+    <Grid layout={""} dimension={"'a'"} >
       <GridElement position='a'>
         <Flexbox align='left' direction='row' wrap='wrap'>
           {getStack.data && getStack.data.stacks.map((value : any, index : number) => {
@@ -113,7 +113,7 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
         })}
       </Flexbox>
       </GridElement>
-      <GridElement position='b' align='center'>
+      <GridElement position='a' align='center'>
         <IconButton size='2x' icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
       </GridElement>
     </Grid>

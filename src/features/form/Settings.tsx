@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Snack } from '../../components/Snack';
 import { LightTheme } from '../../schema/color';
 import { Button } from '../button/Button';
+import { useAPIPut } from '../../api/api';
 
 
 interface SettingsProps {
@@ -52,17 +53,21 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
 
   const {register, handleSubmit, formState: {errors}} = useForm();
   const state = {
-    "DisplayName" :"",
-    "FirstName" :"",
-    "LastName" :"",
-    "Email" :""
+    "uuid": uuid,
+    "display_name" :"",
+    "first_name" :"",
+    "last_name" :"",
+    "email" :""
   }
   const [data, setData] = useState(state)
   const [loading, setLoading] = useState(false)
+  const editUser = useAPIPut("/users", "put", payload)
+
 
   var cookie: string;
   var recipes: string[];
   var sessionIDRecipe: string | undefined;
+  var payload: any;
   cookie = document.cookie
   recipes = cookie.split('; ')
 
@@ -89,6 +94,27 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
     .finally(() => setLoading(false))
   }, [uuid, loading])
 
+
+
+  const useSettings = function(){
+    if(!displayName && !firstName && !lastName && !email){
+      return 
+    }
+
+    payload = {"payload": {
+      "uuid": uuid,
+      "display_name": displayName,
+      "first_name":firstName,
+      "last_name":lastName,
+      "email": email
+    }}
+
+
+    setLoading(true)
+
+    nav("/user/"+uuid)
+  }
+
   //edit Handler calls our backend with edited data
   //our db updates the user with given uuid
   //we set our loading to true and let our useEffect hook change is as soon as it is done fetching our modified user list again
@@ -98,30 +124,18 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
       return 
     }
 
-    setLoading(true)
-    const request = new Request("/users", {
-        method: "put",
-        body: JSON.stringify({
-          uuid: uuid,
-          displayName: displayName,
-          firstName: firstName,
-          lastName: lastName,
-          email: email
-        }),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
+    payload = {"payload": {
+      "uuid": uuid,
+      "display_name": displayName,
+      "first_name":firstName,
+      "last_name":lastName,
+      "email": email
+    }}
 
-    fetch(request).then(res => {
-        if (res.status === 200) {
-            nav("/user/"+uuid)
-            return
-        }
-    }).catch(error => {
-        console.log(error);
-    });
+    console.log(editUser.putPayload)
+    editUser.put()
+
+    nav("/user/"+uuid)
   }
 
   return (
@@ -132,19 +146,19 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
         </StyledSettingsFormHeader>
         <StyledSettingsFormContent onSubmit={handleSubmit(handleEdit)}>
           <StyledSettingsFormLabel>Display Name</StyledSettingsFormLabel>
-          <StyledSettingsFormInput placeholder={data && data["DisplayName"]} {...register("displayName")} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>
+          <StyledSettingsFormInput placeholder={data && data["display_name"]} {...register("displayName")} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>
           {errors.displayName && <p>Display name is required.</p>}
 
           <StyledSettingsFormLabel>First Name</StyledSettingsFormLabel>
-          <StyledSettingsFormInput placeholder={data && data["FirstName"]} {...register("firstName")} type={"text"} onChange={(e) => setFirstName(e.target.value)}/>
+          <StyledSettingsFormInput placeholder={data && data["first_name"]} {...register("firstName")} type={"text"} onChange={(e) => setFirstName(e.target.value)}/>
           {errors.firstName && <p>First Name is required.</p>}
 
           <StyledSettingsFormLabel>Last Name</StyledSettingsFormLabel>
-          <StyledSettingsFormInput placeholder={data && data["LastName"]} {...register("lastName")} type={"text"} onChange={(e) => setLastName(e.target.value)}/>
+          <StyledSettingsFormInput placeholder={data && data["last_name"]} {...register("lastName")} type={"text"} onChange={(e) => setLastName(e.target.value)}/>
           {errors.lastName && <p>Last name is required.</p>}
 
           <StyledSettingsFormLabel>Email</StyledSettingsFormLabel>
-          <StyledSettingsFormInput placeholder={data && data["Email"]} {...register("email")} type={"email"} onChange={(e) => setEmail(e.target.value)}/>
+          <StyledSettingsFormInput placeholder={data && data["email"]} {...register("email")} type={"email"} onChange={(e) => setEmail(e.target.value)}/>
           {errors.email && <p>Email is required.</p>}
 
           <StyledSettingsFormLabel>Password</StyledSettingsFormLabel>

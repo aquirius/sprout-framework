@@ -5,6 +5,7 @@ import { Background } from '../components/Background';
 import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
 import { Greenhouses } from '../components/Greenhouses';
+import { CloudAnimation } from '../components/CloudAnimation';
 
 interface GreenhousePageProps {
 }
@@ -23,6 +24,7 @@ const GreenhousesPage = ({}) : ReactElement => {
     }
     return (
     <>
+    <CloudAnimation transform='' top={true}></CloudAnimation>
     <Grid layout={'75px auto'} dimension={"'a b'"}>
         <GridElement position='a'>
             <Navbar uuid={uuid}/>
@@ -31,10 +33,10 @@ const GreenhousesPage = ({}) : ReactElement => {
             <Greenhouses uuid={userID}/>
         </GridElement>
     </Grid>
-    <Background/>
     </>
 );
 }
+
 
   
 export { GreenhousesPage }
