@@ -1,10 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Snack } from '../../components/Snack';
-import { useAPIPost } from '../../api/api';
-import { LightTheme } from '../../schema/color';
 import { Button } from '../button/Button';
 
 
@@ -51,6 +47,7 @@ const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
   //const getStackSettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "get", {"payload" : {"puid": puid}});
 
 
+  
   useEffect(() => {    
   }, [loading])
 
@@ -65,7 +62,6 @@ const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
           {suid}
           <StyledStackSettingsFormInput placeholder={"suid"} {...register("SUID")} type={"text"} onChange={(e) => {}}/>
           {errors.displayName && <p>Display name is required.</p>}
-
           <Button type={"submit"} content='submit'></Button>
         </StyledStackSettingsFormContent>
       </StyledStackSettingsForm>

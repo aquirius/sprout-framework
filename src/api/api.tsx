@@ -29,6 +29,16 @@ const useAPIPut = (target: string, method: string, request: APIRequest): APIPut 
           "Content-Type": "application/json"
       }
     });  
+
+
+  //     console.log({
+  //   postSuccess: success,
+  //   busy: busy,
+  //   version: versionState,
+  //   payload: request.payload,
+	// 	data: data,
+  //   post: "",
+  // })
     fetch(_request).then((res) => {
       setVersion(versionState+1)
       if(!res.ok){
@@ -47,15 +57,6 @@ const useAPIPut = (target: string, method: string, request: APIRequest): APIPut 
       setBusy(false)
     })
   },[versionState, target])
-
-  // console.log({
-  //   postSuccess: success,
-  //   busy: busy,
-  //   version: versionState,
-  //   payload: request.payload,
-	// 	data: data,
-  //   post:post,
-  // })
 
   return {
     putSuccess: success,
@@ -112,14 +113,14 @@ const useAPIPost = (target: string, method: string, request: APIRequest): APIPos
     })
   },[versionState, target])
 
-  // console.log({
-  //   postSuccess: success,
-  //   busy: busy,
-  //   version: versionState,
-  //   payload: request.payload,
-	// 	data: data,
-  //   post:post,
-  // })
+  console.log({
+    postSuccess: success,
+    busy: busy,
+    version: versionState,
+    payload: request.payload,
+		data: data,
+    post:post,
+  })
 
   return {
     postSuccess: success,
@@ -168,13 +169,13 @@ const useAPIGet = (target: string): APIGet => {
     }).catch(() => undefined)
   },[versionState, target])
 
-  // console.log({
-  //   getSuccess: success,
-  //   getBusy: busy,
-  //   getVersion: versionState,
-	// 	getData: data,
-  //   get:get,
-  // })
+  console.log({
+    getSuccess: success,
+    getBusy: busy,
+    getVersion: versionState,
+		getData: data,
+    get:get,
+  })
 
   return {
     getSuccess: success,

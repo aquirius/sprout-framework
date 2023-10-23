@@ -1,6 +1,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import styled,{ keyframes } from 'styled-components';
+import { LightTheme } from '../schema/color';
 
 const fadeIn = keyframes`
     from {bottom: 0; opacity: 0;} 
@@ -29,7 +30,7 @@ const StyledSnack = styled.div<{show?: boolean; danger: boolean}>`
     z-index: 1;
     left: 50%;
     bottom: 30px;
-    font-size: 17px;
+    font-size: ${LightTheme.font.size.big};
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     animation-name: ${(props) => props.show ? fadeIn : fadeOut};
     animation-duration: 2s;

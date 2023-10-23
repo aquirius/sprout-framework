@@ -61,13 +61,13 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
   }
   const [data, setData] = useState(state)
   const [loading, setLoading] = useState(false)
-  const editUser = useAPIPut("/users", "put", payload)
 
 
   var cookie: string;
   var recipes: string[];
   var sessionIDRecipe: string | undefined;
-  var payload: any;
+  let payload: any;
+
   cookie = document.cookie
   recipes = cookie.split('; ')
 
@@ -109,7 +109,6 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
       "email": email
     }}
 
-
     setLoading(true)
 
     nav("/user/"+uuid)
@@ -132,11 +131,9 @@ const Settings = ({uuid} : SettingsProps) : ReactElement => {
       "email": email
     }}
 
-    console.log(editUser.putPayload)
-    editUser.put()
-
     nav("/user/"+uuid)
   }
+
 
   return (
     <>

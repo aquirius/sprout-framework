@@ -1,14 +1,8 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAPIGet } from '../api/api';
-import { Flexbox } from './Flexbox';
-import { Grid, GridElement } from './Grid';
-import { Snack } from './Snack';
 import { LightTheme } from '../schema/color';
-import { IconButton } from '../features/button/IconButton';
-import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { Stacks } from './Stacks';
 
 const StyledGreenhouse = styled.div`

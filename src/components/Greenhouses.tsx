@@ -1,22 +1,20 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faBuilding, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAPIGet, useAPIPost } from '../api/api';
-import { Button } from '../features/button/Button';
-import { Card } from './Card';
 import { Flexbox, FlexboxElement } from './Flexbox';
-import { Grid, GridElement } from './Grid';
-import { Snack } from './Snack';
 import { IconButton } from '../features/button/IconButton';
 import { Sidebar } from './Sidebar';
 import { GreenhouseSettings } from '../features/form/GreenhouseSettings';
 import { Greenhouse } from './Greenhouse';
+import { LightTheme } from '../schema/color';
 
 
 const StyledGreenhouseSettings = styled.div<{expand:boolean}>`
   position: absolute;
+  font-size: ${LightTheme.font.size.medium};
   top: 0px;
   transition:all 0.5s ease
 `;
@@ -62,7 +60,7 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
     }
     setMessage("200")
     setLoading(false)
-  }, [addGreenhouse.postVersion])
+  }, [])
 
   const onAddGreenhouse = () => {
     addGreenhouse.post()

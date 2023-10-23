@@ -1,5 +1,5 @@
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Pots } from './Pots';
 import { LightTheme } from '../schema/color';
@@ -7,6 +7,7 @@ import { LightTheme } from '../schema/color';
 const StyledStack = styled.div<{expand?: boolean, height?:number, width?:number}>`
     position: relative;
     background-color: ${LightTheme.palette.light};
+    font-size: ${LightTheme.font.size.small};
     min-height: 75px;
     min-width: 150px;
     margin: 1rem;

@@ -106,11 +106,7 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
 
   return (
   <>
-    <StyledNavbar onClick={() => setExpand(!expand)} expand={expand}>
-      <StyledBurgerIcon> 
-        {expand && <FontAwesomeIcon size='2x' icon={"angle-left"}></FontAwesomeIcon>}
-        {!expand && <FontAwesomeIcon size='2x' icon={"angle-right"}></FontAwesomeIcon>}
-      </StyledBurgerIcon>
+    <StyledNavbar expand={false}>
       <StyledNavbarContent expand={expand}>
         <Grid rows='80%' layout={"100%"} dimension={"'a'"} >
           <GridElement position='a'>
