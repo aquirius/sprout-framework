@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { useAPIGet } from '../api/api';
 import { LightTheme } from '../schema/color';
 import { Stacks } from './Stacks';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faHouse, faSeedling, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const StyledGreenhouse = styled.div`
   position: relative;
@@ -46,11 +49,16 @@ const Greenhouse = ({uuid, guid, onClick} : GreenhouseProps) : ReactElement => {
 
   return (
     <StyledGreenhouse onClick={onClick}>
-      <h1>{uuid}</h1>
-      <h1>{guid}</h1>
-      <h1>{getGreenhouse.data && getGreenhouse.data.greenhouse.Type}</h1>
-      <h1>{getGreenhouse.data && getGreenhouse.data.greenhouse.Status}</h1>
-      <h1>{getGreenhouse.data && getGreenhouse.data.greenhouse.DisplayName}</h1>
+      {getGreenhouse.data && (
+        <>
+        {getGreenhouse.data.greenhouse.Type === "indoor" ?
+          <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouses")} size='1x' icon={faHouse as IconProp}/> : 
+          <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouses")} size='1x' icon={faSeedling as IconProp}/>}
+         {getGreenhouse.data.greenhouse.Status === "active" ?
+          <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouses")} size='1x' icon={faCheck as IconProp}/> : 
+          <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouses")} size='1x' icon={faXmark as IconProp}/>}
+        </>
+      )}
       <Stacks uuid={uuid} guid={guid} onClick={() => {}}></Stacks>
     </StyledGreenhouse>
   );

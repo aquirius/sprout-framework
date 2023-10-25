@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import { Flexbox, FlexboxElement } from './Flexbox';
 import { IconButton } from '../features/button/IconButton';
 import { Sidebar } from './Sidebar';
 import { GreenhouseSettings } from '../features/form/GreenhouseSettings';
-import { Greenhouse } from './Greenhouse';
 import { LightTheme } from '../schema/color';
 
 
@@ -19,9 +18,23 @@ const StyledGreenhouseSettings = styled.div<{expand:boolean}>`
   transition:all 0.5s ease
 `;
 
-const StyledGreenhouseButton = styled.div`
-  height: 50px;
+const StyledGreenhousesButton = styled.div`
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  height: 75px;
+  width: calc(100% - 75px);
+  vertical-align: middle;
+  color: white;
+  background: ${LightTheme.palette.secondary};
+`;
+
+const StyledGreenhouseContent = styled.div`
+  background: white;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  border-radius: 100%;
+  height: 100px;
+  width: 100px;
 `;
 
 const StyledGreenhouse = styled.div`
@@ -60,7 +73,7 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
     }
     setMessage("200")
     setLoading(false)
-  }, [])
+  }, [addGreenhouse.postVersion, loading])
 
   const onAddGreenhouse = () => {
     addGreenhouse.post()
@@ -69,27 +82,25 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
 
   return (
     <>
-    <StyledGreenhouse>
-     <Flexbox align='center' direction='row' wrap='wrap'>
+    <Flexbox align='center' direction='row' wrap='wrap'>
         {getGreenhouses.data && getGreenhouses.data.greenhouses.map((value : any, index : number) => {
           return (
             <div key={index}>
               <FlexboxElement align='flex-start' order={0} grow={0}>
-              <StyledGreenhouse>
-                <StyledGreenhouseSettings expand={true}>
+                <StyledGreenhouse>
+                  <StyledGreenhouseContent>
                   <IconButton size='2x' icon={faPen as IconProp} onClick={(e) => onEditGreenhouse(value.GUID, e)}></IconButton>
-                </StyledGreenhouseSettings>
-                <Greenhouse uuid={uuid} guid={value.GUID} onClick={() => {}}/>
-              </StyledGreenhouse>
-            </FlexboxElement>
+                  <IconButton size='2x' icon={faHouse as IconProp} onClick={(e) => nav("/user/"+uuid+"/greenhouse/"+value.GUID)}></IconButton>
+                  </StyledGreenhouseContent>
+                </StyledGreenhouse>
+              </FlexboxElement>
             </div>
           );
         })}
-      </Flexbox>
-      <StyledGreenhouseButton>
-        <IconButton size='4x' icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton>
-      </StyledGreenhouseButton>
-    </StyledGreenhouse>
+    </Flexbox>
+    <StyledGreenhousesButton>
+      <IconButton size='4x' icon={faPlus as IconProp} onClick={() => onAddGreenhouse()}></IconButton>
+    </StyledGreenhousesButton>
     <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
         <GreenhouseSettings guid={guid}></GreenhouseSettings>
     </Sidebar>

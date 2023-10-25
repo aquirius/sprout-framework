@@ -103,7 +103,6 @@ const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
                 <StyledStack>
                 <StyledStackSettings expand={true}>
                   <IconButton size='2x' icon={faPen as IconProp} onClick={(e) => onEditStack(value.SUID, e)}></IconButton>
-                  {value.SUID}
                 </StyledStackSettings>
                   <Stack onClick={() => {}} uuid={uuid ? uuid : 0} guid={guid ? guid : 0} suid={value.SUID ? value.SUID : 0}></Stack>
                 </StyledStack>

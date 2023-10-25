@@ -5,11 +5,12 @@ import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
 import { Greenhouses } from '../components/Greenhouses';
 import { CloudAnimation } from '../components/CloudAnimation';
+import { Greenhouse } from '../components/Greenhouse';
 
-interface GreenhousesPageProps {
+interface GreenhousePageProps {
 }
 //Register page does import our form component and is bound to our react routing system
-const GreenhousesPage = ({}) : ReactElement => {
+const GreenhousePage = ({}) : ReactElement => {
     const { uuid } = useParams();
     const { guid } = useParams();
     
@@ -21,6 +22,8 @@ const GreenhousesPage = ({}) : ReactElement => {
     if (guid != null){
         greenhouseID = parseInt(guid)
     }
+
+    console.log(greenhouseID, userID)
     return (
     <>
     <CloudAnimation transform='' top={true}></CloudAnimation>
@@ -29,7 +32,7 @@ const GreenhousesPage = ({}) : ReactElement => {
             <Navbar uuid={uuid}/>
         </GridElement>
         <GridElement position='b'>
-            <Greenhouses uuid={userID}/>
+            <Greenhouse uuid={userID} guid={greenhouseID}/>
         </GridElement>
     </Grid>
     </>
@@ -38,4 +41,4 @@ const GreenhousesPage = ({}) : ReactElement => {
 
 
   
-export { GreenhousesPage }
+export { GreenhousePage }
