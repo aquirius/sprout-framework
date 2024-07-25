@@ -46,11 +46,11 @@ const Skills = () : ReactElement => {
 return (
     <> 
         <StyledProjects>
-        <Flexbox align='center' direction='row' wrap='wrap'>
-          <FlexboxElement align='flex-start' order={1} grow={0}>
+        <Flexbox gap={0} align='center' direction='row' wrap='wrap'>
+          <FlexboxElement gap={0} align='flex-start' order={1} grow={0}>
             <Card childFront={<StyledProjectCoverImage url='register-sprout.png'></StyledProjectCoverImage>} childBack={<StyledProjectBack><FontAwesomeIcon size='4x' icon={faReact as IconProp}></FontAwesomeIcon><StyledProjectBackText>Login/Register component for webapp services. Built with React/Typescript styled with styled-components. Login/Register handler with built in session token</StyledProjectBackText><StyledProjectBackLink onClick={() => nav("users")}><FontAwesomeIcon size='4x' icon={faAngleRight as IconProp}></FontAwesomeIcon></StyledProjectBackLink></StyledProjectBack>}></Card>
           </FlexboxElement>
-          <FlexboxElement align='flex-center' order={1} grow={0}>
+          <FlexboxElement gap={0} align='flex-center' order={1} grow={0}>
             <Card childFront={<StyledProjectCoverImage url='band-prev.png'></StyledProjectCoverImage>} childBack={<StyledProjectBack><FontAwesomeIcon size='4x' icon={faReact as IconProp}></FontAwesomeIcon><StyledProjectBackText>Band template for upcoming music artists. Built with React/Typescript styled with styled-components</StyledProjectBackText><StyledProjectBackLink href='http://band.guth.io'><FontAwesomeIcon size='4x' icon={faAngleRight as IconProp}></FontAwesomeIcon></StyledProjectBackLink></StyledProjectBack>}></Card>
           </FlexboxElement>
         </Flexbox>

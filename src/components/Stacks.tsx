@@ -1,127 +1,162 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faMasksTheater, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
-import React, { ReactElement, ReactEventHandler, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { useAPIGet, useAPIPost } from '../api/api';
-import { Button } from '../features/button/Button';
-import { Card } from './Card';
-import { Flexbox, FlexboxElement } from './Flexbox';
-import { Grid, GridElement } from './Grid';
-import { Popup } from './Popup';
-import { Pots } from './Pots';
-import { Snack } from './Snack';
-import { Stack } from './Stack';
-import { IconButton } from '../features/button/IconButton';
-import { Sidebar } from './Sidebar';
-import { PotSettings } from '../features/form/PotSettings';
-import { StackSettings } from '../features/form/StackSettings';
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCircle,
+  faMasksTheater,
+  faPen,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import React, { ReactElement, useEffect, useState } from "react";
+import styled from "styled-components";
+import { useAPIGet, useAPIPost, useAPI } from "../api/api";
+import { Button } from "../features/button/Button";
+import { Card } from "./Card";
+import { Flexbox, FlexboxElement } from "./Flexbox";
+import { Grid, GridElement } from "./Grid";
+import { Popup } from "./Popup";
+import { Pots } from "./Pots";
+import { Snack } from "./Snack";
+import { Stack } from "./Stack";
+import { IconButton } from "../features/button/IconButton";
+import { Sidebar } from "./Sidebar";
+import { PotSettings } from "../features/form/PotSettings";
+import { StackSettings } from "../features/form/StackSettings";
+import { LightTheme } from "../schema/color";
 
-const StyledStackSettings = styled.div<{expand:boolean}>`
+const StyledStackSettings = styled.div<{ expand: boolean }>`
   position: absolute;
   top: 0px;
-  transition:all 0.5s ease
+  transition: all 0.5s ease;
+  width: 100%;
+  height: 25px;
+  background: ${LightTheme.palette.secondary};
 `;
 
-const StyledStacks = styled.div`
-`;
-
+const StyledStacks = styled.div``;
 
 const StyledStack = styled.div`
   position: relative;
-  margin: 2rem 0;
-  &:hover ${StyledStackSettings}{
-    top: -50px;
+  &:hover ${StyledStackSettings} {
+    top: -25px;
   }
 `;
 
 interface StacksProps {
-  uuid?: number
-  guid?: number
-  onClick : (event :any) => void
+  uuid?: number;
+  guid?: number;
+  onClick: (event: any) => void;
 }
 
-interface StacksProps {
-}
+interface StacksProps {}
 
 interface Pots {
-  puid?: number
+  puid?: number;
 }
 
 interface GetPots {
-  pots: Array<Pots>
+  pots: Array<Pots>;
 }
 
-//Button component draws us an html button with icon and size of the icon
-const Stacks = ({uuid, guid, onClick} : StacksProps) : ReactElement => {
+const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
+  const [stacks, setStacks] = useState<any>();
+  const [pots, setPots] = useState<GetPots>();
+  const [suid, setSuid] = useState(0);
+  const [sidebar, setSidebar] = useState(false);
 
-  const [stacks, setStacks] = useState<any>()
-  const [pots, setPots] = useState<GetPots>()
-  const [suid, setSuid] = useState(0)
-  const [sidebar, setSidebar] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-
-  const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState("")
-  const [stackUUID, setStackUUID] = useState();
-
-  const getStack = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack");
-  const addStack = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack", "add", {"payload" : {"UUID": uuid,"GUID": guid}});
-
-  const onEditStack = (suid : any, event : React.MouseEvent) => {
-    setSidebar(true)
-    setSuid(suid)
-    console.log(suid)
-  }
+  const getStack = useAPIGet(`/user/${uuid}/greenhouse/${guid}/stack`);
+  const addStack = useAPIPost(`/user/${uuid}/greenhouse/${guid}/stack`, "add", {
+    payload: { UUID: uuid, GUID: guid },
+  });
+  const addSprout = useAPIPost(
+    `/user/${uuid}/greenhouse/${guid}/stack/${suid}`,
+    "add",
+    { payload: { SUID: suid } }
+  );
 
   useEffect(() => {
-    getStack.get()
-    if (loading || !getStack.data){
-      return
+    setLoading(true);
+    getStack.get();
+    if (loading || !getStack.data) {
+      return;
     }
-    setMessage("200")
-    setLoading(false)
-  }, [addStack.postVersion])
+    setLoading(false);
+    setMessage("200");
+  }, [loading]);
 
-  //submit Handler submits our form with filled data
-  //we fill out our user object with our useState hooks
-  //we prevent default rendering, because we want to display a message
+  const onEditStack = (suid: any, event: React.MouseEvent) => {
+    setSidebar(true);
+    setSuid(suid);
+  };
+
   const onAddStack = () => {
-    addStack.post()
-    setLoading(true)
-  }
+    addStack.post();
+    setLoading(true);
+  };
+
+  const onAddSprout = (suid: any) => {
+    setSuid(suid);
+    addSprout.post();
+    setLoading(true);
+  };
+
   return (
     <>
-    <StyledStacks>
-    <Grid layout={""} dimension={"'a'"} >
-      <GridElement position='a'>
-        <Flexbox align='left' direction='row' wrap='wrap'>
-          {getStack.data && getStack.data.stacks.map((value : any, index : number) => {
-          return (
-            <div key={index}>
-              <FlexboxElement align='flex-start' order={0} grow={0}>
-                <StyledStack>
-                <StyledStackSettings expand={true}>
-                  <IconButton size='2x' icon={faPen as IconProp} onClick={(e) => onEditStack(value.SUID, e)}></IconButton>
-                </StyledStackSettings>
-                  <Stack onClick={() => {}} uuid={uuid ? uuid : 0} guid={guid ? guid : 0} suid={value.SUID ? value.SUID : 0}></Stack>
-                </StyledStack>
-              </FlexboxElement>
-            </div>
-          );
-        })}
-      </Flexbox>
-      </GridElement>
-      <GridElement position='a' align='center'>
-        <IconButton size='2x' icon={faPlus as IconProp} onClick={() => onAddStack()}></IconButton>
-      </GridElement>
-    </Grid>
-    </StyledStacks>
-    <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-      <StackSettings suid={suid}></StackSettings>
-    </Sidebar>
+      <StyledStacks>
+        <Grid layout={""} dimension={"'a'"}>
+          <GridElement position="a">
+            <Flexbox gap={1} align="left" direction="row" wrap="wrap">
+              {getStack.data &&
+                getStack.data.stacks.map((value: any, index: number) => {
+                  return (
+                    <div key={index}>
+                      <FlexboxElement
+                        gap={1}
+                        align="flex-start"
+                        order={0}
+                        grow={0}
+                      >
+                        <StyledStack>
+                          <StyledStackSettings expand={true}>
+                            <IconButton
+                              size="1x"
+                              icon={faPen as IconProp}
+                              onClick={(e) => onEditStack(value.SUID, e)}
+                            ></IconButton>
+                            <IconButton
+                              size="1x"
+                              icon={faCircle as IconProp}
+                              onClick={() => onAddSprout(value.SUID)}
+                            ></IconButton>
+                          </StyledStackSettings>
+                          <Stack
+                            onClick={() => {}}
+                            uuid={uuid ? uuid : 0}
+                            guid={guid ? guid : 0}
+                            suid={value.SUID ? value.SUID : 0}
+                          ></Stack>
+                        </StyledStack>
+                      </FlexboxElement>
+                    </div>
+                  );
+                })}
+            </Flexbox>
+          </GridElement>
+          <GridElement position="a" align="center">
+            <IconButton
+              size="2x"
+              icon={faPlus as IconProp}
+              onClick={() => onAddStack()}
+            ></IconButton>
+          </GridElement>
+        </Grid>
+      </StyledStacks>
+      <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
+        <StackSettings suid={suid} guid={guid} uuid={uuid}></StackSettings>
+      </Sidebar>
     </>
   );
-}
+};
 
-export { Stacks }
+export { Stacks };

@@ -10,7 +10,7 @@ import { Greenhouse } from '../components/Greenhouse';
 interface GreenhousePageProps {
 }
 //Register page does import our form component and is bound to our react routing system
-const GreenhousePage = ({}) : ReactElement => {
+const GreenhousePage = ({} : GreenhousePageProps) : ReactElement => {
     const { uuid } = useParams();
     const { guid } = useParams();
     
@@ -23,7 +23,6 @@ const GreenhousePage = ({}) : ReactElement => {
         greenhouseID = parseInt(guid)
     }
 
-    console.log(greenhouseID, userID)
     return (
     <>
     <CloudAnimation transform='' top={true}></CloudAnimation>

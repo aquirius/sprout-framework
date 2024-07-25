@@ -1,5 +1,5 @@
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled,{ keyframes } from 'styled-components';
 import { LightTheme } from '../schema/color';
 
@@ -47,17 +47,15 @@ interface SnackProps {
 
 //User page does import our table component and is bound to our react routing system
 const Snack = ({ message, danger }:SnackProps) : ReactElement => {
-
     const [show, setShow] = useState(true)
-
-return (
-    <>
-    <StyledSnack danger={danger} onClick={() => setShow(!show)} show={show}>
-        <StyledSnackContainer danger={danger} show={show} >
-            {message}
-        </StyledSnackContainer>
-    </StyledSnack>
-    </>
+    return (
+        <>
+        <StyledSnack danger={danger} onClick={() => setShow(!show)} show={show}>
+            <StyledSnackContainer danger={danger} show={show} >
+                {message}
+            </StyledSnackContainer>
+        </StyledSnack>
+        </>
 );
 }
   

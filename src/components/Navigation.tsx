@@ -1,8 +1,8 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faHouse, faSignOut, faSpa } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faSignOut, faSpa } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement, useEffect, useState} from 'react';
+import React, { ReactElement} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Grid, GridElement } from './Grid';
@@ -32,13 +32,6 @@ const StyledNavbarFooter = styled.div<{expand: boolean}>`
   bottom: 0;
 `;
 
-
-const StyledBurgerIcon = styled.div`
-  margin: 2rem auto;
-  width: 20px;
-  height  20px;
-`;
-
 const StyledActionIcons = styled.p<{expand: boolean}>`
   padding: 2rem;
 `;
@@ -58,7 +51,6 @@ interface NavbarProps {
 }
 
 const Navbar = ({uuid} : NavbarProps) : ReactElement => {
-  const [expand, setExpand] = useState(false)
   const nav = useNavigate();
   var cookie: string;
   var recipes: string[];
@@ -95,7 +87,6 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
 
     fetch(request)
     .then(res => {
-      console.log(res)
       if(res.ok){
         nav("/login", {replace: true})
       }
@@ -107,32 +98,32 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
   return (
   <>
     <StyledNavbar expand={false}>
-      <StyledNavbarContent expand={expand}>
+      <StyledNavbarContent expand={false}>
         <Grid rows='80%' layout={"100%"} dimension={"'a'"} >
           <GridElement position='a'>
-            <StyledActionIcons expand={expand}>
+            <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid)} size='2x' icon={"user"}/>
-              <StyledActionIconLabel expand={expand}>profile</StyledActionIconLabel>
+              <StyledActionIconLabel expand={false}>profile</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
           <GridElement row='' position="a">
-            <StyledActionIcons expand={expand}>
+            <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/greenhouses")} size='2x' icon={faSpa as IconProp}/>
-              <StyledActionIconLabel expand={expand}>home</StyledActionIconLabel>
+              <StyledActionIconLabel expand={false}>home</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
           <GridElement row='' position="a">
-            <StyledActionIcons expand={expand}>
+            <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}/>
-              <StyledActionIconLabel expand={expand}>settings</StyledActionIconLabel>
+              <StyledActionIconLabel expand={false}>settings</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
         </Grid>
       </StyledNavbarContent>
-      <StyledNavbarFooter expand={expand}>
-        <StyledActionIcons expand={expand}>
+      <StyledNavbarFooter expand={false}>
+        <StyledActionIcons expand={false}>
           <FontAwesomeIcon onClick={() => onSubmit()} size='2x' icon={faSignOut as IconProp}/>
-          <StyledActionIconLabel expand={expand}>logout</StyledActionIconLabel>
+          <StyledActionIconLabel expand={false}>logout</StyledActionIconLabel>
         </StyledActionIcons>
       </StyledNavbarFooter>
     </StyledNavbar>

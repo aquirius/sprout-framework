@@ -2,10 +2,14 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button } from '../button/Button';
+import { useAPIPost } from '../../api/api';
 
 
 interface StackSettingsProps {
+    uuid?: number
+    guid?: number
     suid?: number
+
   }
 
 const StyledStackSettingsForm = styled.div`
@@ -35,7 +39,7 @@ const StyledStackSettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
+const StackSettings = ({suid, guid, uuid} : StackSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
   const state = {
@@ -45,17 +49,19 @@ const StackSettings = ({suid} : StackSettingsProps) : ReactElement => {
   const [loading, setLoading] = useState(false)
 
   //const getStackSettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "get", {"payload" : {"puid": puid}});
+  const getSprout = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid, "get", {"payload" : {"suid": suid}});
 
 
   
-  useEffect(() => {    
-  }, [loading])
+  useEffect(() => {
+  }, [])
 
   return (
     <>
       <StyledStackSettingsForm>
         <StyledStackSettingsFormHeader>
           <h2>StackSettings</h2>
+          {getSprout.data && getSprout.data.sprout && getSprout.data.sprout.AirTemp}
         </StyledStackSettingsFormHeader>
         <StyledStackSettingsFormContent onSubmit={() => {}}>
           <StyledStackSettingsFormLabel>Display Name</StyledStackSettingsFormLabel>

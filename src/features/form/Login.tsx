@@ -1,9 +1,8 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Snack } from '../../components/Snack';
-import { json } from 'stream/consumers';
 import { LightTheme } from '../../schema/color';
 import { Button } from '../button/Button';
 
@@ -18,7 +17,7 @@ const StyledLoginForm = styled.div`
 `;
 
 const StyledLoginFormHeader = styled.div`
-color: inherit;
+  color: inherit;
 `;
 
 const StyledLoginFormContent = styled.form`
@@ -36,7 +35,6 @@ const StyledLoginFormInput = styled.input`
 `;
 
 const Login = () : ReactElement => {
-  //initialize our form with empty states
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -97,7 +95,6 @@ const Login = () : ReactElement => {
       return json
     })
     .then(res => {
-        console.log(res)
         nav("/user/"+res.uuid, {replace: true})
     }).catch(error => {
         console.log(error);

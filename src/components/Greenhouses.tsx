@@ -73,7 +73,7 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
     }
     setMessage("200")
     setLoading(false)
-  }, [addGreenhouse.postVersion, loading])
+  }, [addGreenhouse.postVersion])
 
   const onAddGreenhouse = () => {
     addGreenhouse.post()
@@ -82,11 +82,11 @@ const Greenhouses = ({uuid} : GreenhousesProps) : ReactElement => {
 
   return (
     <>
-    <Flexbox align='center' direction='row' wrap='wrap'>
+    <Flexbox gap={1} align='center' direction='row' wrap='wrap'>
         {getGreenhouses.data && getGreenhouses.data.greenhouses.map((value : any, index : number) => {
           return (
             <div key={index}>
-              <FlexboxElement align='flex-start' order={0} grow={0}>
+              <FlexboxElement align='flex-start' gap={1} order={0} grow={0}>
                 <StyledGreenhouse>
                   <StyledGreenhouseContent>
                   <IconButton size='2x' icon={faPen as IconProp} onClick={(e) => onEditGreenhouse(value.GUID, e)}></IconButton>

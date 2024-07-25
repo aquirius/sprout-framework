@@ -1,13 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Card } from './Card';
-import { Flexbox, FlexboxElement } from './Flexbox';
 import { Grid, GridElement } from './Grid';
 import { Snack } from './Snack';
 import { useNavigate } from 'react-router-dom';
-
-const StyledUser = styled.div`
-`;
 
 interface UserProps {
   uuid?: string
@@ -38,10 +32,6 @@ const User = ({uuid} : UserProps) : ReactElement => {
   return (
     <>
     <Grid layout={"80% 20%"} dimension={"'a b'"} >
-      <GridElement position='a'>
-        <Flexbox align='center' direction='row' wrap='wrap'>
-        </Flexbox>
-      </GridElement>
       <GridElement position='b'>
         <Snack danger message={message}></Snack>
       </GridElement>

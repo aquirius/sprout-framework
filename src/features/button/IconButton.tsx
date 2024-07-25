@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
-const StyledIconButton = styled.button`
-  height: 50px;
-  width: 50px;
+const StyledIconButton = styled.button<{size?: SizeProp}>`
+  height: ${(props) => props.size === "1x" ? "25px" : "50px"};
+  width: ${(props) => props.size === "1x" ? "25px" : "50px"};
   border: none;
   background: transparent;
 `;
@@ -21,7 +21,7 @@ interface IconButtonProps {
 const IconButton = ({size, icon, onClick} : IconButtonProps) : ReactElement => {
   return (
     <>
-      <StyledIconButton onClick={onClick}>
+      <StyledIconButton size={size} onClick={onClick}>
         {icon && <FontAwesomeIcon icon={icon} size={size}/>}
       </StyledIconButton>
     </>
