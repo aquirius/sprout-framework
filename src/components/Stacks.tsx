@@ -1,24 +1,13 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import {
-  faCircle,
-  faMasksTheater,
-  faPen,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useAPIGet, useAPIPost, useAPI } from "../api/api";
-import { Button } from "../features/button/Button";
-import { Card } from "./Card";
+import { useAPIGet, useAPIPost } from "../api/api";
 import { Flexbox, FlexboxElement } from "./Flexbox";
 import { Grid, GridElement } from "./Grid";
-import { Popup } from "./Popup";
-import { Pots } from "./Pots";
-import { Snack } from "./Snack";
 import { Stack } from "./Stack";
 import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
-import { PotSettings } from "../features/form/PotSettings";
 import { StackSettings } from "../features/form/StackSettings";
 import { LightTheme } from "../schema/color";
 
@@ -46,19 +35,7 @@ interface StacksProps {
   onClick: (event: any) => void;
 }
 
-interface StacksProps {}
-
-interface Pots {
-  puid?: number;
-}
-
-interface GetPots {
-  pots: Array<Pots>;
-}
-
 const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
-  const [stacks, setStacks] = useState<any>();
-  const [pots, setPots] = useState<GetPots>();
   const [suid, setSuid] = useState(0);
   const [sidebar, setSidebar] = useState(false);
 
@@ -66,14 +43,10 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
   const [message, setMessage] = useState("");
 
   const getStack = useAPIGet(`/user/${uuid}/greenhouse/${guid}/stack`);
-  const addStack = useAPIPost(`/user/${uuid}/greenhouse/${guid}/stack`, "add", {
-    payload: { UUID: uuid, GUID: guid },
-  });
-  const addSprout = useAPIPost(
-    `/user/${uuid}/greenhouse/${guid}/stack/${suid}`,
-    "add",
-    { payload: { SUID: suid } }
-  );
+
+  const addStack = useAPIPost(``, "add", {});
+
+  const addSprout = useAPIPost(``, "add", {});
 
   useEffect(() => {
     setLoading(true);
@@ -83,7 +56,8 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
     }
     setLoading(false);
     setMessage("200");
-  }, [loading]);
+    // eslint-disable-next-line
+  }, [loading, addStack.postSuccess, addSprout.postSuccess]);
 
   const onEditStack = (suid: any, event: React.MouseEvent) => {
     setSidebar(true);
@@ -91,13 +65,19 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
   };
 
   const onAddStack = () => {
-    addStack.post();
+    addStack.post(
+      { payload: { UUID: uuid, GUID: guid } },
+      `/user/${uuid}/greenhouse/${guid}/stack`
+    );
     setLoading(true);
   };
 
   const onAddSprout = (suid: any) => {
     setSuid(suid);
-    addSprout.post();
+    addSprout.post(
+      { payload: { SUID: suid } },
+      `/user/${uuid}/greenhouse/${guid}/stack/${suid}`
+    );
     setLoading(true);
   };
 
@@ -127,7 +107,7 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
                             <IconButton
                               size="1x"
                               icon={faCircle as IconProp}
-                              onClick={() => onAddSprout(value.SUID)}
+                              onClick={(e) => onAddSprout(value.SUID)}
                             ></IconButton>
                           </StyledStackSettings>
                           <Stack
@@ -136,6 +116,7 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
                             guid={guid ? guid : 0}
                             suid={value.SUID ? value.SUID : 0}
                           ></Stack>
+                          {value.SUID}
                         </StyledStack>
                       </FlexboxElement>
                     </div>

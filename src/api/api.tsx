@@ -80,7 +80,7 @@ export interface APIPost {
   readonly data?: any;
   readonly postBusy: boolean;
   readonly postVersion: number;
-  readonly post: () => void;
+  readonly post: (payload: any, target: string) => void;
 }
 
 const useAPIPost = (
@@ -93,38 +93,41 @@ const useAPIPost = (
   const [busy, setBusy] = useState(true);
   const [versionState, setVersion] = useState(0);
 
-  var post = useCallback(() => {
-    const _request = new Request(target, {
-      method: "post",
-      body: JSON.stringify(request.payload),
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Method: method,
-      },
-    });
-    fetch(_request)
-      .then((res) => {
-        setVersion(versionState + 1);
-        if (!res.ok) {
-          setSuccess(false);
-          throw new Error("invalid post");
-        }
-        return res.json();
-      })
-      .then((json) => {
-        setData(json);
-        return;
-      })
-      .finally(() => {
-        setSuccess(true);
-        setBusy(false);
-      })
-      .catch((err) => {
-        setSuccess(false);
-        setBusy(false);
+  var post = useCallback(
+    (payload: any, target: string) => {
+      const _request = new Request(target, {
+        method: "post",
+        body: JSON.stringify(request.payload || payload.payload),
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          Method: method,
+        },
       });
-  }, [versionState, target, method, request.payload]);
+      fetch(_request)
+        .then((res) => {
+          setVersion(versionState + 1);
+          if (!res.ok) {
+            setSuccess(false);
+            throw new Error("invalid post");
+          }
+          return res.json();
+        })
+        .then((json) => {
+          setData(json);
+          return;
+        })
+        .finally(() => {
+          setSuccess(true);
+          setBusy(false);
+        })
+        .catch((err) => {
+          setSuccess(false);
+          setBusy(false);
+        });
+    },
+    [versionState, target, method, request.payload]
+  );
 
   /*console.log({
     postSuccess: success,
@@ -179,7 +182,9 @@ const useAPIGet = (target: string): APIGet => {
       .then((json) => {
         setSuccess(true);
         setBusy(false);
-        setData(json);
+        if (json !== undefined) {
+          setData(json);
+        }
         return;
       })
       .catch((err) => err);

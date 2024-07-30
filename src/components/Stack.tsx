@@ -11,7 +11,7 @@ const StyledStack = styled.div<{
 }>`
   position: relative;
   background-color: ${LightTheme.palette.light};
-  font-size: ${LightTheme.font.size.small};
+  font-size: ${LightTheme.font.size.medium};
   min-height: 75px;
   min-width: 150px;
   box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
@@ -30,24 +30,36 @@ interface StackProps {
 const Stack = ({ uuid, guid, suid }: StackProps): ReactElement => {
   const [loading, setLoading] = useState(true);
 
-  const getSprout = useAPIGet(
-    "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid
-  );
+  // const getSprout = useAPIGet(
+  //   "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid
+  // );
+
+  const getSprout = useAPIPost("", "get", {});
 
   useEffect(() => {
     setLoading(true);
-    getSprout.get();
+    getSprout.post(
+      { payload: { suid: suid } },
+      "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid
+    );
     if (loading || !getSprout.data) {
       return;
     }
     setLoading(false);
+    // eslint-disable-next-line
   }, [loading]);
-
-  console.log("sprout", getSprout.data);
 
   return (
     <>
       <StyledStack>
+        <>{getSprout.data ? getSprout.data.sprout.SproutUID : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.AirTemp : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.Humidity : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.PH : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.ORP : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.TDS : ""}</>
+        <>{getSprout.data ? getSprout.data.sprout.WaterTemp : ""}</>
+
         <Pots onClick={() => {}} uuid={uuid} guid={guid} suid={suid}></Pots>
       </StyledStack>
     </>

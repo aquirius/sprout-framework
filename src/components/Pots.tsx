@@ -33,19 +33,15 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
 
   const nav = useNavigate();
 
-  const getPots = useAPIPost(
-    "/user/" + uuid + "/greenhouse/" + guid + "/pot",
-    "get",
-    { payload: { suid: suid } }
-  );
-  const addPots = useAPIPost(
-    "/user/" + uuid + "/greenhouse/" + guid + "/pot",
-    "add",
-    { payload: { suid: suid } }
-  );
+  //todo, getpots over get api
+  const getPots = useAPIPost("", "get", {});
+  const addPots = useAPIPost("", "add", {});
 
   const onAddPot = () => {
-    addPots.post();
+    addPots.post(
+      { payload: { suid: suid } },
+      "/user/" + uuid + "/greenhouse/" + guid + "/pot"
+    );
     setLoading(true);
   };
 
@@ -56,12 +52,15 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
 
   useEffect(() => {
     setLoading(true);
-    getPots.post();
+    getPots.post(
+      { payload: { suid: suid } },
+      "/user/" + uuid + "/greenhouse/" + guid + "/pot"
+    );
     if (loading || !getPots.data) {
       return;
     }
     setLoading(false);
-  }, [loading]);
+  }, [loading, addPots.postSuccess]);
 
   var water = 100;
   var fertilizer = 100;
