@@ -129,23 +129,37 @@ const useAPIPost = (
     [versionState, target, method, request.payload]
   );
 
-  /*console.log({
+  console.log({
     postSuccess: success,
     busy: busy,
     version: versionState,
     payload: request.payload,
 		data: data,
     post:post,
-  })*/
+  })
 
-  return {
-    postSuccess: success,
-    postBusy: false,
-    postVersion: versionState,
-    postPayload: request.payload,
-    data: data,
-    post: post,
-  };
+  if(data != undefined){
+    return {
+      postSuccess: success,
+      postBusy: false,
+      postVersion: versionState,
+      postPayload: request.payload,
+      data: data,
+      post: post,
+    };
+  } else {
+    console.error("no data");
+    return {
+      postSuccess: false,
+      postBusy: true,
+      postVersion: versionState,
+      postPayload: request.payload,
+      data: data,
+      post: post
+    }
+  }
+
+
 };
 
 export interface APIGet {

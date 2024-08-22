@@ -79,11 +79,11 @@ const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
   }, [loading, addGreenhouse.postVersion]);
 
   const onAddGreenhouse = () => {
+    setSidebar(true);
     addGreenhouse.post(
       { payload: { UUID: uuid } },
       `/user/${uuid}/greenhouses`
-    );
-    setLoading(true);
+    )
   };
 
   return (
