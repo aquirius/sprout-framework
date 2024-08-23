@@ -5,12 +5,27 @@ import { IconButton } from "../features/button/IconButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { LightTheme } from "../schema/color";
+import { useAPIGet } from "../api/api";
+import { time } from "console";
 
-const StyledPotContainer = styled.div<{ expand?: boolean }>`
+const StyledEmptyPotContainer = styled.div<{ expand?: boolean }>`
   position: relative;
   width: ${(props) => (props.expand ? "50px" : "100px")};
   height: ${(props) => (props.expand ? "50px" : "100px")};
   background: ${LightTheme.palette.light};
+  font-size: ${LightTheme.font.size.small};
+  border-radius: 100%;
+  overflow: hidden;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+`;
+
+const StyledPotContainer = styled.div<{ expand?: boolean, color?: string }>`
+  position: relative;
+  width: ${(props) => (props.expand ? "50px" : "100px")};
+  height: ${(props) => (props.expand ? "50px" : "100px")};
+  background: ${(props) => (props.color ? props.color : "red")};
   font-size: ${LightTheme.font.size.small};
   border-radius: 100%;
   overflow: hidden;
@@ -110,25 +125,47 @@ const StyledPot = styled.div<{
 `;
 
 interface PotProps {
+  uuid: number;
+  guid: number;
+  suid: number;
+  puid: number;
+
   water?: number;
   fertilizer?: number;
-  puid: number;
   onClick: (event: any) => void;
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({ water, fertilizer, puid, onClick }: PotProps): ReactElement => {
+const Pot = ({uuid, guid, suid, puid, water, fertilizer, onClick }: PotProps): ReactElement => {
   const [data, setData] = useState();
   const [rect, setRect] = useState<DOMRect>();
   const [expandPot, setExpandPot] = useState(true);
+  const [loading, setLoading] = useState(false);
+
 
   water = Math.floor(Math.random() * (100 - 0 + 1) + 0);
   fertilizer = Math.floor(Math.random() * (100 - 0 + 1) + 0);
 
+  const getPlant = useAPIGet( "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot/" +puid+ "/plant");
+
+  useEffect(() => {
+    getPlant.get();
+    if (loading || !getPlant.data) {
+      return;
+    }
+    setLoading(false);
+    // eslint-disable-next-line
+  }, [loading])
+
   return (
     <>
       <StyledPot onClick={onClick}>
-        <StyledPotContainer expand={expandPot}>
+      {getPlant.data && getPlant.data.plant.PLUID ?
+        <StyledPotContainer expand={expandPot} color={getPlant.data.plant.HarvestedTS > (Date.now() / 1000) ? "green" : "red"}>
+          {getPlant.data.plant.PLUID}
+        </StyledPotContainer>
+     :
+        <StyledEmptyPotContainer expand={expandPot}>
           <StyledPotWater expand={expandPot}>
             <StyledPotWaterLabel expand={expandPot}>
               {water}
@@ -139,8 +176,10 @@ const Pot = ({ water, fertilizer, puid, onClick }: PotProps): ReactElement => {
               {fertilizer}
             </StyledPotFertilizerLabel>
           </StyledPotFertilizer>
-        </StyledPotContainer>
+        </StyledEmptyPotContainer>}
       </StyledPot>
+      
+    
     </>
   );
 };

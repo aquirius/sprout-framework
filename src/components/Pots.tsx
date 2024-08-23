@@ -17,9 +17,9 @@ const StyledAddPotButton = styled.div`
 `;
 
 interface PotsProps {
-  uuid?: number;
-  guid?: number;
-  suid?: number;
+  uuid: number;
+  guid: number;
+  suid: number;
   onClick: (event: any) => void;
 }
 
@@ -40,7 +40,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   const onAddPot = () => {
     addPots.post(
       { payload: { suid: suid } },
-      "/user/" + uuid + "/greenhouse/" + guid + "/pot"
+      "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot"
     );
     setLoading(true);
   };
@@ -54,7 +54,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
     setLoading(true);
     getPots.post(
       { payload: { suid: suid } },
-      "/user/" + uuid + "/greenhouse/" + guid + "/pot"
+      "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot"
     );
     if (loading || !getPots.data) {
       return;
@@ -81,6 +81,9 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
                       grow={0}
                     >
                       <Pot
+                        uuid={uuid}
+                        guid={guid}
+                        suid={suid}
                         puid={value.PUID}
                         onClick={(e) => onEditPot(value.PUID, e)}
                         water={water}
@@ -101,7 +104,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
         </GridElement>
       </Grid>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <PotSettings puid={puid}></PotSettings>
+        <PotSettings uuid={uuid} guid={guid} suid={suid} puid={puid}></PotSettings>
       </Sidebar>
     </>
   );

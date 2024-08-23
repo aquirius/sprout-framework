@@ -9,6 +9,9 @@ import { Button } from '../button/Button';
 
 
 interface PotSettingsProps {
+    uuid?: number
+    guid?: number
+    suid?: number
     puid?: number
   }
 
@@ -39,7 +42,7 @@ const StyledPotSettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const PotSettings = ({puid} : PotSettingsProps) : ReactElement => {
+const PotSettings = ({uuid, guid, suid, puid} : PotSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
   const state = {
@@ -48,11 +51,10 @@ const PotSettings = ({puid} : PotSettingsProps) : ReactElement => {
   const [data, setData] = useState(state)
   const [loading, setLoading] = useState(false)
 
-  //const getPotSettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/pot", "get", {"payload" : {"puid": puid}});
+  const addPlant = useAPIPost("", "post", {});
 
 
-  useEffect(() => {    
-  }, [loading])
+
 
   return (
     <>
@@ -65,7 +67,7 @@ const PotSettings = ({puid} : PotSettingsProps) : ReactElement => {
           {puid}
           <StyledPotSettingsFormInput placeholder={"puid"} {...register("PUID")} type={"text"} onChange={(e) => {}}/>
           {errors.displayName && <p>Display name is required.</p>}
-          <Button type={"submit"} content='submit'></Button>
+          <Button onClick={() => addPlant.post({"payload" : {"puid": puid}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")} content='submit'></Button>
         </StyledPotSettingsFormContent>
       </StyledPotSettingsForm>
     </>
