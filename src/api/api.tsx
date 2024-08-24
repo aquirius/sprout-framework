@@ -148,13 +148,12 @@ const useAPIPost = (
       post: post,
     };
   } else {
-    console.error("no data");
     return {
       postSuccess: false,
       postBusy: true,
       postVersion: versionState,
       postPayload: request.payload,
-      data: data,
+      data: null,
       post: post
     }
   }

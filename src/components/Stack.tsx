@@ -19,6 +19,11 @@ const StyledStack = styled.div<{
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 `;
 
+const StyledStackInfo = styled.div`
+  brea-after: auto;
+`;
+
+
 interface StackProps {
   uuid: number;
   guid: number;
@@ -52,14 +57,16 @@ const Stack = ({ uuid, guid, suid }: StackProps): ReactElement => {
   return (
     <>
       <StyledStack>
-        <>{getSprout.data ? getSprout.data.sprout.SproutUID : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.AirTemp : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.Humidity : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.PH : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.ORP : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.TDS : ""}</>
-        <>{getSprout.data ? getSprout.data.sprout.WaterTemp : ""}</>
-
+        {getSprout.data && <>
+                <StyledStackInfo>SproutID : {getSprout.data ? getSprout.data.sprout.SproutUID : ""}</StyledStackInfo>
+                <StyledStackInfo>Air Temperature : {getSprout.data ? getSprout.data.sprout.AirTemp : ""}</StyledStackInfo>
+                <StyledStackInfo>Humidity : {getSprout.data ? getSprout.data.sprout.Humidity : ""}</StyledStackInfo>
+                <StyledStackInfo>PH - Level : {getSprout.data ? getSprout.data.sprout.PH : ""}</StyledStackInfo>
+                <StyledStackInfo>ORP : {getSprout.data ? getSprout.data.sprout.ORP : ""}</StyledStackInfo>
+                <StyledStackInfo>TDS : {getSprout.data ? getSprout.data.sprout.TDS : ""}</StyledStackInfo>
+                <StyledStackInfo>Water Temperature : {getSprout.data ? getSprout.data.sprout.WaterTemp : ""}</StyledStackInfo>
+                </>
+        }
         <Pots onClick={() => {}} uuid={uuid} guid={guid} suid={suid}></Pots>
       </StyledStack>
     </>

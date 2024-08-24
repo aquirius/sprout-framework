@@ -53,7 +53,17 @@ const PotSettings = ({uuid, guid, suid, puid} : PotSettingsProps) : ReactElement
 
   const addPlant = useAPIPost("", "post", {});
 
+  const postPotSettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/"+puid, "", {});
 
+  const onSubmit = (data: any) => {
+    postPotSettings.post({"payload" : 
+    {
+      "uuid": uuid,
+      "guid": guid,
+      "suid": suid,
+      "puid": puid
+    }}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/"+puid, );
+  }
 
 
   return (
@@ -62,7 +72,7 @@ const PotSettings = ({uuid, guid, suid, puid} : PotSettingsProps) : ReactElement
         <StyledPotSettingsFormHeader>
           <h2>PotSettings</h2>
         </StyledPotSettingsFormHeader>
-        <StyledPotSettingsFormContent onSubmit={() => {}}>
+        <StyledPotSettingsFormContent onSubmit={handleSubmit(onSubmit)}>
           <StyledPotSettingsFormLabel>Display Name</StyledPotSettingsFormLabel>
           {puid}
           <StyledPotSettingsFormInput placeholder={"puid"} {...register("PUID")} type={"text"} onChange={(e) => {}}/>

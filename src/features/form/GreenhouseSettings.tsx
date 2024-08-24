@@ -59,33 +59,25 @@ const GreenhouseSettings = ({uuid, guid} : GreenhouseSettingsProps) : ReactEleme
 
   const [loading, setLoading] = useState(false)
 
-  const putGreenhouseSettings = useAPIPut(
-    "/user/"+uuid+"/greenhouse/"+guid, "edit", 
-      {"payload" : 
-      {
-        "uuid": uuid,
-        "guid": guid,
-        "display_name": displayName,
-        "status" : "active", 
-        "zip" : zip,
-        "address" : address,
-        "destination" : destination,
-        "tempIn" : tempIn,
-        "tempOut" : tempOut,
-        "humidity" : humidity,
-        "brightness" : brightness,
-        "co2" : co2,
-      }}
-  );
+  const postGreenhouseSettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid, "", {});
 
   const onSubmit = (data: any) => {
-    putGreenhouseSettings.put();
+    postGreenhouseSettings.post({"payload" : 
+    {
+      "uuid": uuid,
+      "guid": guid,
+      "display_name": displayName,
+      "status" : "active", 
+      "zip" : zip,
+      "address" : address,
+      "destination" : destination,
+      "tempIn" : tempIn,
+      "tempOut" : tempOut,
+      "humidity" : humidity,
+      "brightness" : brightness,
+      "co2" : co2,
+    }}, "/user/"+uuid+"/greenhouse/"+guid, );
   }
-
-  // useEffect(() => {    
-  // }, [loading])
-  //          {errors.displayName && <p>Display name is required.</p>}
-
 
   return (
     <>
@@ -119,13 +111,13 @@ const GreenhouseSettings = ({uuid, guid} : GreenhouseSettingsProps) : ReactEleme
           <StyledGreenhouseSettingsFormInput placeholder={"co2"} {...register("co2")} type={"number"} onChange={(e) => setCo2(parseInt(e.target.value))}/>
 
           <StyledGreenhouseSettingsFormLabel><FontAwesomeIcon size='2x' icon={faBox as IconProp}/></StyledGreenhouseSettingsFormLabel>
-          <StyledGreenhouseSettingsFormInput placeholder={"greenhouse"} {...register("destination")} type={"radio"} value={"greenhouse"}/>
+          <StyledGreenhouseSettingsFormInput placeholder={"greenhouse"} {...register("destination")} type={"radio"} value={"greenhouse"} onClick={() => setDestination("greenhouse")}/>
 
           <StyledGreenhouseSettingsFormLabel><FontAwesomeIcon size='2x' icon={faHouse as IconProp}/></StyledGreenhouseSettingsFormLabel>
-          <StyledGreenhouseSettingsFormInput placeholder={"indoor"} {...register("destination")} type={"radio"} value={"indoor"}/>
+          <StyledGreenhouseSettingsFormInput placeholder={"indoor"} {...register("destination")} type={"radio"} value={"indoor"} onClick={() => setDestination("indoor")}/>
 
           <StyledGreenhouseSettingsFormLabel><FontAwesomeIcon size='2x' icon={faCloudSun as IconProp}/></StyledGreenhouseSettingsFormLabel>
-          <StyledGreenhouseSettingsFormInput placeholder={"outdoor"} {...register("destination")} type={"radio"} value={"outdoor"}/>
+          <StyledGreenhouseSettingsFormInput placeholder={"outdoor"} {...register("destination")} type={"radio"} value={"outdoor"} onClick={() => setDestination("outdoor")}/>
 
           <Button type={"submit"} content='submit'></Button>
         </StyledGreenhouseSettingsFormContent>

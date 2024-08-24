@@ -28,7 +28,7 @@ const Grid = ({dimension, layout, children, rows } : GridProps) : ReactElement =
     );
 }
 
-const StyledGridElement = styled.div<{position : string, align?: string, row?: string}>`
+const StyledGridElement = styled.div<{position? : string, align?: string, row?: string}>`
     display:grid;
     grid-area: ${(props) => props.position};
     grid-row-start: auto;
@@ -41,7 +41,7 @@ const StyledGridElement = styled.div<{position : string, align?: string, row?: s
 
 
 interface GridElementProps {
-    position: string;
+    position?: string;
     align?: string;
     children: ReactNode;
     row?: string;

@@ -43,9 +43,7 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
   const [message, setMessage] = useState("");
 
   const getStack = useAPIGet(`/user/${uuid}/greenhouse/${guid}/stack`);
-
   const addStack = useAPIPost(``, "add", {});
-
   const addSprout = useAPIPost(``, "add", {});
 
   useEffect(() => {
