@@ -42,7 +42,7 @@ const getDestinationBorder = (destination?: string): string => {
  }
 }
 
-const getCurrentHourBackground = (hour?: number): string => {
+export const getCurrentHourBackground = (hour?: number): string => {
   let currentHour = new Date().getHours();
   let gradients = "linear-gradient(";
   if(hour) {
@@ -223,33 +223,6 @@ const Greenhouse = ({ uuid, guid, onClick }: GreenhouseProps): ReactElement => {
           </Grid>
           
         </StyledGreenhouseBanner>
-        
-          {getGreenhouse.data.greenhouse.Type === "indoor" ? (
-            <FontAwesomeIcon
-              onClick={() => nav("/user/" + uuid + "/greenhouses")}
-              size="1x"
-              icon={faHouse as IconProp}
-            />
-          ) : (
-            <FontAwesomeIcon
-              onClick={() => nav("/user/" + uuid + "/greenhouses")}
-              size="1x"
-              icon={faSeedling as IconProp}
-            />
-          )}
-          {getGreenhouse.data.greenhouse.Status === "active" ? (
-            <FontAwesomeIcon
-              onClick={() => nav("/user/" + uuid + "/greenhouses")}
-              size="1x"
-              icon={faCheck as IconProp}
-            />
-          ) : (
-            <FontAwesomeIcon
-              onClick={() => nav("/user/" + uuid + "/greenhouses")}
-              size="1x"
-              icon={faXmark as IconProp}
-            />
-          )}
         </>
       )}
       <Stacks uuid={uuid} guid={guid} onClick={() => {}}></Stacks>

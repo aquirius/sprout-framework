@@ -23,13 +23,44 @@ interface PotsProps {
   onClick: (event: any) => void;
 }
 
-interface PotsProps {}
+export type PotProps = {
+  uuid: number;
+  guid: number;
+  suid: number;
+  puid: number;
+
+  plant?: Plant;
+
+  water?: number;
+  fertilizer?: number;
+  onClick: (event: any) => void;
+}
+
+type Nutrients = {
+  Carbon: number;
+  Hydrogen: number;
+  Oxygen: number;
+  Nitrogen: number;
+  Phosphorus: number;
+  Potassium: number;
+  Sulfur: number;
+  Calcium: number;
+  Magnesium: number;
+}
+
+type Plant = {
+  PLUID: number;
+  CreatedTS: number;
+  PlantedTS: number;
+  HarvestedTS: number;
+  Nutrients: Nutrients;
+}
 
 //Button component draws us an html button with icon and size of the icon
 const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   const [loading, setLoading] = useState(false);
   const [sidebar, setSidebar] = useState(false);
-  const [puid, setPuid] = useState(0);
+  const [puid, setPuid] = useState<any>();
 
   const nav = useNavigate();
 
@@ -46,8 +77,8 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   };
 
   const onEditPot = (puid: any, event: React.MouseEvent) => {
+    setPuid(puid.PUID);
     setSidebar(true);
-    setPuid(puid);
   };
 
   useEffect(() => {
@@ -67,11 +98,12 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
 
   return (
     <>
-      <Grid layout={"80% 20%"} dimension={"'a b'"}>
+      {getPots.data &&
+      (<><Grid layout={"80% 20%"} dimension={"'a b'"}>
         <GridElement position="a">
           <Flexbox gap={1} align="center" direction="row" wrap="wrap">
-            {getPots.data &&
-              getPots.data.pots.map((value: any, index: number) => {
+            
+              {getPots.data.pots.map((value: any, index: number) => {
                 return (
                   <div key={index}>
                     <FlexboxElement
@@ -85,7 +117,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
                         guid={guid}
                         suid={suid}
                         puid={value.PUID}
-                        onClick={(e) => onEditPot(value.PUID, e)}
+                        onClick={(e) => onEditPot(value, e)}
                         water={water}
                         fertilizer={fertilizer}
                       />
@@ -104,8 +136,9 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
         </GridElement>
       </Grid>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <PotSettings uuid={uuid} guid={guid} suid={suid} puid={puid}></PotSettings>
-      </Sidebar>
+        <PotSettings visible={sidebar} uuid={uuid} guid={guid} suid={suid} puid={puid}></PotSettings>
+      </Sidebar></>)
+      }
     </>
   );
 };

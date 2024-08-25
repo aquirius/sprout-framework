@@ -5,7 +5,7 @@ import { IconButton } from "../features/button/IconButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { LightTheme } from "../schema/color";
-import { useAPIGet } from "../api/api";
+import { useAPIGet, useAPIPost } from "../api/api";
 import { time } from "console";
 
 const StyledEmptyPotContainer = styled.div<{ expand?: boolean }>`
@@ -124,11 +124,33 @@ const StyledPot = styled.div<{
   border-radius: 50%;
 `;
 
-interface PotProps {
+type Nutrients = {
+  Carbon: number;
+  Hydogen: number;
+  Oxygen: number;
+  Nitrogen: number;
+  Phosphorus: number;
+  Potassium: number;
+  Sulfur: number;
+  Calcium: number;
+  Magnesium: number;
+}
+
+type Plant = {
+  PLUID: number;
+  CreatedTS: number;
+  PlantedTS: number;
+  HarvestedTS: number;
+  Nutrients: Nutrients;
+}
+
+type PotProps = {
   uuid: number;
   guid: number;
   suid: number;
   puid: number;
+
+  plant?: Plant;
 
   water?: number;
   fertilizer?: number;
@@ -137,8 +159,8 @@ interface PotProps {
 
 //User page does import our table component and is bound to our react routing system
 const Pot = ({uuid, guid, suid, puid, water, fertilizer, onClick }: PotProps): ReactElement => {
-  const [data, setData] = useState();
   const [rect, setRect] = useState<DOMRect>();
+  const [data, setData] = useState<Plant>();
   const [expandPot, setExpandPot] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -148,35 +170,41 @@ const Pot = ({uuid, guid, suid, puid, water, fertilizer, onClick }: PotProps): R
 
   const getPlant = useAPIGet( "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot/" +puid+ "/plant");
 
+  const handleEditPot = (pot: any) => {
+    onClick(pot);
+  }
+
   useEffect(() => {
     getPlant.get();
     if (loading || !getPlant.data) {
       return;
     }
+    setData(getPlant.data.plant);
+    console.log("getPlant", data);
     setLoading(false);
     // eslint-disable-next-line
   }, [loading])
 
   return (
     <>
-      <StyledPot onClick={onClick}>
-      {getPlant.data && getPlant.data.plant.PLUID ?
-        <StyledPotContainer expand={expandPot} color={getPlant.data.plant.HarvestedTS > (Date.now() / 1000) ? "green" : "red"}>
-          {getPlant.data.plant.PLUID}
-        </StyledPotContainer>
-     :
-        <StyledEmptyPotContainer expand={expandPot}>
+      <StyledPot onClick={() => handleEditPot(getPlant.data?.plant)}>
+
+      {getPlant.data?.plant.HarvestedTS
+        ? (<StyledPotContainer expand={expandPot} color={"grey"}>
+        </StyledPotContainer>)
+        : getPlant.data?.plant 
+        ? (<StyledPotContainer expand={expandPot} color={"green"}>
+        </StyledPotContainer>)
+        : (<StyledEmptyPotContainer expand={expandPot}>
           <StyledPotWater expand={expandPot}>
             <StyledPotWaterLabel expand={expandPot}>
-              {water}
             </StyledPotWaterLabel>
           </StyledPotWater>
           <StyledPotFertilizer expand={expandPot}>
             <StyledPotFertilizerLabel expand={expandPot}>
-              {fertilizer}
             </StyledPotFertilizerLabel>
           </StyledPotFertilizer>
-        </StyledEmptyPotContainer>}
+        </StyledEmptyPotContainer>)}
       </StyledPot>
       
     

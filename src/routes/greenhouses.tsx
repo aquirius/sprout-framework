@@ -5,9 +5,29 @@ import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
 import { Greenhouses } from '../components/Greenhouses';
 import { CloudAnimation } from '../components/CloudAnimation';
+import styled from 'styled-components';
 
 interface GreenhousesPageProps {
 }
+
+const StyledGreenhousesNavbar = styled.div`
+    width: 75px;
+    height: 100vh;
+
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+`;
+
+const StyledGreenhouses = styled.div`
+    width: calc(100vw - 75px);
+    height: 100vh;
+    display: block;
+    position: absolute;
+    left: 75px;
+    top: 0;
+`;
 //Register page does import our form component and is bound to our react routing system
 const GreenhousesPage = ({}) : ReactElement => {
     const { uuid } = useParams();
@@ -24,14 +44,12 @@ const GreenhousesPage = ({}) : ReactElement => {
     return (
     <>
     <CloudAnimation transform='' top={true}></CloudAnimation>
-    <Grid layout={'75px auto'} dimension={"'a b'"}>
-        <GridElement position='a'>
-            <Navbar uuid={uuid}/>
-        </GridElement>
-        <GridElement position='b'>
-            <Greenhouses uuid={userID}/>
-        </GridElement>
-    </Grid>
+    <StyledGreenhousesNavbar>
+        <Navbar uuid={uuid}/>
+    </StyledGreenhousesNavbar>
+    <StyledGreenhouses>
+        <Greenhouses uuid={userID}/>
+    </StyledGreenhouses>
     </>
 );
 }
