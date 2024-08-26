@@ -136,12 +136,30 @@ type Nutrients = {
   Magnesium: number;
 }
 
+type Crop = {
+  CUID: number;
+  CropName: string;
+  AirTempMin: number;
+  AirTempMax: number;
+  HumidityMin: number;
+  HumidityMax: number;
+  PHLevelMin: number;
+  PHLevelMax: number;
+  OrpMin: number;
+  OrpMax: number;
+  TdsMin: number;
+  TdsMax: number;
+  WaterTempMin: number;
+  WaterTempMax: number;
+}
+
 type Plant = {
   PLUID: number;
   CreatedTS: number;
   PlantedTS: number;
   HarvestedTS: number;
   Nutrients: Nutrients;
+  Crop: Crop;
 }
 
 type PotProps = {
@@ -158,7 +176,7 @@ type PotProps = {
 }
 
 //User page does import our table component and is bound to our react routing system
-const Pot = ({uuid, guid, suid, puid, water, fertilizer, onClick }: PotProps): ReactElement => {
+const Pot = ({uuid, guid, suid, puid, plant, water, fertilizer, onClick }: PotProps): ReactElement => {
   const [rect, setRect] = useState<DOMRect>();
   const [data, setData] = useState<Plant>();
   const [expandPot, setExpandPot] = useState(true);
@@ -168,31 +186,25 @@ const Pot = ({uuid, guid, suid, puid, water, fertilizer, onClick }: PotProps): R
   water = Math.floor(Math.random() * (100 - 0 + 1) + 0);
   fertilizer = Math.floor(Math.random() * (100 - 0 + 1) + 0);
 
-  const getPlant = useAPIGet( "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot/" +puid+ "/plant");
+  //const getPlant = useAPIGet( "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot/" +puid+ "/plant");
+  const now = Date.now() / 1000;
 
-  const handleEditPot = (pot: any) => {
-    onClick(pot);
+  const handleEditPot = (plant: any) => {
+    onClick(plant);
+    setLoading(true);
   }
-
-  useEffect(() => {
-    getPlant.get();
-    if (loading || !getPlant.data) {
-      return;
-    }
-    setData(getPlant.data.plant);
-    console.log("getPlant", data);
-    setLoading(false);
-    // eslint-disable-next-line
-  }, [loading])
 
   return (
     <>
-      <StyledPot onClick={() => handleEditPot(getPlant.data?.plant)}>
+      <StyledPot onClick={() => handleEditPot(plant)}>
 
-      {getPlant.data?.plant.HarvestedTS
+      {plant && plant.Crop && plant.HarvestedTS < now && plant.HarvestedTS !== 0
         ? (<StyledPotContainer expand={expandPot} color={"grey"}>
         </StyledPotContainer>)
-        : getPlant.data?.plant 
+        : plant?.Crop.CropName === "tomato"
+        ? (<StyledPotContainer expand={expandPot} color={"red"}>
+        </StyledPotContainer>)
+        : plant?.Crop.CropName === "lettuce"
         ? (<StyledPotContainer expand={expandPot} color={"green"}>
         </StyledPotContainer>)
         : (<StyledEmptyPotContainer expand={expandPot}>

@@ -18,11 +18,12 @@ interface GreenhouseSettingsProps {
 
 const StyledGreenhouseSettingsForm = styled.div`
   max-width: 500px;
+  height: 100%;
+  overflow-y: scroll;
   background: linear-gradient(90deg, #f9f9f9 0%, transparent 100%);
   border-radius: 25px;
   padding: 2rem 3rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; 
-  margin:10vh auto;
 `;
 
 const StyledGreenhouseSettingsFormHeader = styled.div`

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,23 +12,41 @@ import { faBox, faCloudSun, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { PotProps } from '../../components/Pots';
 
 type Nutrients = {
-  carbon: number;
-  hydrogen: number;
-  oxygen: number;
-  nitrogen: number;
-  phosphorus: number;
-  potassium: number;
-  sulfur: number;
-  calcium: number;
-  magnesium: number;
+  Carbon: number;
+  Hydrogen: number;
+  Oxygen: number;
+  Nitrogen: number;
+  Phosphorus: number;
+  Potassium: number;
+  Sulfur: number;
+  Calcium: number;
+  Magnesium: number;
+}
+
+type Crop = {
+  CUID: number;
+  CropName: string;
+  AirTempMin: number;
+  AirTempMax: number;
+  HumidityMin: number;
+  HumidityMax: number;
+  PHLevelMin: number;
+  PHLevelMax: number;
+  OrpMin: number;
+  OrpMax: number;
+  TdsMin: number;
+  TdsMax: number;
+  WaterTempMin: number;
+  WaterTempMax: number;
 }
 
 type Plant = {
-  pluid: number;
-  createdTs: number;
-  plantedTs: number;
-  harvestedTs: number;
-  nutrients: Nutrients;
+  PLUID: number;
+  CreatedTS: number;
+  PlantedTS: number;
+  HarvestedTS: number;
+  Nutrients: Nutrients;
+  Crop: Crop;
 }
 
 interface PotSettingsProps {
@@ -40,6 +58,8 @@ interface PotSettingsProps {
 
     pot?: PotProps
     plant? : Plant
+
+    sidebar: (value: React.SetStateAction<boolean>) => void
   }
 
 const StyledPotSettingsForm = styled.div`
@@ -72,43 +92,42 @@ const StyledPotSettingsFormInput = styled.input`
 const StyledPotInfo = styled.div`
   font-size: ${LightTheme.font.size.medium};
   color: ${LightTheme.palette.contrast};
-
 `;
 
-const PotSettings = ({visible, uuid, guid, suid, puid, pot} : PotSettingsProps) : ReactElement => {
+
+const StyledPotPlant = styled.button<{color : string}>`
+  background: ${(props) => props.color};
+  width: 50px;
+  height: 50px; 
+  border-radius: 100%;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+  rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+`;
+
+const PotSettings = ({visible, uuid, guid, suid, puid, plant, sidebar} : PotSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
-  const state = {
-    "PUID" :"",
-  }
-  const [nutrientID, setNutrientID] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [pluid, setPluid] = useState(0)
+  const [cropName, setCropName] = useState("");
+
 
   const addPlant = useAPIPost("", "add", {});
   const harvestPlant = useAPIPost("", "harvest", {});
   const getPlant = useAPIGet("/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/"+puid+"/plant");
+
   const handleAddPlant = () => {
-    addPlant.post({"payload" : {"puid": puid}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")
+    addPlant.post({"payload" : {"puid": puid, "cropName" : cropName}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")
+    setLoading(true);
+    sidebar(false);
   }
-
   const handleHarvestPlant = () => {
-    console.log(puid)
     harvestPlant.post({"payload" : {"puid": puid}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")
+    setLoading(true);
   }
-
   const onSubmit = (data: any) => {
     
   }
-
-  useEffect(() => {
-    getPlant.get();
-    if (loading || !getPlant.data) {
-      return;
-    }
-    setPluid(getPlant.data.PLUID);
-    setLoading(false);
-  },[loading, visible])
 
 
   return (
@@ -118,24 +137,43 @@ const PotSettings = ({visible, uuid, guid, suid, puid, pot} : PotSettingsProps) 
           <h2>PotSettings</h2>
         </StyledPotSettingsFormHeader>
         <StyledPotSettingsFormContent onSubmit={handleSubmit(onSubmit)}>
-          {getPlant.data && (
+          {plant && plant.CreatedTS ? (
+              <>
+                <StyledPotInfo>CUID : {plant ? plant.Crop.CUID : ""}</StyledPotInfo>
+                <StyledPotInfo>Crop Name : {plant ? plant.Crop.CropName : ""}</StyledPotInfo>
+                <StyledPotInfo>Air Temperature (Min) : {plant ? plant.Crop.AirTempMin : ""}</StyledPotInfo>
+                <StyledPotInfo>Air Temperature (Max) : {plant ? plant.Crop.AirTempMax : ""}</StyledPotInfo>
+                <StyledPotInfo>Humidity (Min) : {plant ? plant.Crop.HumidityMin : ""}</StyledPotInfo>
+                <StyledPotInfo>Humidity (Max) : {plant ? plant.Crop.HumidityMax : ""}</StyledPotInfo>
+                <StyledPotInfo>PH Level (Min) : {plant ? plant.Crop.PHLevelMin : ""}</StyledPotInfo>
+                <StyledPotInfo>PH Level (Max) : {plant ? plant.Crop.PHLevelMax : ""}</StyledPotInfo>
+                <StyledPotInfo>ORP (Min) : {plant ? plant.Crop.OrpMin : ""}</StyledPotInfo>
+                <StyledPotInfo>ORP (Max) : {plant ? plant.Crop.OrpMax : ""}</StyledPotInfo>
+                <StyledPotInfo>TDS (Min) : {plant ? plant.Crop.TdsMin : ""}</StyledPotInfo>
+                <StyledPotInfo>TDS (Max) : {plant ? plant.Crop.TdsMax : ""}</StyledPotInfo>
+                <StyledPotInfo>Water Temperature (Min) : {plant ? plant.Crop.WaterTempMin : ""}</StyledPotInfo>
+                <StyledPotInfo>Water Temperature (Max) : {plant ? plant.Crop.WaterTempMax : ""}</StyledPotInfo>
+
+
+                <StyledPotInfo>Created : {plant ? plant.CreatedTS : ""}</StyledPotInfo>
+                <StyledPotInfo>Planted : {plant ? plant.PlantedTS : ""}</StyledPotInfo>
+                <StyledPotInfo>Harvested : {plant ? plant.HarvestedTS : ""}</StyledPotInfo>
+                <StyledPotInfo>Nitrogen : {plant ? plant.Nutrients.Nitrogen : ""}</StyledPotInfo>
+                <StyledPotInfo>Calcium : {plant ? plant.Nutrients.Calcium : ""}</StyledPotInfo>
+                <StyledPotInfo>Hydrogen : {plant ? plant.Nutrients.Hydrogen : ""}</StyledPotInfo>
+                <StyledPotInfo>Potassium : {plant ? plant.Nutrients.Potassium : ""}</StyledPotInfo>
+                <StyledPotInfo>Phosphorus : {plant ? plant.Nutrients.Phosphorus : ""}</StyledPotInfo>
+                <StyledPotInfo>Magnesium : {plant ? plant.Nutrients.Magnesium : ""}</StyledPotInfo>
+                <StyledPotInfo>Sulfur : {plant ? plant.Nutrients.Sulfur : ""}</StyledPotInfo>
+                <Button type={"submit"} onClick={handleSubmit(handleHarvestPlant)} content='harvest plant'></Button>
+            </>
+          ) : (
             <>
-                <StyledPotInfo>Created : {getPlant.data ? getPlant.data.plant.CreatedTS : ""}</StyledPotInfo>
-                <StyledPotInfo>Planted : {getPlant.data ? getPlant.data.plant.PlantedTS : ""}</StyledPotInfo>
-                <StyledPotInfo>Harvested : {getPlant.data ? getPlant.data.plant.HarvestedTS : ""}</StyledPotInfo>
-                <StyledPotInfo>Nitrogen : {getPlant.data ? getPlant.data.plant.Nutrients.Nitrogen : ""}</StyledPotInfo>
-                <StyledPotInfo>Calcium : {getPlant.data ? getPlant.data.plant.Nutrients.Calcium : ""}</StyledPotInfo>
-                <StyledPotInfo>Hydrogen : {getPlant.data ? getPlant.data.plant.Nutrients.Hydrogen : ""}</StyledPotInfo>
-                <StyledPotInfo>Oxygen : {getPlant.data ? getPlant.data.plant.Nutrients.Oxygen : ""}</StyledPotInfo>
+            <StyledPotSettingsFormLabel placeholder='tomato' {...register("nutrientID")} onClick={() => setCropName("tomato")}><StyledPotPlant color='red'></StyledPotPlant></StyledPotSettingsFormLabel>
+            <StyledPotSettingsFormLabel placeholder='lettuce' {...register("nutrientID")} onClick={() => setCropName("lettuce")}><StyledPotPlant color='green'></StyledPotPlant></StyledPotSettingsFormLabel>
+            <Button type={"submit"} onClick={handleSubmit(handleAddPlant)} content='add plant'></Button>
             </>
           )}
-          <StyledPotSettingsFormLabel><FontAwesomeIcon size='2x' icon={faHouse as IconProp}/></StyledPotSettingsFormLabel>
-          <StyledPotSettingsFormInput placeholder={"tomato"} {...register("nutrientID")} type={"radio"} value={1} onClick={() => setNutrientID(1)}/>
-          <StyledPotSettingsFormLabel><FontAwesomeIcon size='2x' icon={faCloudSun as IconProp}/></StyledPotSettingsFormLabel>
-          <StyledPotSettingsFormInput placeholder={"cabbage"} {...register("nutrientID")} type={"radio"} value={2} onClick={() => setNutrientID(2)}/>
-          <Button onClick={handleAddPlant} content='add plant'></Button>
-          <Button onClick={handleHarvestPlant} content='harvest plant'></Button>
-
         </StyledPotSettingsFormContent>
       </StyledPotSettingsForm>
     </>

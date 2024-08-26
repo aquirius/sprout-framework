@@ -114,7 +114,6 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
                             guid={guid ? guid : 0}
                             suid={value.SUID ? value.SUID : 0}
                           ></Stack>
-                          {value.SUID}
                         </StyledStack>
                       </FlexboxElement>
                     </div>

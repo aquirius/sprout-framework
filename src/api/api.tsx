@@ -129,14 +129,14 @@ const useAPIPost = (
     [versionState, target, method, request.payload]
   );
 
-  console.log({
-    postSuccess: success,
-    busy: busy,
-    version: versionState,
-    payload: request.payload,
-		data: data,
-    post:post,
-  })
+  // console.log({
+  //   postSuccess: success,
+  //   busy: busy,
+  //   version: versionState,
+  //   payload: request.payload,
+	// 	data: data,
+  //   post:post,
+  // })
 
   if(data != undefined){
     return {
