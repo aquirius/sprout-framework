@@ -32,6 +32,7 @@ const StyledPotContainer = styled.div<{ expand?: boolean, color?: string }>`
   box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    transition: all 5sec ease;
 `;
 
 const StyledPotFertilizerLabel = styled.div<{ expand?: boolean }>`
@@ -175,6 +176,14 @@ type PotProps = {
   onClick: (event: any) => void;
 }
 
+const getColorForCrop = (crop: string): string => {
+  if(crop === "tomato" ) {
+    return "red"
+  } else {
+    return "green;"
+  }
+}
+
 //User page does import our table component and is bound to our react routing system
 const Pot = ({uuid, guid, suid, puid, plant, water, fertilizer, onClick }: PotProps): ReactElement => {
   const [rect, setRect] = useState<DOMRect>();
@@ -201,11 +210,8 @@ const Pot = ({uuid, guid, suid, puid, plant, water, fertilizer, onClick }: PotPr
       {plant && plant.Crop && plant.HarvestedTS < now && plant.HarvestedTS !== 0
         ? (<StyledPotContainer expand={expandPot} color={"grey"}>
         </StyledPotContainer>)
-        : plant?.Crop.CropName === "tomato"
-        ? (<StyledPotContainer expand={expandPot} color={"red"}>
-        </StyledPotContainer>)
-        : plant?.Crop.CropName === "lettuce"
-        ? (<StyledPotContainer expand={expandPot} color={"green"}>
+        : plant?.Crop.CropName
+        ? (<StyledPotContainer expand={expandPot} color={getColorForCrop(plant?.Crop.CropName)}>
         </StyledPotContainer>)
         : (<StyledEmptyPotContainer expand={expandPot}>
           <StyledPotWater expand={expandPot}>

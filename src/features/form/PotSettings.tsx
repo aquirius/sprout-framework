@@ -60,6 +60,7 @@ interface PotSettingsProps {
     plant? : Plant
 
     sidebar: (value: React.SetStateAction<boolean>) => void
+    onClick: () => void
   }
 
 const StyledPotSettingsForm = styled.div`
@@ -105,7 +106,7 @@ const StyledPotPlant = styled.button<{color : string}>`
   rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 `;
 
-const PotSettings = ({visible, uuid, guid, suid, puid, plant, sidebar} : PotSettingsProps) : ReactElement => {
+const PotSettings = ({visible, uuid, guid, suid, puid, plant, sidebar, onClick} : PotSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
   const [loading, setLoading] = useState(false)
@@ -118,17 +119,18 @@ const PotSettings = ({visible, uuid, guid, suid, puid, plant, sidebar} : PotSett
 
   const handleAddPlant = () => {
     addPlant.post({"payload" : {"puid": puid, "cropName" : cropName}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")
-    setLoading(true);
     sidebar(false);
+    onClick();
+
   }
   const handleHarvestPlant = () => {
     harvestPlant.post({"payload" : {"puid": puid}}, "/user/"+uuid+"/greenhouse/"+guid+"/stack/"+suid+"/pot/" + puid + "/plant")
-    setLoading(true);
+    sidebar(false);
+    onClick();
   }
   const onSubmit = (data: any) => {
     
   }
-
 
   return (
     <>

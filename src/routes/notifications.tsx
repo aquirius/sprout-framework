@@ -3,14 +3,14 @@ import React, { ReactElement} from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
-import { Greenhouses } from '../components/Greenhouses';
+import { Notifications } from '../components/Notifications';
 import { CloudAnimation } from '../components/CloudAnimation';
 import styled from 'styled-components';
 
-interface GreenhousesPageProps {
+interface NotificationsPageProps {
 }
 
-const StyledGreenhousesNavbar = styled.div`
+const StyledNotificationsNavbar = styled.div`
     width: 75px;
     height: 100vh;
 
@@ -20,7 +20,7 @@ const StyledGreenhousesNavbar = styled.div`
     top: 0;
 `;
 
-const StyledGreenhouses = styled.div`
+const StyledNotifications = styled.div`
     width: calc(100vw - 75px);
     height: 100vh;
     display: block;
@@ -31,7 +31,7 @@ const StyledGreenhouses = styled.div`
 
 `;
 //Register page does import our form component and is bound to our react routing system
-const GreenhousesPage = ({}) : ReactElement => {
+const NotificationsPage = ({}) : ReactElement => {
     const { uuid } = useParams();
     const { guid } = useParams();
     
@@ -46,16 +46,16 @@ const GreenhousesPage = ({}) : ReactElement => {
     return (
     <>
     <CloudAnimation transform='' top={true}></CloudAnimation>
-    <StyledGreenhousesNavbar>
+    <StyledNotificationsNavbar>
         <Navbar uuid={uuid}/>
-    </StyledGreenhousesNavbar>
-    <StyledGreenhouses>
-        <Greenhouses uuid={userID}/>
-    </StyledGreenhouses>
+    </StyledNotificationsNavbar>
+    <StyledNotifications>
+        <Notifications uuid={userID}/>
+    </StyledNotifications>
     </>
 );
 }
 
 
   
-export { GreenhousesPage }
+export { NotificationsPage }

@@ -29,6 +29,19 @@ const StyledStack = styled.div`
   }
 `;
 
+const StyledAddStackButton = styled.div`
+  display: grid;
+  justify-content: center;
+  align-content: center;  color: ${LightTheme.palette.light};
+  background: ${LightTheme.palette.secondary};
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  height: 150px;
+  margin: 2rem;
+`;
+
+
 interface StacksProps {
   uuid?: number;
   guid?: number;
@@ -84,7 +97,7 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
       <StyledStacks>
         <Grid layout={""} dimension={"'a'"}>
           <GridElement position="a">
-            <Flexbox gap={1} align="left" direction="row" wrap="wrap">
+            <Flexbox gap={4} align="left" direction="row" wrap="wrap">
               {getStack.data &&
                 getStack.data.stacks.map((value: any, index: number) => {
                   return (
@@ -121,13 +134,13 @@ const Stacks = ({ uuid, guid, onClick }: StacksProps): ReactElement => {
                 })}
             </Flexbox>
           </GridElement>
-          <GridElement position="a" align="center">
-            <IconButton
-              size="2x"
-              icon={faPlus as IconProp}
-              onClick={() => onAddStack()}
-            ></IconButton>
-          </GridElement>
+          <StyledAddStackButton>
+              <IconButton
+                size="4x"
+                icon={faPlus as IconProp}
+                onClick={() => onAddStack()}
+              ></IconButton>
+            </StyledAddStackButton>
         </Grid>
       </StyledStacks>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>

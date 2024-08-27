@@ -7,18 +7,18 @@ import { useAPIGet, useAPIPost } from "../api/api";
 import { Flexbox, FlexboxElement } from "./Flexbox";
 import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
-import { GreenhouseSettings } from "../features/form/GreenhouseSettings";
+import { NotificationsSettings } from "../features/form/NotificationsSettings";
 import { LightTheme, SkyGradient } from "../schema/color";
 import { getCurrentHourBackground, getDestinationStyling } from "./Greenhouse";
 
-const StyledGreenhouseSettings = styled.div<{ expand: boolean }>`
+const StyledNotificationsettings = styled.div<{ expand: boolean }>`
   position: absolute;
   font-size: ${LightTheme.font.size.medium};
   top: 0px;
   transition: all 0.5s ease;
 `;
 
-const StyledAddGreenhousesButton = styled.div`
+const StyledAddNotificationsButton = styled.div`
   display: grid;
   justify-content: center;
   align-content: center;  color: ${LightTheme.palette.light};
@@ -43,7 +43,7 @@ const StyledGreenhouseContent = styled.div<{destination: string}>`
 const StyledGreenhouse = styled.div`
   position: relative;
   margin: 2rem;
-  &:hover ${StyledGreenhouseSettings} {
+  &:hover ${StyledNotificationsettings} {
     top: -50px;
   }
 `;
@@ -70,12 +70,12 @@ const StyledGreenhouseButton = styled.div`
   align-items: center;
   justify-content: center;
 `;
-interface GreenhousesProps {
+interface NotificationsProps {
   uuid: number;
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
+const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   const [messageFetch, setMessage] = useState("");
   const [guid, setGuid] = useState(0);
 
@@ -83,17 +83,17 @@ const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
   const [sidebar, setSidebar] = useState(false);
 
   const nav = useNavigate();
-  const getGreenhouses = useAPIGet(`/user/${uuid}/greenhouses`);
+  const getNotifications = useAPIGet(`/user/${uuid}/notifications`);
   const addGreenhouse = useAPIPost("", "add", {});
 
-  const onEditGreenhouse = (guid: any, event: React.MouseEvent) => {
+  const onEditNotifications = (guid: any, event: React.MouseEvent) => {
     setSidebar(true);
     setGuid(guid);
   };
 
   useEffect(() => {
-    getGreenhouses.get();
-    if (loading || !getGreenhouses.data) {
+    getNotifications.get();
+    if (loading || !getNotifications.data) {
       return;
     }
     setMessage("200");
@@ -102,17 +102,14 @@ const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
 
   const onAddGreenhouse = () => {
     setSidebar(true);
-    addGreenhouse.post(
-      { payload: { UUID: uuid } },
-      `/user/${uuid}/greenhouses`
-    )
+
   };
 
   return (
     <>
       <Flexbox gap={1} align="center" direction="row" wrap="wrap">
-        {getGreenhouses.data &&
-          getGreenhouses.data.greenhouses.map((value: any, index: number) => {
+        {getNotifications.data &&
+          getNotifications.data.Notifications.map((value: any, index: number) => {
             return (
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
@@ -132,7 +129,7 @@ const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
                         <IconButton
                           size="3x"
                           icon={faPen as IconProp}
-                          onClick={(e) => onEditGreenhouse(value.GUID, e)}
+                          onClick={(e) => onEditNotifications(value.GUID, e)}
                         ></IconButton>
                       </StyledGreenhouseButton>
                     </StyledGreenhouseContent>
@@ -142,20 +139,20 @@ const Greenhouses = ({ uuid }: GreenhousesProps): ReactElement => {
             );
           })}
           <FlexboxElement align="flex-end" gap={1} order={0} grow={0}>
-              <StyledAddGreenhousesButton>
+              <StyledAddNotificationsButton>
                 <IconButton
                   size="4x"
                   icon={faPlus as IconProp}
                   onClick={() => onAddGreenhouse()}
                 ></IconButton>
-          </StyledAddGreenhousesButton>
+          </StyledAddNotificationsButton>
           </FlexboxElement>
       </Flexbox>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <GreenhouseSettings guid={guid}></GreenhouseSettings>
+        <NotificationsSettings guid={guid}></NotificationsSettings>
       </Sidebar>
     </>
   );
 };
 
-export { Greenhouses };
+export { Notifications };

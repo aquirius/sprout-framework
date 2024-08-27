@@ -1,6 +1,6 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faSignOut, faSpa } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCog, faSignOut, faSpa } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement} from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -116,6 +116,12 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
             <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}/>
               <StyledActionIconLabel expand={false}>settings</StyledActionIconLabel>
+            </StyledActionIcons>
+          </GridElement>
+          <GridElement row='' position="a">
+            <StyledActionIcons expand={false}>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/notifications")} size='2x' icon={faBell as IconProp}/>
+              <StyledActionIconLabel expand={false}>notifications</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
         </Grid>

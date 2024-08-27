@@ -16,6 +16,8 @@ import { UserSettingsPage } from './routes/settings';
 import { LandingPage } from './routes/landing';
 import { ImpressumPage } from './routes/impressum';
 import { GreenhousesPage } from './routes/greenhouses';
+import { NotificationsPage } from './routes/notifications';
+
 import { GreenhousePage } from './routes/greenhouse';
 
 
@@ -60,6 +62,7 @@ root.render(
     <Route path="/user/:uuid/greenhouse/:guid" element={<GreenhousePage/>}></Route>
     <Route path="/user/:uuid/settings" element={<UserSettingsPage/>}></Route>
     <Route path='/users' element={<UsersPage/>}></Route>
+    <Route path='/user/:uuid/notifications' element={<NotificationsPage/>}></Route>
   </Routes>
   </BrowserRouter>
 );

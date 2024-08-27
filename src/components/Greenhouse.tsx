@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Grid, GridElement } from "./Grid";
 
-const getDestinationStyling = (destination?: string): string => {
+export const getDestinationStyling = (destination?: string): string => {
   switch ( destination ) {
     case "indoor":
         return "white"
@@ -101,12 +101,6 @@ const StyledGreenhouseContainer = styled.div<{destination?: string, status?: str
   height: 100%;
   width: 40%;
   position: absolute;
-  border-left: 0;
-  border-top:0;
-  border-bottom:0;
-  border-right: 5px solid grey;
-  border-image-slice: 1;
-  ${(props) => getDestinationBorder(props.destination)};
 `;
 
 const StyledWeatherHeader = styled.div<{daytime?: string}>`
@@ -116,24 +110,22 @@ const StyledWeatherHeader = styled.div<{daytime?: string}>`
 
 const StyledGround = styled.div<{daytime?: string}>`
   font-size: 20px;
-  color: ${getCurrentDayStyling() === "day" ? LightTheme.palette.contrast :  LightTheme.palette.light};
-  background: ${getCurrentDayStyling() === "day" ? "sandybrown" :  "saddlebrown"};;
+  background: ${LightTheme.palette.secondary};
   width: 100%;
   position: absolute;
   bottom: 0;
   height: 15px;
   `;
 
-  const StyledGrass = styled.div<{daytime?: string}>`
-    font-size: 20px;
-    color: ${getCurrentDayStyling() === "day" ? LightTheme.palette.contrast :  LightTheme.palette.light};
-    background: ${getCurrentDayStyling() === "day" ? "limegreen" :  "darkgreen"};
-    width: 100%;
-    position: absolute;
-    bottom: 15px;
-    height: 10px;
+const StyledGrass = styled.div<{daytime?: string}>`
+  font-size: 20px;
+  background: ${LightTheme.palette.primary};
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  height: 10px;
 
-  `;
+`;
 
 
 
@@ -205,8 +197,6 @@ const Greenhouse = ({ uuid, guid, onClick }: GreenhouseProps): ReactElement => {
                 <StyledGreenhouseInfo>Humidity : {getGreenhouse.data.greenhouse.Humidity + "\n"}</StyledGreenhouseInfo>
                 <StyledGreenhouseInfo>Brightness : {getGreenhouse.data.greenhouse.Brightness + "\n"}</StyledGreenhouseInfo>
                 <StyledGreenhouseInfo>Co2 : {getGreenhouse.data.greenhouse.Co2 + "\n"}</StyledGreenhouseInfo>
-                <StyledGrass></StyledGrass>
-                <StyledGround></StyledGround>
             </StyledGreenhouseContainer>
             </GridElement>
             <GridElement>
@@ -214,10 +204,6 @@ const Greenhouse = ({ uuid, guid, onClick }: GreenhouseProps): ReactElement => {
                 <StyledWeatherHeader>
                   {getGreenhouse.data.greenhouse.TempOut + "°"}
                 </StyledWeatherHeader>
-                <StyledGrass></StyledGrass>
-                <StyledGround>
-
-                </StyledGround>
               </StyledWeatherBackground>
             </GridElement>
           </Grid>

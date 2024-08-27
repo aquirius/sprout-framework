@@ -12,10 +12,6 @@ import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
 import { PotSettings } from "../features/form/PotSettings";
 
-const StyledAddPotButton = styled.div`
-  align-self: center;
-`;
-
 interface PotsProps {
   uuid: number;
   guid: number;
@@ -56,6 +52,11 @@ type Plant = {
   Nutrients: Nutrients;
 }
 
+
+const StyledPotsContainer = styled.div`
+  margin: 4rem;
+`;
+
 //Button component draws us an html button with icon and size of the icon
 const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   const [loading, setLoading] = useState(false);
@@ -77,17 +78,21 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
       { payload: { suid: suid } },
       "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot"
     );
+    console.log(loading)
+
+    setSidebar(false);
     setLoading(true);
   };
 
   const onEditPot = (puid: any, event: React.MouseEvent) => {
+    console.log(loading)
     setPuid(puid);
     setPlant(event);
     setSidebar(true);
+    setLoading(true);
   };
 
   useEffect(() => {
-    setLoading(true);
     getPots.post(
       { payload: { suid: suid } },
       "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot"
@@ -110,6 +115,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
         "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/plants"
       );
     }
+    console.log(loading)
     setLoading(false);
   },[loading, puid, getPots.postSuccess])
 
@@ -119,9 +125,13 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   return (
     <>
       {getPots.data && getPlants.data &&
-      (<><Grid layout={"80% 20%"} dimension={"'a b'"}>
+      (<>
+      <Grid layout={"80% 20%"} dimension={"'a b'"}>
+
+        <StyledPotsContainer>
+
         <GridElement position="a">
-          <Flexbox gap={1} align="center" direction="row" wrap="wrap">
+          <Flexbox content="start" gap={1.5} align="center" direction="row" wrap="wrap">
               {getPots.data.pots.map((value: any, index: number) => {
                 var plant = getPlants.data.plants[index];
                 return (
@@ -148,6 +158,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
               })}
           </Flexbox>
         </GridElement>
+        </StyledPotsContainer>
         <GridElement position="b" align="center">
           <IconButton
             size="2x"
@@ -157,7 +168,7 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
         </GridElement>
       </Grid>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <PotSettings visible={sidebar} uuid={uuid} guid={guid} suid={suid} puid={puid?.PUID} plant={plant} sidebar={(value) => setSidebar(value)}></PotSettings>
+        <PotSettings onClick={() => setLoading(true)} visible={sidebar} uuid={uuid} guid={guid} suid={suid} puid={puid?.PUID} plant={plant} sidebar={(value) => setSidebar(value)}></PotSettings>
       </Sidebar></>)
       }
     </>
