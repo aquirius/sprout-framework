@@ -20,7 +20,10 @@ const StyledStackSettings = styled.div<{ expand: boolean }>`
   background: ${LightTheme.palette.secondary};
 `;
 
-const StyledStacks = styled.div``;
+const StyledStacks = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
 
 const StyledStack = styled.div`
   position: relative;

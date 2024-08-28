@@ -13,7 +13,6 @@ import { useAPIPost, useAPIPut } from '../../api/api';
 
 interface NotificationsSettingsProps {
     uuid?:number
-    guid?: number
   }
 
 const StyledNotificationsettingsForm = styled.div`
@@ -44,7 +43,7 @@ const StyledNotificationsettingsFormInput = styled.input`
   box-sizing: border-box;
 `;
 
-const NotificationsSettings = ({uuid, guid} : NotificationsSettingsProps) : ReactElement => {
+const NotificationsSettings = ({uuid} : NotificationsSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
   const [displayName, setDisplayName] = useState("");
@@ -60,13 +59,12 @@ const NotificationsSettings = ({uuid, guid} : NotificationsSettingsProps) : Reac
 
   const [loading, setLoading] = useState(false)
 
-  const postNotificationsettings = useAPIPost("/user/"+uuid+"/greenhouse/"+guid, "", {});
+  const postNotificationsettings = useAPIPost("/user/"+uuid,  "", {})
 
   const onSubmit = (data: any) => {
     postNotificationsettings.post({"payload" : 
     {
       "uuid": uuid,
-      "guid": guid,
       "display_name": displayName,
       "status" : "active", 
       "zip" : zip,
@@ -77,7 +75,7 @@ const NotificationsSettings = ({uuid, guid} : NotificationsSettingsProps) : Reac
       "humidity" : humidity,
       "brightness" : brightness,
       "co2" : co2,
-    }}, "/user/"+uuid+"/greenhouse/"+guid, );
+    }}, "/user/"+uuid, );
   }
 
   return (

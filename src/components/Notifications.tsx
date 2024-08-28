@@ -9,9 +9,8 @@ import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
 import { NotificationsSettings } from "../features/form/NotificationsSettings";
 import { LightTheme, SkyGradient } from "../schema/color";
-import { getCurrentHourBackground, getDestinationStyling } from "./Greenhouse";
 
-const StyledNotificationsettings = styled.div<{ expand: boolean }>`
+const StyledNotificationSettings = styled.div<{ expand: boolean }>`
   position: absolute;
   font-size: ${LightTheme.font.size.medium};
   top: 0px;
@@ -31,36 +30,35 @@ const StyledAddNotificationsButton = styled.div`
   margin: 2rem;
 `;
 
-const StyledGreenhouseContent = styled.div<{destination: string}>`
-  background: ${(props) => getDestinationStyling(props.destination)};
+const StyledNotificationsContent = styled.div<{destination: string}>`
+  background: ${LightTheme.palette.light};
   box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-  height: 500px;
-  width: 300px;
+  color : ${LightTheme.palette.contrast};
+  height: 100px;
+  width: 100%;
 `;
 
-const StyledGreenhouse = styled.div`
+const StyledNotifications = styled.div`
   position: relative;
-  margin: 2rem;
-  &:hover ${StyledNotificationsettings} {
-    top: -50px;
-  }
+  width: calc(100vw - 75px);
+  height: 100px;
 `;
 
-const StyledGreenhouseHeader = styled.div`
+const StyledNotificationsHeader = styled.div`
   text-align: center;
   width: 100%;
   font-size: 4rem;
   height: 65px;
   top: 0px;
   transition: all 0.5s ease;
-  background: ${LightTheme.palette.secondary};
-  color: ${LightTheme.palette.light};
+  background: ${LightTheme.palette.light};
+  color: ${LightTheme.palette.contrast};
 
 `;
 
-const StyledGreenhouseButton = styled.div`
+const StyledNotificationsButton = styled.div`
   display: grid;
   width: 100%;
   height: 200px;
@@ -77,18 +75,18 @@ interface NotificationsProps {
 //Button component draws us an html button with icon and size of the icon
 const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   const [messageFetch, setMessage] = useState("");
-  const [guid, setGuid] = useState(0);
+  const [nuid, setNuid] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
   const nav = useNavigate();
   const getNotifications = useAPIGet(`/user/${uuid}/notifications`);
-  const addGreenhouse = useAPIPost("", "add", {});
+  const addNotifications = useAPIPost("", "add", {});
 
-  const onEditNotifications = (guid: any, event: React.MouseEvent) => {
+  const onEditNotifications = (nuid: any, event: React.MouseEvent) => {
     setSidebar(true);
-    setGuid(guid);
+    setNuid(nuid);
   };
 
   useEffect(() => {
@@ -98,9 +96,9 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
     }
     setMessage("200");
     setLoading(false);
-  }, [loading, addGreenhouse.postVersion]);
+  }, [loading, addNotifications.postVersion]);
 
-  const onAddGreenhouse = () => {
+  const onAddNotifications = () => {
     setSidebar(true);
 
   };
@@ -113,43 +111,35 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
             return (
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
-                  <StyledGreenhouse>
-                    <StyledGreenhouseHeader>{value.DisplayName ? value.DisplayName : "\n"}</StyledGreenhouseHeader>
-                    <StyledGreenhouseContent destination={value.Destination}>
-                      <StyledGreenhouseButton>
-                      <IconButton
-                        size="3x"
-                        icon={faHouse as IconProp}
-                        onClick={(e) =>
-                          nav("/user/" + uuid + "/greenhouse/" + value.GUID)
-                        }
-                      ></IconButton>
-                      </StyledGreenhouseButton>
-                      <StyledGreenhouseButton>
-                        <IconButton
-                          size="3x"
-                          icon={faPen as IconProp}
-                          onClick={(e) => onEditNotifications(value.GUID, e)}
-                        ></IconButton>
-                      </StyledGreenhouseButton>
-                    </StyledGreenhouseContent>
-                  </StyledGreenhouse>
+                  <StyledNotifications>
+                    <StyledNotificationsHeader>{value.DisplayName ? value.DisplayName : "\n"}</StyledNotificationsHeader>
+                    <StyledNotificationsContent destination={value.Destination}>
+                        asfasdfsafdasdfdsafsadfasdfasdf safsafdasdfdsaf
+                        asdfsadfsadfsadfdsaf asdfsadfsadfsadfdsafasdf
+                        asdfsadfsafdsafsadf
+                        asdfasdfdsafdsafasfddsaf
+                    </StyledNotificationsContent>
+                    <StyledNotificationsButton></StyledNotificationsButton>
+                  </StyledNotifications>
                 </FlexboxElement>
               </div>
             );
           })}
           <FlexboxElement align="flex-end" gap={1} order={0} grow={0}>
-              <StyledAddNotificationsButton>
-                <IconButton
-                  size="4x"
-                  icon={faPlus as IconProp}
-                  onClick={() => onAddGreenhouse()}
-                ></IconButton>
-          </StyledAddNotificationsButton>
+              <StyledNotifications>
+                    <StyledNotificationsHeader>asfasdfsafdasdfdsafsadfasdfasdf</StyledNotificationsHeader>
+                    <StyledNotificationsContent destination={"indoor"}>
+                        asfasdfsafdasdfdsafsadfasdfasdf safsafdasdfdsaf
+                        asdfsadfsadfsadfdsaf asdfsadfsadfsadfdsafasdf
+                        asdfsadfsafdsafsadf
+                        asdfasdfdsafdsafasfddsaf
+                    </StyledNotificationsContent>
+                    <StyledNotificationsButton></StyledNotificationsButton>
+                  </StyledNotifications>
           </FlexboxElement>
       </Flexbox>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <NotificationsSettings guid={guid}></NotificationsSettings>
+        <NotificationsSettings uuid={uuid}></NotificationsSettings>
       </Sidebar>
     </>
   );
