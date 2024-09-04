@@ -81,7 +81,7 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   const [sidebar, setSidebar] = useState(false);
 
   const nav = useNavigate();
-  const getNotifications = useAPIGet(`/user/${uuid}/notifications`);
+  const getNotifications = useAPIPost(`/user/${uuid}/notifications`, "get-many", {});
   const addNotifications = useAPIPost("", "add", {});
 
   const onEditNotifications = (nuid: any, event: React.MouseEvent) => {
@@ -90,7 +90,7 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   };
 
   useEffect(() => {
-    getNotifications.get();
+    getNotifications.post({}, `/user/${uuid}/notifications`);
     if (loading || !getNotifications.data) {
       return;
     }
@@ -107,17 +107,14 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
     <>
       <Flexbox gap={1} align="center" direction="row" wrap="wrap">
         {getNotifications.data &&
-          getNotifications.data.Notifications.map((value: any, index: number) => {
+          getNotifications.data.notifications.map((value: any, index: number) => {
             return (
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
                   <StyledNotifications>
-                    <StyledNotificationsHeader>{value.DisplayName ? value.DisplayName : "\n"}</StyledNotificationsHeader>
+                    <StyledNotificationsHeader>{value.Title ? value.Title : "\n"}</StyledNotificationsHeader>
                     <StyledNotificationsContent destination={value.Destination}>
-                        asfasdfsafdasdfdsafsadfasdfasdf safsafdasdfdsaf
-                        asdfsadfsadfsadfdsaf asdfsadfsadfsadfdsafasdf
-                        asdfsadfsafdsafsadf
-                        asdfasdfdsafdsafasfddsaf
+                        {value.Message ? value.Message : "\n"}
                     </StyledNotificationsContent>
                     <StyledNotificationsButton></StyledNotificationsButton>
                   </StyledNotifications>
@@ -125,18 +122,6 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
               </div>
             );
           })}
-          <FlexboxElement align="flex-end" gap={1} order={0} grow={0}>
-              <StyledNotifications>
-                    <StyledNotificationsHeader>asfasdfsafdasdfdsafsadfasdfasdf</StyledNotificationsHeader>
-                    <StyledNotificationsContent destination={"indoor"}>
-                        asfasdfsafdasdfdsafsadfasdfasdf safsafdasdfdsaf
-                        asdfsadfsadfsadfdsaf asdfsadfsadfsadfdsafasdf
-                        asdfsadfsafdsafsadf
-                        asdfasdfdsafdsafasfddsaf
-                    </StyledNotificationsContent>
-                    <StyledNotificationsButton></StyledNotificationsButton>
-                  </StyledNotifications>
-          </FlexboxElement>
       </Flexbox>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
         <NotificationsSettings uuid={uuid}></NotificationsSettings>

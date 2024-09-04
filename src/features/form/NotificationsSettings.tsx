@@ -59,7 +59,7 @@ const NotificationsSettings = ({uuid} : NotificationsSettingsProps) : ReactEleme
 
   const [loading, setLoading] = useState(false)
 
-  const postNotificationsettings = useAPIPost("/user/"+uuid,  "", {})
+  const postNotificationsettings = useAPIPost("/user/"+uuid+"/notifications",  "", {})
 
   const onSubmit = (data: any) => {
     postNotificationsettings.post({"payload" : 
