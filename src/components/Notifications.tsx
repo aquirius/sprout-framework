@@ -1,5 +1,5 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faHouse, faPen, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,6 +9,8 @@ import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
 import { NotificationsSettings } from "../features/form/NotificationsSettings";
 import { LightTheme, SkyGradient } from "../schema/color";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Grid, GridElement } from "./Grid";
 
 const StyledNotificationSettings = styled.div<{ expand: boolean }>`
   position: absolute;
@@ -36,7 +38,6 @@ const StyledNotificationsContent = styled.div<{destination: string}>`
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   color : ${LightTheme.palette.contrast};
-  height: 100px;
   width: 100%;
 `;
 
@@ -47,11 +48,8 @@ const StyledNotifications = styled.div`
 `;
 
 const StyledNotificationsHeader = styled.div`
-  text-align: center;
   width: 100%;
-  font-size: 4rem;
-  height: 65px;
-  top: 0px;
+  font-size: 2rem;
   transition: all 0.5s ease;
   background: ${LightTheme.palette.light};
   color: ${LightTheme.palette.contrast};
@@ -59,14 +57,9 @@ const StyledNotificationsHeader = styled.div`
 `;
 
 const StyledNotificationsButton = styled.div`
-  display: grid;
   width: 100%;
-  height: 200px;
-  top: 0px;
   transition: all 0.5s ease;
   position: relative;
-  align-items: center;
-  justify-content: center;
 `;
 interface NotificationsProps {
   uuid: number;
@@ -82,7 +75,7 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
 
   const nav = useNavigate();
   const getNotifications = useAPIPost(`/user/${uuid}/notifications`, "get-many", {});
-  const addNotifications = useAPIPost("", "add", {});
+  const deleteNotification = useAPIPost("", "delete", {});
 
   const onEditNotifications = (nuid: any, event: React.MouseEvent) => {
     setSidebar(true);
@@ -96,11 +89,11 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
     }
     setMessage("200");
     setLoading(false);
-  }, [loading, addNotifications.postVersion]);
+  }, [loading, deleteNotification.postVersion]);
 
-  const onAddNotifications = () => {
-    setSidebar(true);
-
+  const handleDeleteNotification = (nuid: any) => {
+    deleteNotification.post({}, `/user/${uuid}/notification/${nuid}`);
+    setLoading(true)
   };
 
   return (
@@ -112,11 +105,17 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
                   <StyledNotifications>
-                    <StyledNotificationsHeader>{value.Title ? value.Title : "\n"}</StyledNotificationsHeader>
-                    <StyledNotificationsContent destination={value.Destination}>
-                        {value.Message ? value.Message : "\n"}
-                    </StyledNotificationsContent>
-                    <StyledNotificationsButton></StyledNotificationsButton>
+                      <Grid gap="1" dimension="" layout="80% 20%">
+                          <GridElement align="start">
+                            <StyledNotificationsHeader>{value.Title ? value.Title : "\n"}</StyledNotificationsHeader>
+                            <StyledNotificationsContent destination={value.Destination}>
+                                {value.Message ? value.Message : "\n"}
+                            </StyledNotificationsContent>
+                          </GridElement>
+                          <GridElement align="center">
+                            <StyledNotificationsButton onClick={() => handleDeleteNotification(value.NUID)}><FontAwesomeIcon size='2x' icon={faX as IconProp}/></StyledNotificationsButton>
+                          </GridElement>
+                      </Grid>
                   </StyledNotifications>
                 </FlexboxElement>
               </div>

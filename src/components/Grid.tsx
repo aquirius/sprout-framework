@@ -5,13 +5,16 @@ interface GridProps {
     dimension: string;
     layout: string;
     rows?: string;
+    gap?: string;
     children: ReactNode;
 }
 
-const StyledGrid = styled.div<{dimension : string, layout : string, rows?: string}>`
+const StyledGrid = styled.div<{dimension : string, layout : string, gap? : string, rows?: string}>`
     display:grid;
     grid-template-columns: ${(props) => props.layout};
     grid-template-areas: ${(props) => props.dimension};
+    ${(props) => props.gap ? "gap: "+props.gap : "0"};
+
     ${(props) => props.rows ? "grid-template-rows:"+props.rows : ""};
     align-items:center;
     justify-content: center;
@@ -20,10 +23,10 @@ const StyledGrid = styled.div<{dimension : string, layout : string, rows?: strin
 
 
 
-const Grid = ({dimension, layout, children, rows } : GridProps) : ReactElement => {
+const Grid = ({dimension, layout, gap, children, rows } : GridProps) : ReactElement => {
     return (
         <>
-        <StyledGrid rows={rows} layout={layout} dimension={dimension}>{children}</StyledGrid>
+        <StyledGrid rows={rows} gap={gap} layout={layout} dimension={dimension}>{children}</StyledGrid>
         </>
     );
 }
