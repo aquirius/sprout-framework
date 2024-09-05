@@ -41,7 +41,8 @@ const StyledAddStackButton = styled.div`
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   height: 150px;
-  margin: 2rem;
+  min-width: 300px;
+  margin:2rem 0 2rem 0;
 `;
 
 

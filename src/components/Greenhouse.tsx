@@ -85,26 +85,36 @@ const StyledGreenhouse = styled.div`
 
 const StyledGreenhouseBanner = styled.div`
   position: relative;
-  width: calc(100vw - 75px);
-  height: 250px;
+  margin-bottom: 4rem;
+  width: 100%;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+  rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
 `;
 
 const StyledGreenhouseHeader = styled.div<{daytime?: string}>`
-  font-size: 20px;
-  color: ${getCurrentDayStyling() === "day" ? LightTheme.palette.contrast :  LightTheme.palette.light};
+  font-size: 2rem;
+  color: ${LightTheme.palette.contrast};
+  padding: 2rem 0 2rem 0;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  border-bottom: 10px solid ${LightTheme.palette.secondary};
 `;
 
 const StyledGreenhouseContainer = styled.div<{destination?: string, status?: string, humidity?: string }>`
-  font-size: 20px;
+  font-size: 1.2rem;
   color: ${LightTheme.palette.contrast};
   background: ${(props) => getDestinationStyling(props.destination)};
-  height: 100%;
-  width: 40%;
-  position: absolute;
+  height: 150px;
+  position: relative;
+  margin: 2rem;
+  padding: 1rem;
+  border: 2px solid grey;
 `;
 
 const StyledWeatherHeader = styled.div<{daytime?: string}>`
-  font-size: 20px;
+  font-size: 2rem;
   color: ${getCurrentDayStyling() === "day" ? LightTheme.palette.contrast :  LightTheme.palette.light};
 `;
 
@@ -124,7 +134,6 @@ const StyledGrass = styled.div<{daytime?: string}>`
   position: absolute;
   bottom: 15px;
   height: 10px;
-
 `;
 
 
@@ -133,16 +142,21 @@ const StyledWeatherBackground = styled.div<{background: string, status?: string,
   font-size: 20px;
   color: ${LightTheme.palette.contrast};
   background: ${(props) => getCurrentHourBackground()};
-  height: 100%;
-  width: 60%;
-  position: absolute;
+  height: 150px;
+  width: 150px;
+  padding: 1rem;
+  position: relative;
   color: ${getCurrentDayStyling() === "day" ? LightTheme.palette.contrast :  LightTheme.palette.light};
-
 `;
 
 const StyledGreenhouseInfo = styled.div`
-break-after: auto;
+  break-after: auto;
+`;
 
+
+const StyledWeatherContainer = styled.div`
+  margin: 2rem 2rem 2rem 0;
+  break-after: auto;
 `;
 
 
@@ -182,15 +196,13 @@ const Greenhouse = ({ uuid, guid, onClick }: GreenhouseProps): ReactElement => {
     <StyledGreenhouse onClick={onClick}>
       {getGreenhouse.data && (
         <>
+        <StyledGreenhouseHeader>
+            {getGreenhouse.data.greenhouse.DisplayName}
+          </StyledGreenhouseHeader>
         <StyledGreenhouseBanner>
-          <Grid rows='' layout={"40% 60%"} dimension={""} >
-            <GridElement>
+          <Grid rows='' layout={"1fr calc(150px + 2rem)"} dimension={""} >
+            <GridElement align="stretch">
             <StyledGreenhouseContainer destination={getGreenhouse.data.greenhouse.Destination}>
-              <StyledGreenhouseHeader>
-                {getGreenhouse.data.greenhouse.DisplayName}
-               
-              </StyledGreenhouseHeader>
-
                 <StyledGreenhouseInfo>Status : {getGreenhouse.data.greenhouse.Status + "\n"}</StyledGreenhouseInfo>
                 <StyledGreenhouseInfo>Destination : {getGreenhouse.data.greenhouse.Destination + "\n"}</StyledGreenhouseInfo>
                 <StyledGreenhouseInfo>Temperature Inside : {getGreenhouse.data.greenhouse.TempIn + "\n"}</StyledGreenhouseInfo>
@@ -199,12 +211,14 @@ const Greenhouse = ({ uuid, guid, onClick }: GreenhouseProps): ReactElement => {
                 <StyledGreenhouseInfo>Co2 : {getGreenhouse.data.greenhouse.Co2 + "\n"}</StyledGreenhouseInfo>
             </StyledGreenhouseContainer>
             </GridElement>
-            <GridElement>
+            <GridElement align="end">
+              <StyledWeatherContainer>
               <StyledWeatherBackground background={getCurrentHourBackground()}>
                 <StyledWeatherHeader>
                   {getGreenhouse.data.greenhouse.TempOut + "°"}
                 </StyledWeatherHeader>
               </StyledWeatherBackground>
+              </StyledWeatherContainer>
             </GridElement>
           </Grid>
           

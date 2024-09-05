@@ -1,6 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faHouse, faPen, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAPIGet, useAPIPost } from "../api/api";
@@ -81,6 +81,45 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
     setSidebar(true);
     setNuid(nuid);
   };
+
+  let ws = useRef<WebSocket>(); // WebSocket reference
+
+  // Establish WebSocket connection when component mounts
+  useEffect(() => {
+    // Replace with your WebSocket server URL
+    ws.current = new WebSocket("ws://127.0.0.1:1234/ws");
+
+    ws.current.onopen = () => {
+      console.log("Connected to WebSocket");
+
+      if(ws.current){
+
+        ws.current.send("message");
+    
+        }
+    };
+
+    ws.current.onmessage = (event : any) => {
+      // Update response when a message is received from the server
+      console.log(event.data);
+    };
+
+
+
+
+    ws.current.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    ws.current.onerror = (error: any) => {
+      console.error("WebSocket error:", error);
+    };
+
+    // Clean up WebSocket connection when component unmounts
+    return () => {
+      ws.current?.close();
+    };
+  }, []);
 
   useEffect(() => {
     getNotifications.post({}, `/user/${uuid}/notifications`);
