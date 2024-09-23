@@ -1,4 +1,3 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faHouse, faPen, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +6,20 @@ import { useAPIGet, useAPIPost } from "../api/api";
 import { Flexbox, FlexboxElement } from "./Flexbox";
 import { IconButton } from "../features/button/IconButton";
 import { Sidebar } from "./Sidebar";
-import { NotificationsSettings } from "../features/form/NotificationsSettings";
+import { CropsSettings } from "../features/form/CropsSettings";
 import { LightTheme, SkyGradient } from "../schema/color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, GridElement } from "./Grid";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-const StyledNotificationSettings = styled.div<{ expand: boolean }>`
+const StyledCropsSettings = styled.div<{ expand: boolean }>`
   position: absolute;
   font-size: ${LightTheme.font.size.medium};
   top: 0px;
   transition: all 0.5s ease;
 `;
 
-const StyledAddNotificationsButton = styled.div`
+const StyledAddCropsButton = styled.div`
   display: grid;
   justify-content: center;
   align-content: center;  color: ${LightTheme.palette.light};
@@ -32,7 +32,7 @@ const StyledAddNotificationsButton = styled.div`
   margin: 2rem;
 `;
 
-const StyledNotificationsContent = styled.div<{destination: string}>`
+const StyledCropsContent = styled.div<{destination: string}>`
   background: ${LightTheme.palette.light};
   box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -41,13 +41,13 @@ const StyledNotificationsContent = styled.div<{destination: string}>`
   width: 100%;
 `;
 
-const StyledNotifications = styled.div`
+const StyledCrops = styled.div`
   position: relative;
   width: calc(100vw - 75px);
   height: 100px;
 `;
 
-const StyledNotificationsHeader = styled.div`
+const StyledCropsHeader = styled.div`
   width: 100%;
   font-size: 2rem;
   transition: all 0.5s ease;
@@ -56,30 +56,30 @@ const StyledNotificationsHeader = styled.div`
 
 `;
 
-const StyledNotificationsButton = styled.div`
+const StyledCropsButton = styled.div`
   width: 100%;
   transition: all 0.5s ease;
   position: relative;
 `;
-interface NotificationsProps {
+interface CropsProps {
   uuid: number;
 }
 
 //Button component draws us an html button with icon and size of the icon
-const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
+const Crops = ({ uuid }: CropsProps): ReactElement => {
   const [messageFetch, setMessage] = useState("");
   const [nuid, setNuid] = useState(0);
-  const [notifications, setNotifications] = useState([]);
+  const [Crops, setCrops] = useState([]);
 
 
   const [loading, setLoading] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
   const nav = useNavigate();
-  const getNotifications = useAPIPost(`/user/${uuid}/notifications`, "get-many", {});
+  const getCrops = useAPIPost(`/user/${uuid}/Crops`, "get-many", {});
   const deleteNotification = useAPIPost("", "delete", {});
 
-  const onEditNotifications = (nuid: any, event: React.MouseEvent) => {
+  const onEditCrops = (nuid: any, event: React.MouseEvent) => {
     setSidebar(true);
     setNuid(nuid);
   };
@@ -104,7 +104,7 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
     ws.current.onmessage = (event : any) => {
       // Update response when a message is received from the server
       console.log(event.data);
-      setNotifications(event.data);
+      setCrops(event.data);
     };
 
 
@@ -123,8 +123,8 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   }, []);
 
   useEffect(() => {
-    getNotifications.post({}, `/user/${uuid}/notifications`);
-    if (loading || !getNotifications.data) {
+    getCrops.post({}, `/user/${uuid}/crops`);
+    if (loading || !getCrops.data) {
       return;
     }
     setMessage("200");
@@ -132,42 +132,42 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
   }, [loading, deleteNotification.postVersion]);
 
   const handleDeleteNotification = (nuid: any) => {
-    deleteNotification.post({}, `/user/${uuid}/notification/${nuid}`);
+    deleteNotification.post({}, `/user/${uuid}/crops/${nuid}`);
     setLoading(true)
   };
 
   return (
     <>
       <Flexbox gap={1} align="center" direction="row" wrap="wrap">
-          {notifications}
-        {getNotifications.data &&
-          getNotifications.data.notifications.map((value: any, index: number) => {
+          {Crops}
+        {getCrops.data &&
+          getCrops.data.Crops.map((value: any, index: number) => {
             return (
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
-                  <StyledNotifications>
+                  <StyledCrops>
                       <Grid gap="1" dimension="" layout="80% 20%">
                           <GridElement align="start">
-                            <StyledNotificationsHeader>{value.Title ? value.Title : "\n"}</StyledNotificationsHeader>
-                            <StyledNotificationsContent destination={value.Destination}>
+                            <StyledCropsHeader>{value.Title ? value.Title : "\n"}</StyledCropsHeader>
+                            <StyledCropsContent destination={value.Destination}>
                                 {value.Message ? value.Message : "\n"}
-                            </StyledNotificationsContent>
+                            </StyledCropsContent>
                           </GridElement>
                           <GridElement align="center">
-                            <StyledNotificationsButton onClick={() => handleDeleteNotification(value.NUID)}><FontAwesomeIcon size='2x' icon={faX as IconProp}/></StyledNotificationsButton>
+                            <StyledCropsButton onClick={() => handleDeleteNotification(value.NUID)}><FontAwesomeIcon size='2x' icon={faX as IconProp}/></StyledCropsButton>
                           </GridElement>
                       </Grid>
-                  </StyledNotifications>
+                  </StyledCrops>
                 </FlexboxElement>
               </div>
             );
           })}
       </Flexbox>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
-        <NotificationsSettings uuid={uuid}></NotificationsSettings>
+        <CropsSettings uuid={uuid}></CropsSettings>
       </Sidebar>
     </>
   );
 };
 
-export { Notifications };
+export { Crops };
