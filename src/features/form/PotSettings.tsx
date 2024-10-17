@@ -171,8 +171,8 @@ const PotSettings = ({visible, uuid, guid, suid, puid, plant, sidebar, onClick} 
             </>
           ) : (
             <>
-            <StyledPotSettingsFormLabel placeholder='tomato' {...register("nutrientID")} onClick={() => setCropName("tomato")}><StyledPotPlant color='red'></StyledPotPlant></StyledPotSettingsFormLabel>
-            <StyledPotSettingsFormLabel placeholder='lettuce' {...register("nutrientID")} onClick={() => setCropName("lettuce")}><StyledPotPlant color='green'></StyledPotPlant></StyledPotSettingsFormLabel>
+            <StyledPotSettingsFormLabel {...register("nutrientID")} onClick={() => setCropName("tomato")}><StyledPotPlant color='red'></StyledPotPlant></StyledPotSettingsFormLabel>
+            <StyledPotSettingsFormLabel {...register("nutrientID")} onClick={() => setCropName("lettuce")}><StyledPotPlant color='green'></StyledPotPlant></StyledPotSettingsFormLabel>
             <Button type={"submit"} onClick={handleSubmit(handleAddPlant)} content='add plant'></Button>
             </>
           )}

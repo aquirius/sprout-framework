@@ -1,5 +1,5 @@
 
-import React, { ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, GridElement } from '../components/Grid';
 import { Navbar } from '../components/Navigation';
