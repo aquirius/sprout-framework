@@ -1,4 +1,4 @@
-# Sprout - Backend
+# Sprout - Frontend
 
 ### Sprout is a private hydroponic monitoring and nutient correction software.
 
@@ -39,7 +39,10 @@ This project is a web application designed to help users manage greenhouse envir
    git clone https://github.com/aquirius/moshi-framework.git
    cd moshi-framework
 
-2. **NPM Install**:
+2. **Package JSON**:
+   modify proxy in package.json 
+
+3. **NPM Install**:
  ```bash
     npm i
 

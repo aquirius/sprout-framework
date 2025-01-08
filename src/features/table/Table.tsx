@@ -86,8 +86,6 @@ const Table = (): ReactElement => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [direction, setDirection] = useState(true);
-  const [sort, setSort] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
   const [message, setMessage] = useState("");
   const nav = useNavigate();
 
@@ -179,8 +177,6 @@ const Table = (): ReactElement => {
 
   //handle our sorting params when we click a column
   const handleQueryParams = (key: string) => {
-    setSort(key);
-    setSearchParams({ sort: key, dir: direction ? "asc" : "desc" });
     setDirection(!direction);
     setLoading(true);
   };

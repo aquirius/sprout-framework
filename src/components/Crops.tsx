@@ -103,7 +103,6 @@ const Crops = ({ uuid }: CropsProps): ReactElement => {
 
     ws.current.onmessage = (event : any) => {
       // Update response when a message is received from the server
-      console.log(event.data);
       setCrops(event.data);
     };
 

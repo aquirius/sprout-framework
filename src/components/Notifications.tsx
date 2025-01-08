@@ -103,7 +103,6 @@ const Notifications = ({ uuid }: NotificationsProps): ReactElement => {
 
     ws.current.onmessage = (event : any) => {
       // Update response when a message is received from the server
-      console.log(event.data);
       setNotifications(event.data);
     };
 

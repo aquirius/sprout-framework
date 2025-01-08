@@ -57,10 +57,10 @@ const CropsSettings = ({uuid} : CropsSettingsProps) : ReactElement => {
 
   const [loading, setLoading] = useState(false)
 
-  const postCropsettings = useAPIPost("/user/"+uuid+"/Crops",  "", {})
+  const postCropsSettings = useAPIPost("/user/"+uuid+"/crops",  "", {})
 
   const onSubmit = (data: any) => {
-    postCropsettings.post({"payload" : 
+    postCropsSettings.post({"payload" : 
     {
       "uuid": uuid,
       "display_name": displayName,

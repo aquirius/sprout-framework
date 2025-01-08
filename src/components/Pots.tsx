@@ -78,14 +78,11 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
       { payload: { suid: suid } },
       "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/pot"
     );
-    console.log(loading)
-
     setSidebar(false);
     setLoading(true);
   };
 
   const onEditPot = (puid: any, event: React.MouseEvent) => {
-    console.log(loading)
     setPuid(puid);
     setPlant(event);
     setSidebar(true);
@@ -106,16 +103,12 @@ const Pots = ({ uuid, guid, suid, onClick }: PotsProps): ReactElement => {
   useEffect(() => {
     if(getPots.data ) {
       const ids = getPots.data?.pots?.map((value: any) => value.PUID)
-      if(ids.length <= 0) {
-        console.log(ids)
-      }
     
       getPlants.post(
         { payload: { "puid": ids } },
         "/user/" + uuid + "/greenhouse/" + guid + "/stack/" + suid + "/plants"
       );
     }
-    console.log(loading)
     setLoading(false);
   },[loading, puid, getPots.postSuccess])
 
