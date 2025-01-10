@@ -18,7 +18,7 @@ This project is a web application designed to help users manage greenhouse envir
 
 ---
 
-## Features
+## Features TBD
 
 - Real-time monitoring of environmental conditions (e.g., temperature, humidity)
 - Manage and track multiple greenhouses and crops.
@@ -36,8 +36,8 @@ This project is a web application designed to help users manage greenhouse envir
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/aquirius/moshi-framework.git
-   cd moshi-framework
+   git clone https://github.com/aquirius/sprout-framework.git
+   cd sprout-framework
 
 2. **Package JSON**:
    modify proxy in package.json 
