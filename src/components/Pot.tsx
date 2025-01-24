@@ -224,8 +224,6 @@ const Pot = ({uuid, guid, suid, puid, plant, water, fertilizer, onClick }: PotPr
           </StyledPotFertilizer>
         </StyledEmptyPotContainer>)}
       </StyledPot>
-      
-    
     </>
   );
 };

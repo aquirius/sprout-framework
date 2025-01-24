@@ -29,7 +29,7 @@ const StyledCrops = styled.div`
     overflow-x: hidden;
 
 `;
-//Register page does import our form component and is bound to our react routing system
+
 const CropsPage = () : ReactElement => {
     const { uuid } = useParams();
     

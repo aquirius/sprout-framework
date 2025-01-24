@@ -114,12 +114,6 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
           </GridElement>
           <GridElement row='' position="a">
             <StyledActionIcons expand={false}>
-              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}/>
-              <StyledActionIconLabel expand={false}>settings</StyledActionIconLabel>
-            </StyledActionIcons>
-          </GridElement>
-          <GridElement row='' position="a">
-            <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/crops")} size='2x' icon={faLeaf as IconProp}/>
               <StyledActionIconLabel expand={false}>crops</StyledActionIconLabel>
             </StyledActionIcons>
@@ -128,6 +122,12 @@ const Navbar = ({uuid} : NavbarProps) : ReactElement => {
             <StyledActionIcons expand={false}>
               <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/notifications")} size='2x' icon={faBell as IconProp}/>
               <StyledActionIconLabel expand={false}>notifications</StyledActionIconLabel>
+            </StyledActionIcons>
+          </GridElement>
+          <GridElement row='' position="a">
+            <StyledActionIcons expand={false}>
+              <FontAwesomeIcon onClick={() => nav("/user/"+uuid+"/settings")} size='2x' icon={faCog as IconProp}/>
+              <StyledActionIconLabel expand={false}>settings</StyledActionIconLabel>
             </StyledActionIcons>
           </GridElement>
         </Grid>

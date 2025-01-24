@@ -50,7 +50,6 @@ library.add(
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
-//Routes do import our pages which hold our components
 root.render(
   <BrowserRouter>
   <Routes>

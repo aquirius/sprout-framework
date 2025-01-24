@@ -68,99 +68,79 @@ interface CropsProps {
 //Button component draws us an html button with icon and size of the icon
 const Crops = ({ uuid }: CropsProps): ReactElement => {
   const [messageFetch, setMessage] = useState("");
-  const [nuid, setNuid] = useState(0);
-  const [Crops, setCrops] = useState([]);
+  const [cuid, setCuid] = useState(0);
+  const [crops, setCrops] = useState([]);
 
 
   const [loading, setLoading] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
   const nav = useNavigate();
-  const getCrops = useAPIPost(`/user/${uuid}/Crops`, "get-many", {});
-  const deleteNotification = useAPIPost("", "delete", {});
+  const getCrops = useAPIPost(`/user/${uuid}/crops`, "get-many", {});
+  const addCrop = useAPIPost(`/user/${uuid}/crops`, "add", {});
 
-  const onEditCrops = (nuid: any, event: React.MouseEvent) => {
+  //const deleteCrop = useAPIPost("", "delete", {});
+
+  const onEditCrops = (cuid: any, event: React.MouseEvent) => {
     setSidebar(true);
-    setNuid(nuid);
+    setCuid(cuid);
   };
 
-  let ws = useRef<WebSocket>(); // WebSocket reference
-
-  // Establish WebSocket connection when component mounts
-  useEffect(() => {
-    // Replace with your WebSocket server URL
-    ws.current = new WebSocket("ws://127.0.0.1:1234/ws");
-
-    ws.current.onopen = () => {
-      console.log("Connected to WebSocket");
-
-      if(ws.current){
-
-        ws.current.send("message");
-    
-        }
-    };
-
-    ws.current.onmessage = (event : any) => {
-      // Update response when a message is received from the server
-      setCrops(event.data);
-    };
-
-
-    ws.current.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-
-    ws.current.onerror = (error: any) => {
-      console.error("WebSocket error:", error);
-    };
-
-    // Clean up WebSocket connection when component unmounts
-    return () => {
-      ws.current?.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    getCrops.post({}, `/user/${uuid}/crops`);
-    if (loading || !getCrops.data) {
-      return;
-    }
-    setMessage("200");
-    setLoading(false);
-  }, [loading, deleteNotification.postVersion]);
-
-  const handleDeleteNotification = (nuid: any) => {
-    deleteNotification.post({}, `/user/${uuid}/crops/${nuid}`);
-    setLoading(true)
+  const onAddCrop = () => {
+    setSidebar(true);
+    addCrop.post(
+      { payload: { UUID: uuid } },
+      `/user/${uuid}/crops`
+    )
   };
+
+  useEffect(()=> {
+    setLoading(true);
+  }, [])
 
   return (
     <>
       <Flexbox gap={1} align="center" direction="row" wrap="wrap">
-          {Crops}
+        {crops}
         {getCrops.data &&
           getCrops.data.Crops.map((value: any, index: number) => {
             return (
               <div key={index}>
                 <FlexboxElement align="flex-start" gap={1} order={0} grow={0}>
                   <StyledCrops>
-                      <Grid gap="1" dimension="" layout="80% 20%">
-                          <GridElement align="start">
-                            <StyledCropsHeader>{value.Title ? value.Title : "\n"}</StyledCropsHeader>
-                            <StyledCropsContent destination={value.Destination}>
-                                {value.Message ? value.Message : "\n"}
-                            </StyledCropsContent>
-                          </GridElement>
-                          <GridElement align="center">
-                            <StyledCropsButton onClick={() => handleDeleteNotification(value.NUID)}><FontAwesomeIcon size='2x' icon={faX as IconProp}/></StyledCropsButton>
-                          </GridElement>
-                      </Grid>
+                  <StyledCropsHeader>{value.DisplayName ? value.DisplayName : "\n"}</StyledCropsHeader>
+                    <StyledCropsContent destination="">
+                      <StyledCropsButton>
+                      <IconButton
+                        size="3x"
+                        icon={faHouse as IconProp}
+                        onClick={(e) =>
+                          nav("/user/" + uuid + "/greenhouse/" + value.GUID)
+                        }
+                      ></IconButton>
+                      </StyledCropsButton>
+                      <StyledCropsButton>
+                        <IconButton
+                          size="3x"
+                          icon={faPen as IconProp}
+                          onClick={(e) => onEditCrops(value.CUID, e)}
+                        ></IconButton>
+                      </StyledCropsButton>
+                    </StyledCropsContent>
                   </StyledCrops>
                 </FlexboxElement>
               </div>
             );
           })}
+          <FlexboxElement align="flex-end" gap={1} order={0} grow={0}>
+              <StyledAddCropsButton>
+                <IconButton
+                  size="4x"
+                  icon={faPlus as IconProp}
+                  onClick={() => onAddCrop()}
+                ></IconButton>
+          </StyledAddCropsButton>
+          </FlexboxElement>
       </Flexbox>
       <Sidebar onClick={() => setSidebar(!sidebar)} expand={sidebar}>
         <CropsSettings uuid={uuid}></CropsSettings>

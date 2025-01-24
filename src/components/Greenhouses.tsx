@@ -70,6 +70,7 @@ const StyledGreenhouseButton = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 interface GreenhousesProps {
   uuid: number;
 }
