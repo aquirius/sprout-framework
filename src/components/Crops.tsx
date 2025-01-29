@@ -89,7 +89,7 @@ const Crops = ({ uuid }: CropsProps): ReactElement => {
   const onAddCrop = () => {
     setSidebar(true);
     addCrop.post(
-      { payload: { UUID: uuid } },
+      { payload: { UUID: uuid, CropName: "tomato" } },
       `/user/${uuid}/crops`
     )
   };

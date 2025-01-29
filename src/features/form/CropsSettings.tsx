@@ -44,77 +44,87 @@ const StyledCropsettingsFormInput = styled.input`
 const CropsSettings = ({uuid} : CropsSettingsProps) : ReactElement => {
   //initialize our form with empty states
   const {register, handleSubmit, formState: {errors}} = useForm();
-  const [displayName, setDisplayName] = useState("");
-  const [zip, setZip] = useState("");
-  const [address, setAddress] = useState("");
+  const [cropName, setCropName] = useState("");
+  const [airTempMin, setAirTempMin] = useState(0);
+  const [airTempMax, setAirTempMax] = useState(0);
+  const [humidityMin, setHumidityMin] = useState(0);
+  const [humidityMax, setHumidityMax] = useState(0);
+  const [phLevelMin, setPhLevelMin] = useState(0);
+  const [phLevelMax, setPhLevelMax] = useState(0);
+  const [orpMin, setOrpMin] = useState(0);
+  const [orpMax, setOrpMax] = useState(0);
+  const [tdsMin, setTdsMin] = useState(0);
+  const [tdsMax, setTdsMax] = useState(0);
+  const [waterTempMin, setWaterTempMin] = useState(0);
+  const [waterTempMax, setWaterTempMax] = useState(0);
 
-  const [destination, setDestination] = useState("");
-  const [tempIn, setTempIn] = useState(0);
-  const [tempOut, setTempOut] = useState(0);
-  const [humidity, setHumidity] = useState(0);
-  const [brightness, setBrightness] = useState(0);
-  const [co2, setCo2] = useState(0);
-
-  const [loading, setLoading] = useState(false)
-
-  const postCropsSettings = useAPIPost("/user/"+uuid+"/crops",  "", {})
+  const postCropsSettings = useAPIPost("/user/"+uuid+"/crops",  "add", {})
 
   const onSubmit = (data: any) => {
     postCropsSettings.post({"payload" : 
     {
-      "uuid": uuid,
-      "display_name": displayName,
-      "status" : "active", 
-      "zip" : zip,
-      "address" : address,
-      "destination" : destination,
-      "tempIn" : tempIn,
-      "tempOut" : tempOut,
-      "humidity" : humidity,
-      "brightness" : brightness,
-      "co2" : co2,
-    }}, "/user/"+uuid, );
+      uuid,
+      cropName,
+      airTempMin, 
+      airTempMax, 
+      humidityMin,
+      humidityMax,
+      phLevelMin, 
+      phLevelMax,
+      orpMin,
+      orpMax,
+      tdsMin,
+      tdsMax,
+      waterTempMin,
+      waterTempMax,
+    }}, "/user/"+uuid+"/crops", );
   }
 
   return (
     <>
       <StyledCropsSettingsForm>
         <StyledCropsettingsFormHeader>
-          <h2>Cropsettings</h2>
+          <h2>Crop Settings</h2>
         </StyledCropsettingsFormHeader>
         <StyledCropsettingsFormContent onSubmit={handleSubmit(onSubmit)}>
-          <StyledCropsettingsFormLabel>Display Name</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"display name"} {...register("displayName")} type={"text"} onChange={(e) => setDisplayName(e.target.value)}/>
+          <StyledCropsettingsFormLabel>Crop Name</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"crop name"} {...register("cropName")} type={"text"} onChange={(e) => setCropName(e.target.value)}/>
 
-          <StyledCropsettingsFormLabel>Address</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"address"} {...register("address")} type={"text"} onChange={(e) => setAddress(e.target.value)}/>
+          <StyledCropsettingsFormLabel>Air Temperature Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"air temp min"} {...register("airTempMin")} type={"number"} onChange={(e) => setAirTempMin(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Zip</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"zip"} {...register("zip")} type={"text"} onChange={(e) => setZip(e.target.value)}/>
+          <StyledCropsettingsFormLabel>Air Temperature Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"air temp max"} {...register("airTempMax")} type={"number"} onChange={(e) => setAirTempMax(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Temperature Inside</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"temp in"} {...register("tempIn")} type={"number"} onChange={(e) => setTempIn(parseInt(e.target.value))}/>
+          <StyledCropsettingsFormLabel>Humidity Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"humidity min"} {...register("humidityMin")} type={"number"} onChange={(e) => setHumidityMin(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Temperature Outside</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"temp out"} {...register("tempOut")} type={"number"} onChange={(e) => setTempOut(parseFloat(e.target.value))}/>
+          <StyledCropsettingsFormLabel>Humidity Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"humidity max"} {...register("humidityMax")} type={"number"} onChange={(e) => setHumidityMax(parseFloat(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Humidity</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"humidity"} {...register("humidity")} type={"number"} onChange={(e) => setHumidity(parseFloat(e.target.value))}/>
+          <StyledCropsettingsFormLabel>PH Level Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"ph level min"} {...register("phLevelMin")} type={"number"} onChange={(e) => setPhLevelMin(parseFloat(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Brightness</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"brightness"} {...register("brightness")} type={"number"} onChange={(e) => setBrightness(parseInt(e.target.value))}/>
+          <StyledCropsettingsFormLabel>PH Level Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"ph level max"} {...register("phLevelMax")} type={"number"} onChange={(e) => setPhLevelMax(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel>Co2</StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"co2"} {...register("co2")} type={"number"} onChange={(e) => setCo2(parseInt(e.target.value))}/>
+          <StyledCropsettingsFormLabel>ORP Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"orp min"} {...register("orpMin")} type={"number"} onChange={(e) => setOrpMin(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel><FontAwesomeIcon size='2x' icon={faBox as IconProp}/></StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"greenhouse"} {...register("destination")} type={"radio"} value={"greenhouse"} onClick={() => setDestination("greenhouse")}/>
+          <StyledCropsettingsFormLabel>ORP Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"orp max"} {...register("orpMax")} type={"number"} onChange={(e) => setOrpMax(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel><FontAwesomeIcon size='2x' icon={faHouse as IconProp}/></StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"indoor"} {...register("destination")} type={"radio"} value={"indoor"} onClick={() => setDestination("indoor")}/>
+          <StyledCropsettingsFormLabel>TDS Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"tds min"} {...register("tdsMin")} type={"number"} onChange={(e) => setTdsMin(parseInt(e.target.value))}/>
 
-          <StyledCropsettingsFormLabel><FontAwesomeIcon size='2x' icon={faCloudSun as IconProp}/></StyledCropsettingsFormLabel>
-          <StyledCropsettingsFormInput placeholder={"outdoor"} {...register("destination")} type={"radio"} value={"outdoor"} onClick={() => setDestination("outdoor")}/>
+          <StyledCropsettingsFormLabel>TDS Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"tds max"} {...register("tdsMax")} type={"number"} onChange={(e) => setTdsMax(parseInt(e.target.value))}/>
+
+          <StyledCropsettingsFormLabel>Water Temperature Min</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"water temp min"} {...register("waterTempMin")} type={"number"} onChange={(e) => setWaterTempMin(parseInt(e.target.value))}/>
+
+          <StyledCropsettingsFormLabel>Water Temperatire Max</StyledCropsettingsFormLabel>
+          <StyledCropsettingsFormInput placeholder={"water temp max"} {...register("waterTempMax")} type={"number"} onChange={(e) => setWaterTempMax(parseInt(e.target.value))}/>
 
           <Button type={"submit"} content='submit'></Button>
         </StyledCropsettingsFormContent>
